@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ParkMeUp!</string>
+
+    <string name="vehicles">My vehicles</string>
+    <string name="other">Other</string>
+    <string name="contacts">Contact us</string>
+    <string name="exit">Exit</string>
+
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="expand">Expand</string>
+    <string name="park_me_now">Park me now!</string>
+
+</resources>
