@@ -11,4 +11,15 @@
     <string name="expand">Expand</string>
     <string name="park_me_now">Park me now!</string>
 
+    <string name="register_vehicle">Register vehicle</string>
+    <string name="enter_brand">Brand</string>
+    <string name="enter_model">Model</string>
+    <string name="enter_plate">Licence plate (XX-00-YY)</string>
+    <string name="enter_plate_date">Licence plate date</string>
+    <string name="register">Register</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="parking_lots">Parking Lots</string>
+
 </resources>

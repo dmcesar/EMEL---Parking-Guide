@@ -5,20 +5,29 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import com.example.projetocm_g11.NavigationManager
-import com.example.projetocm_g11.OnClickEvent
+import com.example.projetocm_g11.interfaces.OnNavigateToFragment
 import com.example.projetocm_g11.R
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnClickEvent {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    OnNavigateToFragment {
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         // Navigate to selected fragment
         when(item.itemId) {
-            R.id.nav_contacts -> NavigationManager.goToContactsFragment(supportFragmentManager)
+
+            R.id.nav_parkings_lots -> NavigationManager.goToFragment(supportFragmentManager, ParkingLotsListFragment())
+
+            R.id.nav_vehicles -> NavigationManager.goToFragment(supportFragmentManager, VehiclesListFragment())
+
+            R.id.nav_contacts -> NavigationManager.goToFragment(supportFragmentManager, ContactsFragment())
+
+            R.id.nav_quit -> finish()
         }
 
         // Close drawer
@@ -34,11 +43,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         else if(supportFragmentManager.backStackEntryCount == 1) finish()
 
         else super.onBackPressed()
-    }
-
-    private fun screenRotated(savedInstanceState: Bundle?): Boolean {
-
-        return savedInstanceState != null
     }
 
     private fun setupDrawerMenu() {
@@ -67,17 +71,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         setupDrawerMenu()
 
-        if(!screenRotated(savedInstanceState)) {
-            NavigationManager.goToListFragment(supportFragmentManager)
-        }
-
         // Navigate to list fragment
-        NavigationManager.goToListFragment(supportFragmentManager)
+        NavigationManager.goToFragment(supportFragmentManager, ParkingLotsListFragment())
     }
 
-    // TODO: Pass API arguments
-    override fun onClickEvent() {
+    override fun onNavigateToFragment(fragment: Fragment) {
 
-        NavigationManager.goToParkInfoFragment(supportFragmentManager)
+        NavigationManager.goToFragment(supportFragmentManager, fragment)
     }
 }

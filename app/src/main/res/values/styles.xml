@@ -5,16 +5,12 @@
         <item name="colorPrimaryDark">@color/primary_darker</item>
         <item name="colorAccent">@color/accent</item>
 
-
         <item name="android:windowBackground">@color/primary_darker</item>
-        <!--
-        <item name="colorControlNormal">@color/iron</item>
-        <item name="colorControlActivated">@color/white</item>
-        <item name="colorControlHighlight">@color/white</item>
-        <item name="android:textColorHint">@color/iron</item>
-        <item name="colorButtonNormal">@color/primary_darker</item>
-        <item name="android:colorButtonNormal">@color/primary_darker</item>
-        -->
+
+        <item name="android:textColorHint">@color/accent</item>
+        <item name="colorControlNormal">@color/accent</item>
+        <item name="colorControlActivated">@color/amber</item>
+        <item name="colorControlHighlight">@color/amber</item>
     </style>
 
     <style name="ToolbarTheme" parent="AppTheme">
@@ -26,6 +22,16 @@
     <style name="ParkMeNowButtonStyle">
         <item name ="android:background">@drawable/toolbar_button</item>
         <item name ="android:textColor">@color/accent</item>
+    </style>
+
+    <style name="SubmitButtonTheme" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/primary</item>
+        <item name="android:drawableEnd">@drawable/ic_upload</item>
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <style name="ExpandToolbarButtonTheme">
+        <item name="drawableStartCompat">@drawable/ic_expand_more</item>
     </style>
 
     <style name="AppNameTheme" parent="@android:style/Widget.TextView">
@@ -53,6 +59,12 @@
     <style name="ItemTextTheme" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <style name="FabTheme" parent="Widget.Design.FloatingActionButton">
+        <item name="android:src">@drawable/ic_add</item>
+        <item name="android:background">@color/accent</item>
+        <item name="android:tint">@color/amber</item>
     </style>
 
 </resources>

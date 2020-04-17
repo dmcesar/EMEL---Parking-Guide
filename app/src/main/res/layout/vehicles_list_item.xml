@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/licence_plate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ItemMainTextTheme" />
+
+        <TextView
+            android:id="@+id/make_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ItemTextTheme" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/plate_date"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

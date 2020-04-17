@@ -8,12 +8,10 @@ import android.view.ViewGroup
 
 import com.example.projetocm_g11.R
 
-class ContactsFragment : Fragment() {
+class VehicleFormFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_contacts, container, false)
-
-        return view
+        return inflater.inflate(R.layout.fragment_vehicle_form, container, false)
     }
 }

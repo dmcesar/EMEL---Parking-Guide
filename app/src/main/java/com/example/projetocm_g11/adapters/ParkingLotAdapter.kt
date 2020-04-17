@@ -1,4 +1,4 @@
-package com.example.projetocm_g11
+package com.example.projetocm_g11.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projetocm_g11.domain.data.ParkingLot
-import kotlinx.android.synthetic.main.item_list.view.*
+import kotlinx.android.synthetic.main.parking_lots_list_item.view.*
 
-class ParkingLotAdapter(private val listener: OnClickEvent, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
+class ParkingLotAdapter(private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
     RecyclerView.Adapter<ParkingLotAdapter.HistoryViewHolder>() {
 
     class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -24,8 +24,6 @@ class ParkingLotAdapter(private val listener: OnClickEvent, private val context:
 
         //val address: TextView = view.text_result
         //val lastUpdatedAt: TextView
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -48,6 +46,6 @@ class ParkingLotAdapter(private val listener: OnClickEvent, private val context:
         holder.distance.text = "Distance"
         holder.availability.text = items[position].getState()
 
-        holder.itemView.setOnClickListener { listener.onClickEvent() }
+        //holder.itemView.setOnClickListener { listener.onClickEvent() }
     }
 }

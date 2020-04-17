@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/nav_parkings_lots"
+        android:icon="@drawable/ic_local_parking"
+        android:title="@string/parking_lots" />
+
+    <item
         android:id="@+id/nav_vehicles"
         android:icon="@drawable/ic_vehicle"
         android:title="@string/vehicles" />
