@@ -7,4 +7,7 @@
     <color name="amber">#FFBF00</color>
     <color name="dark_red">#8B0000</color>
     <color name="forest_green">#228B22</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="blue">#2A9DF4</color>
 </resources>
