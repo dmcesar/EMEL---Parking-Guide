@@ -1,9 +1,7 @@
 package com.example.projetocm_g11.adapters
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -19,11 +17,8 @@ class ParkingLotAdapter(private val context: Context, private val layout: Int, p
         val capacityText: TextView = view.park_capacity_text
 
         val name: TextView = view.park_name
-        val distance: TextView = view.park_distance
+        val occupancyState: TextView = view.park_occupancy_state
         val availability: TextView = view.park_availability
-
-        //val address: TextView = view.text_result
-        //val lastUpdatedAt: TextView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -35,17 +30,17 @@ class ParkingLotAdapter(private val context: Context, private val layout: Int, p
 
     override fun getItemCount() = items.size
 
-    // TODO: Pass API arguments
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
 
-        val capacity = "${items[position].capacity}%"
+        val capacity = "${items[position].capacityPercent}%"
+        val coordinates = "(${items[position].latitude}, ${items[position].longitude})"
 
-        holder.capacityBar.progress = items[position].capacity
+        val availability = if(items[position].active) "Open" else "Closed"
+
+        holder.capacityBar.progress = items[position].capacityPercent
         holder.capacityText.text = capacity
         holder.name.text = items[position].name
-        holder.distance.text = "Distance"
-        holder.availability.text = items[position].getState()
-
-        //holder.itemView.setOnClickListener { listener.onClickEvent() }
+        holder.occupancyState.text = items[position].getState()
+        holder.availability.text = availability
     }
 }

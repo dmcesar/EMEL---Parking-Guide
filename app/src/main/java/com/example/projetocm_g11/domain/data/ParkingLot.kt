@@ -3,35 +3,32 @@ package com.example.projetocm_g11.domain.data
 import java.util.*
 
 class ParkingLot(
-    val type: Type,
+    val id: String,
     val name: String,
-    val address: String
+    val active: Boolean,
+    val identityID: Int,
+    val maxCapacity: Int,
+    occupancy: Int,
+    var lastUpdatedAt: Date,
+    val latitude: Double,
+    val longitude: Double,
+    val type: Type
 ) {
 
-    var lastUpdatedAt: Date
-        private set
+    val capacityPercent: Int = occupancy
 
-    /* Number of occupied parking spots (%) */
-    var capacity: Int = 100
-        set(value) {
+        // Returns capacity in %
+        get() {
 
-            field = if(value >= 0 || value <= 100) { value } else capacity
-            lastUpdatedAt = Date()
+           return field * 100 / maxCapacity
         }
 
     /* Returns state in String format according to capacity */
     fun getState(): String {
 
-        if(capacity == 100) { return "Lotado"}
+        if(capacityPercent == 100) { return "Full"}
 
-        return if(capacity >= 90) {
-            "Potencialmente lotado"
-
-        } else "Livre"
-    }
-
-    init {
-        lastUpdatedAt = Date()
+        return if(capacityPercent >= 90) "Potentially full"  else "Free"
     }
 }
 
