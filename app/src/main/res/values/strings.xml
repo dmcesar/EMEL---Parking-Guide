@@ -11,23 +11,20 @@
     <string name="expand">Expand</string>
     <string name="park_me_now">Park me now!</string>
 
+    <string name="update_vehicle">Update vehicle</string>
     <string name="register_vehicle">Register vehicle</string>
     <string name="enter_brand">Brand</string>
     <string name="enter_model">Model</string>
     <string name="enter_plate">Licence plate</string>
-    <string name="enter_plate_date">Licence plate date (MM/YYYY)</string>
+    <string name="enter_plate_date">Date</string>
     <string name="register">Register</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="update">Update</string>
+    
     <string name="parking_lots">Parking Lots</string>
-
-
 
     <string name="service_stations">Service Stations</string>
     <string name="general_contacts">General Contacts</string>
     <string name="vehicle_lock">Vehicle Lock</string>
-
 
     <string name="service_station1_name">Loja do Cidadão do Saldanha\n</string>
     <string name="service_station1_info">Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nHorário: Segunda a Sexta - 9:00 às 19:00\n\n

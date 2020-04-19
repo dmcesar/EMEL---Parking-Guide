@@ -24,6 +24,10 @@
         <item name ="android:textColor">@color/accent</item>
     </style>
 
+    <style name="ListTheme">
+        <item name="android:background">@color/primary_darker</item>
+    </style>
+
     <style name="SubmitButtonTheme" parent="Widget.AppCompat.Button">
         <item name="android:background">@color/primary</item>
         <item name="android:drawableEnd">@drawable/ic_upload</item>
@@ -77,6 +81,10 @@
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/accent</item>
         <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="EditTextTheme" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/accent</item>
     </style>
 
     <style name="ContactsButtonAreaTheme" parent="Widget.AppCompat.Button">

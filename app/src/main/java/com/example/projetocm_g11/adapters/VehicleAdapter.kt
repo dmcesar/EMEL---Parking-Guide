@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projetocm_g11.domain.data.Vehicle
@@ -15,6 +16,7 @@ class VehicleAdapter(private val listener: OnClickEvent, private val context: Co
 
     class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        val deleteBut: ImageView = view.button_delete
         val brand: TextView = view.brand
         val model: TextView = view.model
         val licencePlate: TextView = view.plate
@@ -38,5 +40,6 @@ class VehicleAdapter(private val listener: OnClickEvent, private val context: Co
         holder.plateDate.text = items[position].getDate()
 
         holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
+        holder.deleteBut.setOnClickListener {  listener.onClickEvent(items[position].uuid) }
     }
 }

@@ -30,6 +30,16 @@ class VehiclesListViewModel : ViewModel(), OnDataReceived {
         logic.create(vehicle)
     }
 
+    fun updateVehicle(vehicle: Vehicle) {
+
+        logic.update(vehicle)
+    }
+
+    fun deleteVehicle(uuid: String) {
+
+        logic.delete(uuid)
+    }
+
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(list: ArrayList<*>) {
 

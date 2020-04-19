@@ -29,8 +29,6 @@ class VehiclesLogic {
 
     fun create(vehicle: Vehicle) {
 
-        Log.i(TAG, "${vehicle.brand}")
-
         Log.i(TAG, "Method create() called")
 
         CoroutineScope(Dispatchers.IO).launch {

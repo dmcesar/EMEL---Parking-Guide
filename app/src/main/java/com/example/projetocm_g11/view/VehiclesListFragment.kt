@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 import kotlinx.android.synthetic.main.fragment_vehicles_list.view.*
 import kotlinx.android.synthetic.main.fragment_vehicles_list.view.vehicles
 
+const val EXTRA_VEHICLE = "com.example.projetocm_g11.view.VehiclesListFragment.VEHICLE"
+
 class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
     private val TAG = VehiclesListFragment::class.java.simpleName
@@ -92,8 +94,20 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
     override fun onClickEvent(data: Any) {
 
-        val vehicle = data as Vehicle
+        if(data is Vehicle) {
 
+            val args = Bundle()
+            args.putParcelable(EXTRA_VEHICLE, data)
 
+            val editForm = VehicleFormFragment()
+            editForm.arguments = args
+
+            this.listener?.onNavigateToFragment(editForm)
+        }
+
+        else if(data is String) {
+
+            viewModel.deleteVehicle(data)
+        }
     }
 }
