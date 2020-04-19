@@ -89,6 +89,12 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         Log.i(TAG, "onDataReceived triggered.")
 
+        if(list.size > 0) {
+
+            empty_list_text.visibility = View.INVISIBLE
+
+        } else empty_list_text.visibility = View.VISIBLE
+
         vehicles.adapter = VehicleAdapter(this, activity as Context, R.layout.vehicles_list_item, list as ArrayList<Vehicle>)
     }
 

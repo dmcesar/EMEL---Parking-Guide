@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/empty_list_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/empty_list_text"
+        android:gravity="center_horizontal|center_vertical"
+        style="@style/ItemTextTheme" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vehicles"
         android:layout_width="match_parent"
