@@ -2,6 +2,7 @@ package com.example.projetocm_g11.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,17 +12,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projetocm_g11.*
 import com.example.projetocm_g11.adapters.VehicleAdapter
 import com.example.projetocm_g11.domain.data.Vehicle
+import com.example.projetocm_g11.interfaces.OnClickEvent
 import com.example.projetocm_g11.interfaces.OnDataReceived
 import com.example.projetocm_g11.interfaces.OnNavigateToFragment
-import com.example.projetocm_g11.viewmodel.VehiclesViewModel
+import com.example.projetocm_g11.viewmodel.VehiclesListViewModel
 
 import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 import kotlinx.android.synthetic.main.fragment_vehicles_list.view.*
 import kotlinx.android.synthetic.main.fragment_vehicles_list.view.vehicles
 
-class VehiclesListFragment : Fragment(), OnDataReceived {
+class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
-    private lateinit var viewModel: VehiclesViewModel
+    private val TAG = VehiclesListFragment::class.java.simpleName
+
+    private lateinit var viewModel: VehiclesListViewModel
 
     private var listener: OnNavigateToFragment? = null
 
@@ -59,7 +63,7 @@ class VehiclesListFragment : Fragment(), OnDataReceived {
              */
         }
 
-        viewModel = ViewModelProviders.of(this).get(VehiclesViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
 
         return view
     }
@@ -80,6 +84,16 @@ class VehiclesListFragment : Fragment(), OnDataReceived {
 
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(list: ArrayList<*>) {
-        vehicles.adapter = VehicleAdapter(activity as Context, R.layout.vehicles_list_item, list as ArrayList<Vehicle>)
+
+        Log.i(TAG, "onDataReceived triggered.")
+
+        vehicles.adapter = VehicleAdapter(this, activity as Context, R.layout.vehicles_list_item, list as ArrayList<Vehicle>)
+    }
+
+    override fun onClickEvent(data: Any) {
+
+        val vehicle = data as Vehicle
+
+
     }
 }

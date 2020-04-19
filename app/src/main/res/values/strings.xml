@@ -14,8 +14,8 @@
     <string name="register_vehicle">Register vehicle</string>
     <string name="enter_brand">Brand</string>
     <string name="enter_model">Model</string>
-    <string name="enter_plate">Licence plate (XX-00-YY)</string>
-    <string name="enter_plate_date">Licence plate date</string>
+    <string name="enter_plate">Licence plate</string>
+    <string name="enter_plate_date">Licence plate date (MM/YYYY)</string>
     <string name="register">Register</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -53,7 +53,8 @@
         Telefone: 217803131\n
         Horário: 2ª a 6ª Feira - 8:00 às 24:00 / Sábados, Domingos e Feriados - 9:00 às 18:00\n
     </string>
-
+    <string name="call_for_general_information">Call for General Information</string>
+    <string name="call_for_vehicle_lock_information">Call for Vehicle Lock Information</string>
 
 
 </resources>

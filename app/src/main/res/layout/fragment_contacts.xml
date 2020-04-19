@@ -4,149 +4,86 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="8"
-    android:background="@color/primary_darker">
-
-    <TextView
-          android:layout_weight="1"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:text="@string/service_station1_name"
-          android:textSize="22sp"
-          android:textColor="@color/white"
-          android:gravity="bottom|center_horizontal">
-      </TextView>
-
-    <TextView
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="@string/service_station1_info"
-        android:textSize="17sp"
-        android:textColor="@color/white"
-        android:gravity="top|center_horizontal">
-    </TextView>
-
-    <TextView
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="@string/service_station2_name"
-        android:textSize="22sp"
-        android:textColor="@color/white"
-        android:gravity="bottom|center_horizontal">
-    </TextView>
-
-    <TextView
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="@string/service_station2_info"
-        android:textSize="17sp"
-        android:textColor="@color/white"
-        android:gravity="top|center_horizontal">
-    </TextView>
-
-    <TextView
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="@string/service_station3_name"
-        android:textSize="22sp"
-        android:textColor="@color/white"
-        android:gravity="bottom|center_horizontal">
-    </TextView>
-
-    <TextView
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="@string/service_station3_info"
-        android:textSize="17sp"
-        android:textColor="@color/white"
-        android:gravity="top|center_horizontal">
-    </TextView>
-
+    android:weightSum="8">
 
     <LinearLayout
-        android:id="@+id/call_gen_info"
-        android:layout_weight="1"
-        android:weightSum="6"
+        android:layout_weight="6"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:background="@color/primary">
-
-
-        <ImageView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_phone"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
-
-        </ImageView>
-
+        android:orientation="vertical"
+        android:layout_margin="10dp" >
 
         <TextView
-            android:layout_weight="5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="General informations"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/service_station1_name"
+            style="@style/TextTitle" />
 
-        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/service_station1_info"
+            style="@style/Text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            style="@style/HorizontalLineSeparatorTheme"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/service_station2_name"
+            style="@style/TextTitle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/service_station2_info"
+            style="@style/Text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            style="@style/HorizontalLineSeparatorTheme"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/service_station3_name"
+            style="@style/TextTitle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/service_station3_info"
+            style="@style/Text" />
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/call_gen_info"
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="10dp"
+        android:text="@string/call_for_general_information"
+        style="@style/ContactsButtonAreaTheme" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#c0c0c0"/>
+        style="@style/HorizontalLineSeparatorTheme"/>
 
-
-    <LinearLayout
+    <Button
         android:id="@+id/call_vehicle_lock_info"
         android:layout_weight="1"
-        android:weightSum="6"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:background="@color/primary">
-
-
-        <ImageView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_phone"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            >
-
-        </ImageView>
-        <TextView
-            android:layout_weight="5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Vehicle Lock informations"
-            android:textSize="20sp"
-            android:textColor="@color/white">
-
-        </TextView>
-
-    </LinearLayout>
-
-
+        android:paddingHorizontal="10dp"
+        android:text="@string/call_for_vehicle_lock_information"
+        style="@style/ContactsButtonAreaTheme" />
 
 </LinearLayout>

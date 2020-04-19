@@ -13,9 +13,10 @@ import com.example.projetocm_g11.adapters.ParkingLotAdapter
 
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.domain.data.ParkingLot
+import com.example.projetocm_g11.domain.data.Type
 import com.example.projetocm_g11.viewmodel.ParkingLotsViewModel
-import kotlinx.android.synthetic.main.fragment_list.*
-import kotlinx.android.synthetic.main.fragment_list.view.parking_lots
+import kotlinx.android.synthetic.main.fragment_parking_lots_list.*
+import kotlinx.android.synthetic.main.fragment_parking_lots_list.view.*
 
 class ParkingLotsListFragment : Fragment(), OnDataReceived {
 
@@ -23,7 +24,7 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_parking_lots_list, container, false)
 
         view.parking_lots.layoutManager = LinearLayoutManager(activity as Context)
 
@@ -33,6 +34,13 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived {
     }
 
     override fun onStart() {
+
+        val list = ArrayList<ParkingLot>()
+
+        val p1 = ParkingLot(Type.UNDERGROUND, "Parque de lisboa", "Lisboa")
+
+        list.add(p1)
+        parking_lots.adapter = ParkingLotAdapter(activity as Context, R.layout.parking_lots_list_item, list)
 
         viewModel.registerListener(this)
         super.onStart()

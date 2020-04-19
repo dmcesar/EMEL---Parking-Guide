@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projetocm_g11.domain.data.Vehicle
+import com.example.projetocm_g11.interfaces.OnClickEvent
 import kotlinx.android.synthetic.main.vehicles_list_item.view.*
 
-class VehicleAdapter(private val context: Context, private val layout: Int, private val items: MutableList<Vehicle>) :
+class VehicleAdapter(private val listener: OnClickEvent, private val context: Context, private val layout: Int, private val items: MutableList<Vehicle>) :
     RecyclerView.Adapter<VehicleAdapter.HistoryViewHolder>() {
 
     class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val makeModel: TextView = view.make_model
-        val licencePlate: TextView = view.licence_plate
+        val brand: TextView = view.brand
+        val model: TextView = view.model
+        val licencePlate: TextView = view.plate
         val plateDate: TextView = view.plate_date
     }
 
@@ -30,12 +32,11 @@ class VehicleAdapter(private val context: Context, private val layout: Int, priv
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
 
-        val makeModel = items[position].brand + " : " + items[position].model
-
-        holder.makeModel.text = makeModel
+        holder.brand.text = items[position].brand
+        holder.model.text = items[position].model
         holder.licencePlate.text = items[position].plate
         holder.plateDate.text = items[position].getDate()
 
-        //holder.itemView.setOnClickListener { listener.onClickEvent() }
+        holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
     }
 }

@@ -30,10 +30,6 @@
         <item name="android:textColor">@color/accent</item>
     </style>
 
-    <style name="ExpandToolbarButtonTheme">
-        <item name="drawableStartCompat">@drawable/ic_expand_more</item>
-    </style>
-
     <style name="AppNameTheme" parent="@android:style/Widget.TextView">
         <item name="android:fontFamily">@font/quicksand_light</item>
         <item name="android:textColor">@color/accent</item>
@@ -47,6 +43,10 @@
     </style>
 
     <style name="VerticalLineSeparatorTheme">
+        <item name="android:background">@color/accent</item>
+    </style>
+
+    <style name="HorizontalLineSeparatorTheme">
         <item name="android:background">@color/accent</item>
     </style>
 
@@ -67,4 +67,22 @@
         <item name="android:tint">@color/amber</item>
     </style>
 
+    <style name="TextTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="Text" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="ContactsButtonAreaTheme" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/primary</item>
+        <item name="android:drawableStart">@drawable/ic_phone</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/accent</item>
+    </style>
 </resources>

@@ -5,7 +5,7 @@ import com.example.projetocm_g11.domain.data.Vehicle
 import com.example.projetocm_g11.interfaces.OnDataReceived
 import com.example.projetocm_g11.logic.VehiclesLogic
 
-class VehiclesViewModel : ViewModel(), OnDataReceived {
+class VehiclesListViewModel : ViewModel(), OnDataReceived {
 
     private val logic = VehiclesLogic()
 
@@ -23,6 +23,11 @@ class VehiclesViewModel : ViewModel(), OnDataReceived {
 
         this.listener = null
         this.logic.unregisterListener()
+    }
+
+    fun registerVehicle(vehicle: Vehicle) {
+
+        logic.create(vehicle)
     }
 
     @Suppress("UNCHECKED_CAST")
