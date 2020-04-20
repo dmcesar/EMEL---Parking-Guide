@@ -6,9 +6,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projetocm_g11.domain.data.ParkingLot
+import com.example.projetocm_g11.interfaces.OnClickEvent
 import kotlinx.android.synthetic.main.parking_lots_list_item.view.*
 
-class ParkingLotAdapter(private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
+class ParkingLotAdapter(private val listener: OnClickEvent, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
     RecyclerView.Adapter<ParkingLotAdapter.HistoryViewHolder>() {
 
     class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -19,6 +20,8 @@ class ParkingLotAdapter(private val context: Context, private val layout: Int, p
         val name: TextView = view.park_name
         val occupancyState: TextView = view.park_occupancy_state
         val availability: TextView = view.park_availability
+
+        //val coordinates: TextView = view.park_coordinates
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -42,5 +45,8 @@ class ParkingLotAdapter(private val context: Context, private val layout: Int, p
         holder.name.text = items[position].name
         holder.occupancyState.text = items[position].getState()
         holder.availability.text = availability
+        //holder.coordinates.text = coordinates
+
+        holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
     }
 }
