@@ -58,6 +58,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
     }
 
+    private fun screenRotated(savedInstanceState: Bundle?): Boolean {
+
+        return savedInstanceState != null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -70,9 +75,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         setupDrawerMenu()
+        
+        if(!screenRotated(savedInstanceState)) {
 
-        // Navigate to list fragment
-        NavigationManager.goToFragment(supportFragmentManager, ParkingLotsListFragment())
+            // Navigate to list fragment
+            NavigationManager.goToFragment(supportFragmentManager, ParkingLotsListFragment())
+
+        }
     }
 
     override fun onNavigateToFragment(fragment: Fragment) {
