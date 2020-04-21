@@ -34,6 +34,13 @@
         <item name="android:textColor">@color/accent</item>
     </style>
 
+    <style name="SubmitButtonThemeLand" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/primary</item>
+        <item name="android:drawableEnd">@drawable/ic_upload</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:layout_gravity">end</item>
+    </style>
+
     <style name="NavigateButtonTheme" parent="Widget.AppCompat.Button">
         <item name="android:background">@color/primary</item>
         <item name="android:textColor">@color/accent</item>
@@ -63,6 +70,13 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <style name="ItemMainTextThemeLand" parent="Widget.AppCompat.TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:layout_marginStart">15dp</item>
     </style>
 
     <style name="ItemTextTheme" parent="Widget.AppCompat.TextView">
