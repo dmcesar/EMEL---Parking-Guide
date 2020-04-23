@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">ParkMeUp!</string>
+
+    <string name="vehicles">Os meus veículos</string>
+    <string name="other">Outros</string>
+    <string name="contacts">Contacte-nos</string>
+    <string name="exit">Sair</string>
+
+    <string name="drawer_open">Abrir</string>
+    <string name="drawer_close">Fechar</string>
+    <string name="expand">Expandir</string>
+    <string name="park_me_now">Estacionar Agora</string>
+
+    <string name="update_vehicle">Atualizar veículo</string>
+    <string name="register_vehicle">Registar veículo</string>
+    <string name="enter_brand">Marca</string>
+    <string name="enter_model">Modelo</string>
+    <string name="enter_plate">Matriculoa</string>
+    <string name="enter_plate_date">Data</string>
+    <string name="register">Registar</string>
+    <string name="update">Atualizar</string>
+
+    <string name="parking_lots">Parques</string>
+
+    <string name="service_stations">Estações de Serviço</string>
+    <string name="general_contacts">Contactos Gerais</string>
+    <string name="vehicle_lock">Veículos Bloqueados</string>
+
+    <string name="service_station1_name">Loja do Cidadão do Saldanha\n</string>
+    <string name="service_station1_info">Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nSegunda a Sexta das 9:00 Às 19:00\n\n
+    </string>
+
+    <string name="service_station2_name">Loja do Cidadão das Laranjeiras\n</string>
+    <string name="service_station2_info">
+        Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nHorário: Segunda a Sexta from 9:00 às 19:00\n\n
+    </string>
+
+    <string name="service_station3_name">Edifício central do Município de Lisboa\n</string>
+    <string name="service_station3_info">
+        Campo Grande, 25\nHorário: Segunda a Sexta das 9:00 às 19:00\n
+    </string>
+
+
+    <string name="general_information">
+        Telefone: 211163060\nHorário: Segunda a Sexta das 8:00 às 20:00\nSábado das 9:00 às 15:00
+    </string>
+
+
+    <string name="vehicle_lock_information">
+        Telefone: 217803131\n
+        Horário: Segunda a Sexta das 8:00 às 24:00 / Sábados, Domingos e Feriados das 9:00 às 18:00\n
+    </string>
+    <string name="call_for_general_information">Ligar para informações gerais</string>
+    <string name="call_for_vehicle_lock_information">Ligar para informações sobre veículos bloqueados</string>
+    <string name="empty_list_text">Clique no botão \"+\" Para registar os seus veículos.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="go_map">Navegar</string>
+
+
+</resources>
