@@ -27,6 +27,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="@string/register"
             style="@style/SubmitButtonTheme"/>
 
@@ -101,6 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:layout_marginEnd="150dp"
                 android:hint="@string/enter_plate" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -118,6 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
+                android:layout_marginEnd="150dp"
                 android:hint="@string/enter_plate_date" />
 
         </com.google.android.material.textfield.TextInputLayout>
