@@ -91,7 +91,7 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         if(list.size > 0) {
 
-            empty_list_text.visibility = View.INVISIBLE
+            empty_list_text.visibility = View.GONE
 
         } else empty_list_text.visibility = View.VISIBLE
 

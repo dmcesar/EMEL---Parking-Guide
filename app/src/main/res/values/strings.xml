@@ -1,8 +1,10 @@
 <resources>
 
-    <string name="app_name">ParkMeUp!</string>
+    <string name="app_name">EMEL Parking</string>
+    <string name="emel">EMEL</string>
+    <string name="parking">Parking</string>
 
-        <!-- Drawer nav items -->
+    <!-- Drawer nav items -->
     <string name="parking_lots">Parking Lots</string>
     <string name="vehicles">My vehicles</string>
     <string name="contacts">Contact us</string>
@@ -10,8 +12,9 @@
     <string name="exit">Exit</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
+    <string name="other">Other</string>
 
-        <!-- Buttons -->
+    <!-- Buttons -->
     <string name="register">Register</string>
     <string name="update">Update</string>
     <string name="park_me_now">Park me now!</string>
@@ -22,18 +25,20 @@
     <string name="toggle_removed_vehicles_park">Removed Vehicles Park</string>
     <string name="toggle_removed_vehicles">Removed Vehicles</string>
     <string name="phone_removed_vehicles">Phone: 217803131</string>
+    <string name="setting_A">Setting A</string>
+    <string name="setting_B">Setting B</string>
 
-        <!-- Page titles -->
+    <!-- Page titles -->
     <string name="update_vehicle">Update vehicle</string>
     <string name="register_vehicle">Register vehicle</string>
 
-        <!-- EditViews -->
+    <!-- EditViews -->
     <string name="enter_brand">Brand</string>
     <string name="enter_model">Model</string>
     <string name="enter_plate">Licence plate</string>
     <string name="enter_plate_date">Date</string>
 
-        <!-- TextViews -->
+    <!-- TextViews -->
     <string name="park_closed">Closed</string>
     <string name="park_open">Open</string>
     <string name="coordinates">Coordinates</string>
@@ -52,4 +57,6 @@
     <string name="removed_vehicles_park_B">Email: parque.rebocados@emel.pt</string>
     <string name="removed_vehicles_park_C">Schedule: Everyday from 8AM to 12PM</string>
     <string name="removed_vehicles">Schedule: Mondays to Fridays from 8AM to 12PM\nSaturdays, Sundays and Holidays from 9AM to 6PM</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
 </resources>

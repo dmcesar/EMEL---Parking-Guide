@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/form_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/register_vehicle"
-        style="@style/TextTitleBoldTheme"
-        android:gravity="start"/>
+        android:layout_margin="20dp"
+        android:gravity="start"
+        style="@style/TextTitleTheme"
+        android:text="@string/register_vehicle" />
 
     <!-- Brand label -->
     <com.google.android.material.textfield.TextInputLayout

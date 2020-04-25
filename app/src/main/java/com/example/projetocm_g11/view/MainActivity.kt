@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_contacts -> NavigationManager.goToFragment(supportFragmentManager, ContactsFragment())
 
+            R.id.nav_settings -> NavigationManager.goToFragment(supportFragmentManager, SettingsFragment())
+
             R.id.nav_quit -> finish()
         }
 

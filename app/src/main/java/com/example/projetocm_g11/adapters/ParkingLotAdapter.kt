@@ -23,7 +23,7 @@ class ParkingLotAdapter(private val listener: OnClickEvent, private val context:
         val occupancyState: TextView = view.park_occupancy_state
         val availability: TextView = view.park_availability
 
-        //val coordinates: TextView = view.park_coordinates
+        val coordinates: TextView = view.park_coordinates
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -64,7 +64,7 @@ class ParkingLotAdapter(private val listener: OnClickEvent, private val context:
         holder.name.text = items[position].name
         holder.occupancyState.text = state
         holder.availability.text = availability
-        //holder.coordinates.text = coordinates
+        holder.coordinates.text = coordinates
 
         holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
     }

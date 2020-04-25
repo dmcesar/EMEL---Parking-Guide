@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">ParkMeUp!</string>
+    <string name="app_name">EMEL Parking</string>
+    <string name="emel">EMEL</string>
+    <string name="parking">Parking</string>
 
     <!-- Drawer -->
     <string name="parking_lots">Parques</string>
@@ -9,6 +11,7 @@
     <string name="exit">Sair</string>
     <string name="drawer_open">Abrir</string>
     <string name="drawer_close">Fechar</string>
+    <string name="other">Outros</string>
 
     <!-- Buttons -->
     <string name="go_map">Navegar</string>
@@ -21,6 +24,8 @@
     <string name="toggle_removed_vehicles_park">Parque de Veículos Removidos</string>
     <string name="toggle_removed_vehicles">Veículos Removidos</string>
     <string name="phone_removed_vehicles">Telefone: 217803131</string>
+    <string name="setting_A">Definição A</string>
+    <string name="setting_B">Definição B</string>
 
     <!-- Page titles -->
     <string name="update_vehicle">Atualizar veículo</string>
@@ -51,4 +56,6 @@
     <string name="removed_vehicles_park_B">Email: parque.rebocados@emel.pt</string>
     <string name="removed_vehicles_park_C">Horário: Todos os dias das 8:00 à 00:00</string>
     <string name="removed_vehicles">Horário: Segunda à Sexta das 8:00 à 0:00\nSábados, Domingos e Feriados das 9:00 às 18:00</string>
+    <string name="on">Ativo</string>
+    <string name="off">Desativo</string>
 </resources>
