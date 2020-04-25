@@ -1,89 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="8">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_weight="6"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_margin="10dp" >
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/service_station1_name"
-            style="@style/TextTitle" />
+            android:layout_marginVertical="10dp"
+            android:orientation="vertical"
+            android:background="@color/primary">
 
-        <TextView
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/HorizontalLineSeparatorTheme"/>
+
+            <Button
+                android:id="@+id/button_service_stations"
+                style="@style/ContactsButtonTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_more"
+                android:paddingHorizontal="15dp"
+                android:text="@string/toggle_service_stations" />
+
+            <LinearLayout
+                android:id="@+id/service_stations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/service_station_A"
+                    style="@style/TextTheme" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="10dp"
+                    style="@style/HorizontalLineSeparatorTheme"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/service_station_B"
+                    style="@style/TextTheme" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="10dp"
+                    style="@style/HorizontalLineSeparatorTheme"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/service_station_C"
+                    style="@style/TextTheme" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/HorizontalLineSeparatorTheme"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/service_station1_info"
-            style="@style/Text" />
+            android:layout_marginVertical="20dp"
+            android:orientation="vertical"
+            android:background="@color/primary">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="@style/HorizontalLineSeparatorTheme"
-            android:layout_margin="5dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/HorizontalLineSeparatorTheme"/>
 
-        <TextView
+            <Button
+                android:id="@+id/button_general_information"
+                style="@style/ContactsButtonTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_more"
+                android:paddingHorizontal="15dp"
+                android:text="@string/toggle_general_information" />
+
+            <LinearLayout
+                android:id="@+id/general_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/button_phone_general_information"
+                    style="@style/ContactsButtonTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_general_information"
+                    android:gravity="start|center_vertical"
+                    android:drawableEnd="@drawable/ic_phone"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10dp"
+                    style="@style/HorizontalLineSeparatorTheme"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/general_information"
+                    style="@style/TextTheme" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/HorizontalLineSeparatorTheme"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/service_station2_name"
-            style="@style/TextTitle" />
+            android:layout_marginVertical="10dp"
+            android:orientation="vertical"
+            android:background="@color/primary">
 
-        <TextView
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/HorizontalLineSeparatorTheme"/>
+
+            <Button
+                android:id="@+id/button_removed_vehicles_park"
+                style="@style/ContactsButtonTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_more"
+                android:paddingHorizontal="15dp"
+                android:text="@string/toggle_removed_vehicles_park" />
+
+            <LinearLayout
+                android:id="@+id/removed_vehicles_park"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/removed_vehicles_park_A"
+                    style="@style/TextTheme" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="10dp"
+                    style="@style/HorizontalLineSeparatorTheme"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/removed_vehicles_park_B"
+                    style="@style/TextTheme" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="10dp"
+                    style="@style/HorizontalLineSeparatorTheme"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/removed_vehicles_park_C"
+                    style="@style/TextTheme" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/HorizontalLineSeparatorTheme"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/service_station2_info"
-            style="@style/Text" />
+            android:layout_marginVertical="20dp"
+            android:orientation="vertical"
+            android:background="@color/primary">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="@style/HorizontalLineSeparatorTheme"
-            android:layout_margin="5dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/HorizontalLineSeparatorTheme"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/service_station3_name"
-            style="@style/TextTitle" />
+            <Button
+                android:id="@+id/button_removed_vehicles"
+                style="@style/ContactsButtonTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_more"
+                android:paddingHorizontal="15dp"
+                android:text="@string/toggle_removed_vehicles" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/service_station3_info"
-            style="@style/Text" />
+            <LinearLayout
+                android:id="@+id/removed_vehicles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/button_phone_removed_vehicles"
+                    style="@style/ContactsButtonTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_removed_vehicles"
+                    android:gravity="start|center_vertical"
+                    android:drawableEnd="@drawable/ic_phone"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10dp"
+                    style="@style/HorizontalLineSeparatorTheme"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/general_information"
+                    style="@style/TextTheme" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/HorizontalLineSeparatorTheme"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/call_gen_info"
-        android:layout_weight="1"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:paddingHorizontal="10dp"
-        android:text="@string/call_for_general_information"
-        style="@style/ContactsButtonAreaTheme" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        style="@style/HorizontalLineSeparatorTheme"/>
-
-    <Button
-        android:id="@+id/call_vehicle_lock_info"
-        android:layout_weight="1"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:paddingHorizontal="10dp"
-        android:text="@string/call_for_vehicle_lock_information"
-        style="@style/ContactsButtonAreaTheme" />
-
-</LinearLayout>
+</ScrollView>

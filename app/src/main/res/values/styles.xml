@@ -1,5 +1,6 @@
 <resources>
 
+    <!-- App theme -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_darker</item>
@@ -13,19 +14,25 @@
         <item name="colorControlHighlight">@color/amber</item>
     </style>
 
+    <style name="AppNameTheme" parent="@android:style/Widget.TextView">
+        <item name="android:fontFamily">@font/quicksand_light</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:textSize">50sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <!-- Toolbar -->
     <style name="ToolbarTheme" parent="AppTheme">
         <item name="android:background">@color/primary</item>
         <item name="android:textColorPrimary">@color/accent</item>
         <item name="android:textColorSecondary">@color/accent</item>
     </style>
 
+    <!-- Buttons -->
     <style name="ParkMeNowButtonStyle">
         <item name ="android:background">@drawable/toolbar_button</item>
         <item name ="android:textColor">@color/accent</item>
-    </style>
-
-    <style name="ListTheme">
-        <item name="android:background">@color/primary_darker</item>
     </style>
 
     <style name="SubmitButtonTheme" parent="Widget.AppCompat.Button">
@@ -46,18 +53,28 @@
         <item name="android:textColor">@color/accent</item>
     </style>
 
-    <style name="AppNameTheme" parent="@android:style/Widget.TextView">
-        <item name="android:fontFamily">@font/quicksand_light</item>
+    <style name="FabTheme" parent="Widget.Design.FloatingActionButton">
+        <item name="android:src">@drawable/ic_add</item>
+        <item name="android:background">@color/accent</item>
+        <item name="android:tint">@color/amber</item>
+    </style>
+
+    <style name="ContactsButtonTheme" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/primary</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/accent</item>
-        <item name="android:textSize">50sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <!-- List and list items -->
+    <style name="ListTheme">
+        <item name="android:background">@color/primary_darker</item>
     </style>
 
     <style name="ListItemTheme">
         <item name="android:background">@drawable/item_list_background</item>
     </style>
 
+    <!-- Line Separators -->
     <style name="VerticalLineSeparatorTheme">
         <item name="android:background">@color/accent</item>
     </style>
@@ -66,50 +83,26 @@
         <item name="android:background">@color/accent</item>
     </style>
 
-    <style name="ItemMainTextTheme" parent="Widget.AppCompat.TextView">
+    <!-- Text -->
+    <style name="TextTitleBoldTheme" parent="Widget.AppCompat.TextView">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/accent</item>
     </style>
 
-    <style name="ItemMainTextThemeLand" parent="Widget.AppCompat.TextView">
-        <item name="android:textStyle">bold</item>
+    <style name="TextTitleTheme" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/accent</item>
-        <item name="android:layout_marginStart">15dp</item>
     </style>
 
-    <style name="ItemTextTheme" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">15sp</item>
+    <style name="TextTheme" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/accent</item>
-    </style>
-
-    <style name="FabTheme" parent="Widget.Design.FloatingActionButton">
-        <item name="android:src">@drawable/ic_add</item>
-        <item name="android:background">@color/accent</item>
-        <item name="android:tint">@color/amber</item>
-    </style>
-
-    <style name="TextTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/accent</item>
-        <item name="android:gravity">center_horizontal</item>
-    </style>
-
-    <style name="Text" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@color/accent</item>
-        <item name="android:gravity">center_horizontal</item>
     </style>
 
     <style name="EditTextTheme" parent="Widget.AppCompat.EditText">
-        <item name="android:textColor">@color/accent</item>
-    </style>
-
-    <style name="ContactsButtonAreaTheme" parent="Widget.AppCompat.Button">
-        <item name="android:background">@color/primary</item>
-        <item name="android:drawableStart">@drawable/ic_phone</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/accent</item>
     </style>
+
 </resources>

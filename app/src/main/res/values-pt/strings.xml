@@ -4,8 +4,8 @@
     <!-- Drawer -->
     <string name="parking_lots">Parques</string>
     <string name="vehicles">Os meus veículos</string>
-    <string name="other">Outros</string>
     <string name="contacts">Contacte-nos</string>
+    <string name="settings">Definições</string>
     <string name="exit">Sair</string>
     <string name="drawer_open">Abrir</string>
     <string name="drawer_close">Fechar</string>
@@ -15,6 +15,12 @@
     <string name="register">Registar</string>
     <string name="update">Atualizar</string>
     <string name="park_me_now">Estacionar Agora</string>
+    <string name="toggle_service_stations">Postos de Atendimento</string>
+    <string name="toggle_general_information">Geral EMEL</string>
+    <string name="phone_general_information">Telefone: 211163060</string>
+    <string name="toggle_removed_vehicles_park">Parque de Veículos Removidos</string>
+    <string name="toggle_removed_vehicles">Veículos Removidos</string>
+    <string name="phone_removed_vehicles">Telefone: 217803131</string>
 
     <!-- Page titles -->
     <string name="update_vehicle">Atualizar veículo</string>
@@ -36,30 +42,13 @@
     <string name="state_full">Lotado</string>
     <string name="state_potentially_full">Potencialmente lotado</string>
     <string name="state_free">Livre</string>
-
-    <!-- Contacts -->
-    <string name="service_stations">Estações de Serviço</string>
-    <string name="general_contacts">Contactos Gerais</string>
-    <string name="vehicle_lock">Veículos Bloqueados</string>
-    <string name="service_station1_name">Loja do Cidadão do Saldanha\n</string>
-    <string name="service_station1_info">Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nSegunda a Sexta das 9:00 Às 19:00\n\n
-    </string>
-    <string name="service_station2_name">Loja do Cidadão das Laranjeiras\n</string>
-    <string name="service_station2_info">
-        Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nHorário: Segunda a Sexta from 9:00 às 19:00\n\n
-    </string>
-    <string name="service_station3_name">Edifício central do Município de Lisboa\n</string>
-    <string name="service_station3_info">
-        Campo Grande, 25\nHorário: Segunda a Sexta das 9:00 às 19:00\n
-    </string>
-    <string name="general_information">
-        Telefone: 211163060\nHorário: Segunda a Sexta das 8:00 às 20:00\nSábado das 9:00 às 15:00
-    </string>
-    <string name="vehicle_lock_information">
-        Telefone: 217803131\n
-        Horário: Segunda a Sexta das 8:00 às 24:00 / Sábados, Domingos e Feriados das 9:00 às 18:00\n
-    </string>
-    <string name="call_for_general_information">Ligar para informações gerais</string>
-    <string name="call_for_vehicle_lock_information">Ligar para informações sobre veículos bloqueados</string>
     <string name="empty_list_text">Clique no botão \"+\" Para registar os seus veículos.</string>
+    <string name="service_station_A">Loja do Cidadão do Saldanha\nMercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nHorário: Segunda à Sexta das 9:00 às 19:00</string>
+    <string name="service_station_B">Loja do Cidadão das Laranjeiras\nRua Abranches Ferrão, 10\nHorário: Segunda à Sexta das 8:30 às 19:30\nSábado das 9:30 às 15:00</string>
+    <string name="service_station_C">Edifício central do Município de Lisboa\nCampo Grande, 25\nHorário: Segunda à Sexta das 9:00 às 19:00</string>
+    <string name="general_information">Horário: Segunda à Sexta das 8:00 às 20:00\nSábado das 9:00 às 15:00</string>
+    <string name="removed_vehicles_park_A">Morada: Rua Franciso Lyon de Casto</string>
+    <string name="removed_vehicles_park_B">Email: parque.rebocados@emel.pt</string>
+    <string name="removed_vehicles_park_C">Horário: Todos os dias das 8:00 à 00:00</string>
+    <string name="removed_vehicles">Horário: Segunda à Sexta das 8:00 à 0:00\nSábados, Domingos e Feriados das 9:00 às 18:00</string>
 </resources>

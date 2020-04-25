@@ -19,7 +19,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/register_vehicle"
-        style="@style/ItemMainTextThemeLand"
+        style="@style/TextTitleBoldTheme"
         android:gravity="start"/>
 
         <Button

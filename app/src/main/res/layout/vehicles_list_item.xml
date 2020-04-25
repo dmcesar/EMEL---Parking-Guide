@@ -20,13 +20,13 @@
             android:id="@+id/brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ItemMainTextTheme" />
+            style="@style/TextTitleBoldTheme" />
 
         <TextView
             android:id="@+id/model"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ItemTextTheme" />
+            style="@style/TextTheme" />
 
     </LinearLayout>
 
@@ -47,13 +47,13 @@
             android:id="@+id/plate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ItemMainTextTheme" />
+            style="@style/TextTitleBoldTheme" />
 
         <TextView
             android:id="@+id/plate_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ItemTextTheme"/>
+            style="@style/TextTheme"/>
 
     </LinearLayout>
 

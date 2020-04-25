@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/register_vehicle"
-        style="@style/ItemMainTextTheme"
+        style="@style/TextTitleBoldTheme"
         android:gravity="start"/>
 
     <!-- Brand label -->

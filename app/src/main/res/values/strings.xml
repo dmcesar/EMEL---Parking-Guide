@@ -5,8 +5,8 @@
         <!-- Drawer nav items -->
     <string name="parking_lots">Parking Lots</string>
     <string name="vehicles">My vehicles</string>
-    <string name="other">Other</string>
     <string name="contacts">Contact us</string>
+    <string name="settings">Settings</string>
     <string name="exit">Exit</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
@@ -16,6 +16,12 @@
     <string name="update">Update</string>
     <string name="park_me_now">Park me now!</string>
     <string name="go_map">Set course</string>
+    <string name="toggle_service_stations">Service Stations</string>
+    <string name="toggle_general_information">EMEL General</string>
+    <string name="phone_general_information">Phone: 211163060</string>
+    <string name="toggle_removed_vehicles_park">Removed Vehicles Park</string>
+    <string name="toggle_removed_vehicles">Removed Vehicles</string>
+    <string name="phone_removed_vehicles">Phone: 217803131</string>
 
         <!-- Page titles -->
     <string name="update_vehicle">Update vehicle</string>
@@ -37,31 +43,13 @@
     <string name="state_full">Full</string>
     <string name="state_potentially_full">Potentially Full</string>
     <string name="state_free">Free</string>
-
-        <!-- Contacts information -->
-    <string name="service_stations">Service Stations</string>
-    <string name="general_contacts">General Contacts</string>
-    <string name="vehicle_lock">Vehicle Lock</string>
-    <string name="service_station1_name">Loja do Cidadão do Saldanha\n</string>
-    <string name="service_station1_info">Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nSchedule: Monday to Friday from 9:00 to 19:00\n\n
-        </string>
-    <string name="service_station2_name">Loja do Cidadão das Laranjeiras\n</string>
-    <string name="service_station2_info">
-            Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nHorário: Segunda a Sexta from 9:00 às 19:00\n\n
-        </string>
-    <string name="service_station3_name">Edifício central do Município de Lisboa\n</string>
-    <string name="service_station3_info">
-            Campo Grande, 25\nSchedule: Monday to Friday - 9:00 to 19:00\n
-        </string>
-    <string name="general_information">
-            Phone: 211163060\nSchedule: Monday to Friday from 8:00 to 20:00\nSábado das 9:00 às 15:00
-        </string>
-    <string name="vehicle_lock_information">
-            Phone: 217803131\n
-            Schedule Monday to Friday from 8:00 to 24:00 / Saturdays, Sundays and Holidays from 9:00 to 18:00\n
-        </string>
-    <string name="call_for_general_information">Call for General Information</string>
-    <string name="call_for_vehicle_lock_information">Call for Vehicle Lock Information</string>
     <string name="empty_list_text">Click the button \"+\" to register your vehicles.</string>
+    <string name="service_station_A">Citizen´s Store in Saldanha\nMercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nSchedule: Mondays to Fridays from 9AM to 7PM</string>
+    <string name="service_station_B">Citizen´s Store in Laranjeiras\nRua Abranches Ferrão, 10\nSchedule: Mondays to Fridays from 8:30AM to 7:30PM\nSaturdays from 9:30AM to 3PM</string>
+    <string name="service_station_C">Lisbon Town Hall\'s Central Building\nCampo Grande, 25\nSchedule: Mondays to Fridays from 9AM to 7PM</string>
+    <string name="general_information">Schedule: Mondays to Fridays from 8AM to 8PM\nSaturdays from 9AM to 3PM</string>
+    <string name="removed_vehicles_park_A">Address: Rua Franciso Lyon de Casto</string>
+    <string name="removed_vehicles_park_B">Email: parque.rebocados@emel.pt</string>
+    <string name="removed_vehicles_park_C">Schedule: Everyday from 8AM to 12PM</string>
+    <string name="removed_vehicles">Schedule: Mondays to Fridays from 8AM to 12PM\nSaturdays, Sundays and Holidays from 9AM to 6PM</string>
 </resources>
-
