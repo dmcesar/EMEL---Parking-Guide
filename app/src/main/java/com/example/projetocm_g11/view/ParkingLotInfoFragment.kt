@@ -54,14 +54,40 @@ class ParkingLotInfoFragment : Fragment() {
 
         this.parkingLot = this.arguments?.getParcelable(EXTRA_PARKING_LOT) as ParkingLot
 
-        val coordinates = "Coordinates: (${this.parkingLot.latitude}, ${this.parkingLot.longitude})"
-        val type = if(this.parkingLot.type == Type.SURFACE) "Type: Surface" else "Type: Structure"
-        val active = if(this.parkingLot.active) "Open" else "Closed"
-        val lastUpdatedAt = "Last updated at: ${SimpleDateFormat("dd-MM-yyyy").format(this.parkingLot.lastUpdatedAt)}"
+        val coordinates = "${ (activity as Context).resources.getString(R.string.coordinates) }: " +
+                "(${this.parkingLot.latitude}, ${this.parkingLot.longitude})"
 
-        view.park_capacity_bar.progress = this.parkingLot.capacityPercent
-        view.park_capacity_text.text = this.parkingLot.capacityPercent.toString()
-        view.park_occupancy_state.text = this.parkingLot.getState()
+        val type = if(this.parkingLot.type == Type.SURFACE)
+            (activity as Context).resources.getString(R.string.type_underground)
+        else (activity as Context).resources.getString(R.string.type_surface)
+
+        val active = if(this.parkingLot.active)
+            (activity as Context).resources.getString(R.string.park_open)
+        else (activity as Context).resources.getString(R.string.park_closed)
+
+        val lastUpdatedAt = "${ (activity as Context).resources.getString(R.string.last_updated_at) }: " +
+                SimpleDateFormat("dd-MM-yyyy").format(this.parkingLot.lastUpdatedAt)
+
+        val state = when {
+
+            parkingLot.getCapacityPercent() == 100 -> {
+
+                (activity as Context).resources.getString(R.string.state_full)
+
+            }
+
+            parkingLot.getCapacityPercent() >= 90 -> {
+
+                (activity as Context).resources.getString(R.string.state_potentially_full)
+
+            }
+
+            else -> (activity as Context).resources.getString(R.string.state_free)
+        }
+
+        view.park_capacity_bar.progress = this.parkingLot.getCapacityPercent()
+        view.park_capacity_text.text = this.parkingLot.getCapacityPercent().toString()
+        view.park_occupancy_state.text = state
         view.park_name.text = this.parkingLot.name
         view.park_type.text = type
         view.park_availability.text = active

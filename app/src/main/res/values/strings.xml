@@ -1,63 +1,67 @@
 <resources>
-<string name="app_name">ParkMeUp!</string>
 
-<string name="vehicles">My vehicles</string>
-<string name="other">Other</string>
-<string name="contacts">Contact us</string>
-<string name="exit">Exit</string>
+    <string name="app_name">ParkMeUp!</string>
 
-<string name="drawer_open">open</string>
-<string name="drawer_close">close</string>
-<string name="expand">Expand</string>
-<string name="park_me_now">Park me now!</string>
+        <!-- Drawer nav items -->
+    <string name="parking_lots">Parking Lots</string>
+    <string name="vehicles">My vehicles</string>
+    <string name="other">Other</string>
+    <string name="contacts">Contact us</string>
+    <string name="exit">Exit</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
 
-<string name="update_vehicle">Update vehicle</string>
-<string name="register_vehicle">Register vehicle</string>
-<string name="enter_brand">Brand</string>
-<string name="enter_model">Model</string>
-<string name="enter_plate">Licence plate</string>
-<string name="enter_plate_date">Date</string>
-<string name="register">Register</string>
-<string name="update">Update</string>
+        <!-- Buttons -->
+    <string name="register">Register</string>
+    <string name="update">Update</string>
+    <string name="park_me_now">Park me now!</string>
+    <string name="go_map">Set course</string>
 
-<string name="parking_lots">Parking Lots</string>
+        <!-- Page titles -->
+    <string name="update_vehicle">Update vehicle</string>
+    <string name="register_vehicle">Register vehicle</string>
 
-<string name="service_stations">Service Stations</string>
-<string name="general_contacts">General Contacts</string>
-<string name="vehicle_lock">Vehicle Lock</string>
+        <!-- EditViews -->
+    <string name="enter_brand">Brand</string>
+    <string name="enter_model">Model</string>
+    <string name="enter_plate">Licence plate</string>
+    <string name="enter_plate_date">Date</string>
 
-<string name="service_station1_name">Loja do Cidadão do Saldanha\n</string>
-<string name="service_station1_info">Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nSchedule: Monday to Friday from 9:00 to 19:00\n\n
-    </string>
+        <!-- TextViews -->
+    <string name="park_closed">Closed</string>
+    <string name="park_open">Open</string>
+    <string name="coordinates">Coordinates</string>
+    <string name="type_surface">Type: Surface</string>
+    <string name="type_underground">Type: Underground</string>
+    <string name="last_updated_at">Last updated at</string>
+    <string name="state_full">Full</string>
+    <string name="state_potentially_full">Potentially Full</string>
+    <string name="state_free">Free</string>
 
-<string name="service_station2_name">Loja do Cidadão das Laranjeiras\n</string>
-<string name="service_station2_info">
-        Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nHorário: Segunda a Sexta from 9:00 às 19:00\n\n
-    </string>
-
-<string name="service_station3_name">Edifício central do Município de Lisboa\n</string>
-<string name="service_station3_info">
-        Campo Grande, 25\nSchedule: Monday to Friday - 9:00 to 19:00\n
-    </string>
-
-
-<string name="general_information">
-        Phone: 211163060\nSchedule: Monday to Friday from 8:00 to 20:00\nSábado das 9:00 às 15:00
-    </string>
-
-
-<string name="vehicle_lock_information">
-        Phone: 217803131\n
-        Schedule Monday to Friday from 8:00 to 24:00 / Saturdays, Sundays and Holidays from 9:00 to 18:00\n
-    </string>
-<string name="call_for_general_information">Call for General Information</string>
-<string name="call_for_vehicle_lock_information">Call for Vehicle Lock Information</string>
-<string name="empty_list_text">Click the button \"+\" to register your vehicles.</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-<string name="hello_blank_fragment">Hello blank fragment</string>
-<string name="go_map">Set course</string>
-
-
+        <!-- Contacts information -->
+    <string name="service_stations">Service Stations</string>
+    <string name="general_contacts">General Contacts</string>
+    <string name="vehicle_lock">Vehicle Lock</string>
+    <string name="service_station1_name">Loja do Cidadão do Saldanha\n</string>
+    <string name="service_station1_info">Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nSchedule: Monday to Friday from 9:00 to 19:00\n\n
+        </string>
+    <string name="service_station2_name">Loja do Cidadão das Laranjeiras\n</string>
+    <string name="service_station2_info">
+            Mercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nHorário: Segunda a Sexta from 9:00 às 19:00\n\n
+        </string>
+    <string name="service_station3_name">Edifício central do Município de Lisboa\n</string>
+    <string name="service_station3_info">
+            Campo Grande, 25\nSchedule: Monday to Friday - 9:00 to 19:00\n
+        </string>
+    <string name="general_information">
+            Phone: 211163060\nSchedule: Monday to Friday from 8:00 to 20:00\nSábado das 9:00 às 15:00
+        </string>
+    <string name="vehicle_lock_information">
+            Phone: 217803131\n
+            Schedule Monday to Friday from 8:00 to 24:00 / Saturdays, Sundays and Holidays from 9:00 to 18:00\n
+        </string>
+    <string name="call_for_general_information">Call for General Information</string>
+    <string name="call_for_vehicle_lock_information">Call for Vehicle Lock Information</string>
+    <string name="empty_list_text">Click the button \"+\" to register your vehicles.</string>
 </resources>
 

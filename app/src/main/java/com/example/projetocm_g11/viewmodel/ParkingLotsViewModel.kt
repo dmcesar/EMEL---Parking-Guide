@@ -15,6 +15,7 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
 
         this.listener = listener
         this.logic.registerListener(this)
+        this.logic.getList()
     }
 
     fun unregisterListener() {

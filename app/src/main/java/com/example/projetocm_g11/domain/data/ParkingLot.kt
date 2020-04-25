@@ -10,7 +10,7 @@ class ParkingLot(
     val name: String,
     val active: Boolean,
     val identityID: Int,
-    val maxCapacity: Int,
+    private val maxCapacity: Int,
     private val occupancy: Int,
     var lastUpdatedAt: Date,
     val latitude: Double,
@@ -18,20 +18,9 @@ class ParkingLot(
     val type: Type
 ) : Parcelable {
 
-    val capacityPercent: Int = occupancy
+    fun getCapacityPercent(): Int {
 
-        // Returns capacity in %
-        get() {
-
-           return field * 100 / maxCapacity
-        }
-
-    /* Returns state in String format according to capacity */
-    fun getState(): String {
-
-        if(capacityPercent == 100) { return "Full"}
-
-        return if(capacityPercent >= 90) "Potentially full"  else "Free"
+        return occupancy * 100 / maxCapacity
     }
 }
 

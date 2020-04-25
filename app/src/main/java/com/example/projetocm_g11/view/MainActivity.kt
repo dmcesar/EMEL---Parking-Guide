@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         setupDrawerMenu()
-        
+
         if(!screenRotated(savedInstanceState)) {
 
             // Navigate to list fragment
