@@ -98,9 +98,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         setupDrawerMenu()
 
-        if(!screenRotated(savedInstanceState)) {
+        this.parkingLotsMainFragment = ParkingLotsMainFragment()
 
-            this.parkingLotsMainFragment = ParkingLotsMainFragment()
+        if(!screenRotated(savedInstanceState)) {
 
             // Navigate to list fragment
             NavigationManager.goToFragment(supportFragmentManager, this.parkingLotsMainFragment)

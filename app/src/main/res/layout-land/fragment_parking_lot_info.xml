@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <ProgressBar
+                android:id="@+id/park_capacity_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:indeterminate="false"
+                android:max="100"
+                android:progressDrawable="@drawable/circular"
+                android:secondaryProgress="100"/>
+
+            <TextView
+                android:id="@+id/park_capacity_text"
+                style="@style/TextTitleBoldTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/park_occupancy_state"
+            style="@style/TextTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="20dp"
+        style="@style/HorizontalLineSeparatorTheme" />
+
+    <LinearLayout
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="20dp">
+
+        <TextView
+            android:id="@+id/park_name"
+            style="@style/TextTitleBoldTheme"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start" />
+
+        <TextView
+            android:id="@+id/park_type"
+            style="@style/TextTheme"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/park_coordinates"
+        style="@style/TextTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="20dp"
+        android:gravity="start" />
+
+    <LinearLayout
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="20dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/park_availability"
+            style="@style/TextTheme"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"/>
+
+        <TextView
+            android:id="@+id/last_updated_at"
+            style="@style/TextTheme"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_go_map"
+        style="@style/AppButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="@string/go_map" />
+
+</LinearLayout>
