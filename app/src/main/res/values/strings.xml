@@ -60,4 +60,17 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="filter">Filter results</string>
+    <string name="apply">Apply</string>
+    <string name="toggle_park_type_filter_list">Filter by type</string>
+    <string name="toggle_park_availability_filter_list">Filter by availability</string>
+    <string name="toggle_park_distance_filter_list">Filter by distance (EXTRA)</string>
+    <string name="toggle_park_fair_filter_list">Filter by fair (EXTRA)</string>
+    <string name="filter_alphabetically">Filter alphabetically</string>
+    <string name="filter_by_name">Filter by name</string>
+    <string name="closest">Closest</string>
+    <string name="furthest">Furthest</string>
+    <string name="fair_green">Fair green</string>
+    <string name="fair_yellow">Fair yellow</string>
+    <string name="fair_red">Fair red</string>
+
 </resources>

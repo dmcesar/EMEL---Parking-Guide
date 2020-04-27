@@ -113,6 +113,7 @@
         android:paddingEnd="20dp"
         android:layout_margin="15dp"
         android:text="@string/register"
-        style="@style/SubmitButtonThemeLand"/>
+        android:layout_gravity="end"
+        style="@style/SubmitButtonTheme"/>
 
 </LinearLayout>

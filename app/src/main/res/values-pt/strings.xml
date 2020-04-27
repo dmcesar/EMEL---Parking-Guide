@@ -59,4 +59,17 @@
     <string name="on">Ativado</string>
     <string name="off">Desativo</string>
     <string name="filter">Filtar resultados</string>
+    <string name="apply">Aplicar</string>
+    <string name="toggle_park_type_filter_list">Filtrar por tipo</string>
+    <string name="toggle_park_availability_filter_list">Filtar por disponibilidade</string>
+    <string name="toggle_park_distance_filter_list">Filtar por distância</string>
+    <string name="toggle_park_fair_filter_list">Filtar por tarifa (EXTRA)</string>
+    <string name="filter_alphabetically">Filtar alfabeticamente</string>
+    <string name="filter_by_name">Filtrar por nome</string>
+    <string name="closest">Mais próximos</string>
+    <string name="furthest">Mais distantes</string>
+    <string name="fair_green">Tarifa verde</string>
+    <string name="fair_yellow">Tarifa amarela</string>
+    <string name="fair_red">Tarifa vermelha</string>
+
 </resources>

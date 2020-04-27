@@ -8,19 +8,35 @@
     android:orientation="vertical"
     tools:context=".view.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
-        <include layout="@layout/toolbar" />
+        <include
+            layout="@layout/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true" />
+
+        <RelativeLayout
+            android:id="@+id/background_blur"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="@+id/toolbar"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="#1FFFFFFF"
+            android:alpha="0.7"
+            android:visibility="gone" />
 
         <FrameLayout
             android:id="@+id/frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_drawer"

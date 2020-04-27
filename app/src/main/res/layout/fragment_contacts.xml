@@ -33,10 +33,9 @@
 
             <Button
                 android:id="@+id/button_service_stations"
-                style="@style/ContactsButtonTheme"
+                style="@style/DropdownButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_more"
                 android:paddingHorizontal="15dp"
                 android:text="@string/toggle_service_stations" />
 
@@ -101,7 +100,7 @@
 
             <Button
                 android:id="@+id/button_general_information"
-                style="@style/ContactsButtonTheme"
+                style="@style/DropdownButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_more"
@@ -118,7 +117,7 @@
 
                 <Button
                     android:id="@+id/button_phone_general_information"
-                    style="@style/ContactsButtonTheme"
+                    style="@style/DropdownButtonTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/phone_general_information"
@@ -160,7 +159,7 @@
 
             <Button
                 android:id="@+id/button_removed_vehicles_park"
-                style="@style/ContactsButtonTheme"
+                style="@style/DropdownButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_more"
@@ -228,10 +227,9 @@
 
             <Button
                 android:id="@+id/button_removed_vehicles"
-                style="@style/ContactsButtonTheme"
+                style="@style/DropdownButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_more"
                 android:paddingHorizontal="15dp"
                 android:text="@string/toggle_removed_vehicles" />
 
@@ -245,7 +243,7 @@
 
                 <Button
                     android:id="@+id/button_phone_removed_vehicles"
-                    style="@style/ContactsButtonTheme"
+                    style="@style/AppButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/phone_removed_vehicles"

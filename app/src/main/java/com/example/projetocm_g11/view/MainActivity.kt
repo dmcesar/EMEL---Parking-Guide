@@ -2,6 +2,7 @@ package com.example.projetocm_g11.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -16,12 +17,20 @@ import kotlinx.android.synthetic.main.toolbar.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     OnNavigateToFragment {
 
+    private lateinit var parkingLotsMainFragment: ParkingLotsMainFragment
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         // Navigate to selected fragment
         when(item.itemId) {
 
-            R.id.nav_parkings_lots -> NavigationManager.goToFragment(supportFragmentManager, ParkingLotsListFragment())
+            R.id.nav_parkings_lots -> {
+
+                /* Resets Fragment */
+                this.parkingLotsMainFragment = ParkingLotsMainFragment()
+
+                NavigationManager.goToFragment(supportFragmentManager, this.parkingLotsMainFragment)
+            }
 
             R.id.nav_vehicles -> NavigationManager.goToFragment(supportFragmentManager, VehiclesListFragment())
 
@@ -40,11 +49,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onBackPressed() {
 
-        if(drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START)
+        when {
 
-        else if(supportFragmentManager.backStackEntryCount == 1) finish()
+            /* If drawer is open, close drawer */
+            drawer.isDrawerOpen(GravityCompat.START) ->
+                drawer.closeDrawer(GravityCompat.START)
 
-        else super.onBackPressed()
+            /* If Fragment's child Fragment is on the stack (filters Fragment), remove the Fragment */
+            this.parkingLotsMainFragment.childFragmentManager.backStackEntryCount == 1 ->
+                this.parkingLotsMainFragment.removeFiltersFragment()
+
+            /* If there is only one Fragment on the stack, finish */
+            supportFragmentManager.backStackEntryCount == 1 ->
+                finish()
+
+            else -> super.onBackPressed()
+        }
     }
 
     private fun setupDrawerMenu() {
@@ -80,9 +100,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(!screenRotated(savedInstanceState)) {
 
-            // Navigate to list fragment
-            NavigationManager.goToFragment(supportFragmentManager, ParkingLotsListFragment())
+            this.parkingLotsMainFragment = ParkingLotsMainFragment()
 
+            // Navigate to list fragment
+            NavigationManager.goToFragment(supportFragmentManager, this.parkingLotsMainFragment)
         }
     }
 
