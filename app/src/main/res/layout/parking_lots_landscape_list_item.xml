@@ -5,28 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
-    android:layout_marginHorizontal="10dp"
     android:orientation="horizontal"
-    android:weightSum="4">
+    android:weightSum="5">
 
     <LinearLayout
         android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginVertical="5dp">
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="vertical" >
 
         <!-- Circular progress bar indicating park capacity -->
         <RelativeLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ProgressBar
                 android:id="@+id/park_capacity_bar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
                 android:indeterminate="false"
@@ -49,44 +47,74 @@
             style="@style/TextTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal" />
 
     </LinearLayout>
-
+    
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        style="@style/VerticalLineSeparatorTheme"
-        android:layout_marginVertical="12dp"
-        android:layout_marginEnd="20dp"/>
-
+        android:layout_margin="12dp"
+        style="@style/VerticalLineSeparatorTheme" />
+    
     <LinearLayout
         android:layout_weight="2"
+        android:weightSum="3"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
-
+        android:orientation="vertical"
+        android:padding="10dp" >
+        
         <TextView
+            android:layout_weight="1"
             android:id="@+id/park_name"
             style="@style/TextTitleBoldTheme"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center_vertical" />
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/park_coordinates"
-            style="@style/TextTitleBoldTheme"
+            style="@style/TextTheme"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"/>
+            android:layout_height="0dp"
+            android:gravity="center_vertical" />
 
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/park_availability"
+            style="@style/TextTheme"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center_vertical" />
+        
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/park_availability"
-        style="@style/TextTheme"
-        android:layout_weight="1"
+    <LinearLayout
+        android:layout_weight="2"
+        android:weightSum="2"
         android:layout_width="0dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/park_type"
+            style="@style/TextTheme"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/last_updated_at"
+            style="@style/TextTheme"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center_vertical" />
+        
+    </LinearLayout>
 
 </LinearLayout>

@@ -59,4 +59,5 @@
     <string name="removed_vehicles">Schedule: Mondays to Fridays from 8AM to 12PM\nSaturdays, Sundays and Holidays from 9AM to 6PM</string>
     <string name="on">On</string>
     <string name="off">Off</string>
+    <string name="filter">Filter results</string>
 </resources>

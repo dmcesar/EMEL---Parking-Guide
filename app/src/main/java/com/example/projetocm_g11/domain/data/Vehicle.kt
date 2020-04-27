@@ -7,7 +7,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Parcelize
-class Vehicle(var brand: String, var model: String, var plate: String, private var plateDate: Date = Date()) : Parcelable{
+class Vehicle(var brand: String, var model: String, var plate: String, private var plateDate: Date = Date(), var parkID: String = "") : Parcelable{
+
+    /* var parkID stores ID of the park where the vehicle is parked at. (EXTRA)
+    * IF " " then vehicle is not at any park. */
 
     @IgnoredOnParcel
     val uuid = UUID.randomUUID().toString()

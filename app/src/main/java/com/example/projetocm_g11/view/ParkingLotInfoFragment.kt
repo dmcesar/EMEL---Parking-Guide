@@ -73,13 +73,11 @@ class ParkingLotInfoFragment : Fragment() {
             parkingLot.getCapacityPercent() == 100 -> {
 
                 (activity as Context).resources.getString(R.string.state_full)
-
             }
 
             parkingLot.getCapacityPercent() >= 90 -> {
 
                 (activity as Context).resources.getString(R.string.state_potentially_full)
-
             }
 
             else -> (activity as Context).resources.getString(R.string.state_free)

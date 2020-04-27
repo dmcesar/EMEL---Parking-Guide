@@ -72,5 +72,4 @@
         android:gravity="center_vertical"
         android:layout_weight="1" />
 
-
 </LinearLayout>

@@ -36,7 +36,7 @@ class ParkingLotsLogic {
                 true,
                 1,
                 800,
-                700,
+                750,
                 Date(),
                 38.75463622,
                 -9.3414141,

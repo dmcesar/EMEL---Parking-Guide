@@ -4,128 +4,134 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp" >
-
-    <include layout="@layout/vehicles_list_item" />
+    android:padding="20dp" >
 
     <LinearLayout
+        android:weightSum="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="3">
-    <TextView
+        android:orientation="horizontal">
 
-        android:id="@+id/form_name"
-        android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/register_vehicle"
-        style="@style/TextTitleBoldTheme"
-        android:gravity="start"/>
-
-        <Button
-            android:id="@+id/button_submit_form"
+        <TextView
+            android:id="@+id/form_name"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/register"
-            style="@style/SubmitButtonTheme"/>
+            android:text="@string/update_vehicle"
+            style="@style/TextTitleBoldTheme"
+            />
+
+        <include
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            layout="@layout/vehicles_list_item" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
         android:orientation="horizontal"
-        android:weightSum="2">
-        <!-- Brand label -->
+        android:weightSum="7">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+            android:layout_weight="4"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="10dp">
+            android:layout_marginEnd="20dp"
+            android:gravity="center_vertical" >
 
             <EditText
                 android:id="@+id/input_brand"
                 style="@style/EditTextTheme"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="text"
                 android:hint="@string/enter_brand" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Brand label -->
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="10dp">
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/input_plate_date"
+            style="@style/EditTextTheme"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="date"
+            android:hint="@string/enter_plate_date" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:gravity="center_vertical" >
 
             <EditText
                 android:id="@+id/input_model"
                 style="@style/EditTextTheme"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="text"
                 android:hint="@string/enter_model" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
-
     </LinearLayout>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginTop="10dp">
+        android:weightSum="7">
 
-        <!-- Licence plate label -->
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+            android:layout_weight="4"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_marginEnd="20dp"
+            android:gravity="center_vertical" >
 
             <EditText
                 android:id="@+id/input_plate"
                 style="@style/EditTextTheme"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="text"
-                android:layout_marginEnd="150dp"
                 android:hint="@string/enter_plate" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Date label -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/button_submit_form"
+            android:layout_weight="3"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
-
-            <EditText
-                android:id="@+id/input_plate_date"
-                style="@style/EditTextTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:layout_marginEnd="150dp"
-                android:hint="@string/enter_plate_date" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="20dp"
+            android:text="@string/update"
+            android:padding="10dp"
+            style="@style/SubmitButtonTheme" />
 
     </LinearLayout>
-
 
 </LinearLayout>

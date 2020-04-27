@@ -158,7 +158,6 @@ class VehicleFormFragment : Fragment() {
         input_plate_date.addTextChangedListener(object : TextWatcher {
 
             var ignore = false
-            var previous = 0
 
             var appendDash = false
             var limitSize = false

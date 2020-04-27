@@ -1,6 +1,7 @@
 package com.example.projetocm_g11.view
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projetocm_g11.*
 import com.example.projetocm_g11.adapters.VehicleAdapter
@@ -35,34 +37,16 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         val view =  inflater.inflate(R.layout.fragment_vehicles_list, container, false)
 
-        view.vehicles.layoutManager = LinearLayoutManager(activity as Context)
+        if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            view.vehicles.layoutManager = LinearLayoutManager(activity as Context)
+
+        } else view.vehicles.layoutManager = GridLayoutManager(activity as Context, 2)
 
         view.fab.setOnClickListener {
 
             // Notify MainActivity to navigate to VehicleFormFragment
             this.listener?.onNavigateToFragment(VehicleFormFragment())
-
-            /*
-
-            // Inflate popup view using inflater
-            val popupView = inflater.inflate(R.layout.popup_new_vehicle, null)
-
-            val width = LinearLayout.LayoutParams.MATCH_PARENT
-            val height = LinearLayout.LayoutParams.MATCH_PARENT
-
-            // Initialize a new instance of popup window
-            val popupWindow = PopupWindow(popupView, width, height)
-
-            // Close popup when clicked outside
-            popupWindow.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            popupWindow.isOutsideTouchable = true
-            popupWindow.isFocusable = true
-
-            // Finally, show the popup window on top of the vehicles list
-            TransitionManager.beginDelayedTransition(vehicles)
-            popupWindow.showAtLocation(vehicles, Gravity.CENTER, 0, 0)
-
-             */
         }
 
         viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)

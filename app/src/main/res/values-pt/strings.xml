@@ -56,6 +56,7 @@
     <string name="removed_vehicles_park_B">Email: parque.rebocados@emel.pt</string>
     <string name="removed_vehicles_park_C">Horário: Todos os dias das 8:00 à 00:00</string>
     <string name="removed_vehicles">Horário: Segunda à Sexta das 8:00 à 0:00\nSábados, Domingos e Feriados das 9:00 às 18:00</string>
-    <string name="on">Ativo</string>
+    <string name="on">Ativado</string>
     <string name="off">Desativo</string>
+    <string name="filter">Filtar resultados</string>
 </resources>
