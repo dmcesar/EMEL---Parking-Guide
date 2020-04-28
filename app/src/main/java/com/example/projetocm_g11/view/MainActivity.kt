@@ -17,20 +17,12 @@ import kotlinx.android.synthetic.main.toolbar.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     OnNavigateToFragment {
 
-    private lateinit var parkingLotsMainFragment: ParkingLotsMainFragment
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         // Navigate to selected fragment
         when(item.itemId) {
 
-            R.id.nav_parkings_lots -> {
-
-                /* Resets Fragment */
-                this.parkingLotsMainFragment = ParkingLotsMainFragment()
-
-                NavigationManager.goToFragment(supportFragmentManager, this.parkingLotsMainFragment)
-            }
+            R.id.nav_parkings_lots -> NavigationManager.goToFragment(supportFragmentManager, ParkingLotsListFragment())
 
             R.id.nav_vehicles -> NavigationManager.goToFragment(supportFragmentManager, VehiclesListFragment())
 
@@ -54,10 +46,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             /* If drawer is open, close drawer */
             drawer.isDrawerOpen(GravityCompat.START) ->
                 drawer.closeDrawer(GravityCompat.START)
-
-            /* If Fragment's child Fragment is on the stack (filters Fragment), remove the Fragment */
-            this.parkingLotsMainFragment.childFragmentManager.backStackEntryCount == 1 ->
-                this.parkingLotsMainFragment.removeFiltersFragment()
 
             /* If there is only one Fragment on the stack, finish */
             supportFragmentManager.backStackEntryCount == 1 ->
@@ -98,17 +86,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         setupDrawerMenu()
 
-        this.parkingLotsMainFragment = ParkingLotsMainFragment()
-
         if(!screenRotated(savedInstanceState)) {
 
             // Navigate to list fragment
-            NavigationManager.goToFragment(supportFragmentManager, this.parkingLotsMainFragment)
+            NavigationManager.goToFragment(supportFragmentManager, ParkingLotsListFragment())
         }
     }
 
-    override fun onNavigateToFragment(fragment: Fragment) {
+    override fun onNavigateToFragment(fragment: Fragment?) {
 
-        NavigationManager.goToFragment(supportFragmentManager, fragment)
+        fragment?.let { NavigationManager.goToFragment(supportFragmentManager, it) }
     }
 }

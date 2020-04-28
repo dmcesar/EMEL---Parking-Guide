@@ -41,8 +41,8 @@ class VehiclesListViewModel : ViewModel(), OnDataReceived {
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun onDataReceived(list: ArrayList<*>) {
+    override fun onDataReceived(data: ArrayList<*>?) {
 
-        this.listener?.onDataReceived(list as ArrayList<Vehicle>)
+        data?.let { this.listener?.onDataReceived(it as ArrayList<Vehicle>) }
     }
 }

@@ -14,21 +14,11 @@ class ParkingLotsLogic {
 
     private var listener: OnDataReceived? = null
 
-    fun registerListener(listener: OnDataReceived) {
-
-        this.listener = listener
-    }
-
-    fun unregisterListener() {
-
-        this.listener = null
-    }
+    private var parkingLots = ArrayList<ParkingLot>()
 
     fun getList() {
 
         CoroutineScope(Dispatchers.Default).launch {
-
-            val list = ArrayList<ParkingLot>()
 
             val p1 = ParkingLot(
                 "P001",
@@ -42,6 +32,7 @@ class ParkingLotsLogic {
                 -9.3414141,
                 Type.UNDERGROUND
             )
+
             val p2 = ParkingLot(
                 "P002",
                 "Campo Grande",
@@ -54,6 +45,7 @@ class ParkingLotsLogic {
                 90.324143,
                 Type.SURFACE
             )
+
             val p3 = ParkingLot(
                 "P003",
                 "Baia de Cascais",
@@ -66,6 +58,7 @@ class ParkingLotsLogic {
                 -7.214122,
                 Type.UNDERGROUND
             )
+
             val p4 = ParkingLot(
                 "P019",
                 "CascaisShopping",
@@ -79,15 +72,31 @@ class ParkingLotsLogic {
                 Type.UNDERGROUND
             )
 
-            list.add(p1)
-            list.add(p2)
-            list.add(p3)
-            list.add(p4)
+            parkingLots.add(p1)
+            parkingLots.add(p2)
+            parkingLots.add(p3)
+            parkingLots.add(p4)
 
-            withContext(Dispatchers.Main) {
+            notifyDataChanged()
+        }
+    }
 
-                listener?.onDataReceived(list)
-            }
+    fun registerListener(listener: OnDataReceived) {
+
+        this.listener = listener
+    }
+
+    fun unregisterListener() {
+
+        this.listener = null
+    }
+
+    /* Uses Main Thread: Notifies ViewModel of data changed*/
+    private suspend fun notifyDataChanged() {
+
+        withContext(Dispatchers.Main) {
+
+            listener?.onDataReceived(parkingLots)
         }
     }
 }

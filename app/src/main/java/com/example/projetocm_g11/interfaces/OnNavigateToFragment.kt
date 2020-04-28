@@ -4,5 +4,5 @@ import androidx.fragment.app.Fragment
 
 interface OnNavigateToFragment {
 
-    fun onNavigateToFragment(fragment: Fragment)
+    fun onNavigateToFragment(fragment: Fragment?)
 }

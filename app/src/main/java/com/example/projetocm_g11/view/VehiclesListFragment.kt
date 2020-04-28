@@ -35,20 +35,28 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        /* Inflate layout */
         val view =  inflater.inflate(R.layout.fragment_vehicles_list, container, false)
 
+        /* Set layout for RecycleView according to screen orientation */
         if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             view.vehicles.layoutManager = LinearLayoutManager(activity as Context)
 
-        } else view.vehicles.layoutManager = GridLayoutManager(activity as Context, 2)
+        }
+        else view.vehicles.layoutManager = GridLayoutManager(activity as Context, 2)
 
+        /* Set FAB onClickListener */
         view.fab.setOnClickListener {
 
-            // Notify MainActivity to navigate to VehicleFormFragment
-            this.listener?.onNavigateToFragment(VehicleFormFragment())
+            /* Create an empty vehicle form */
+            val emptyFormFragment = VehicleFormFragment()
+
+            // Notify MainActivity to navigate to Fragment
+            this.listener?.onNavigateToFragment(emptyFormFragment)
         }
 
+        /* Obtain ViewModel*/
         viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
 
         return view
@@ -69,35 +77,39 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun onDataReceived(list: ArrayList<*>) {
+    override fun onDataReceived(data: ArrayList<*>?) {
 
-        Log.i(TAG, "onDataReceived triggered.")
+        Log.i(TAG, "onDataReceived() called")
 
-        if(list.size > 0) {
+        data?.let {
 
-            empty_list_text.visibility = View.GONE
+            if(it.size > 0) {
 
-        } else empty_list_text.visibility = View.VISIBLE
+                empty_list_text.visibility = View.GONE
 
-        vehicles.adapter = VehicleAdapter(this, activity as Context, R.layout.vehicles_list_item, list as ArrayList<Vehicle>)
+            } else empty_list_text.visibility = View.VISIBLE
+
+            vehicles.adapter = VehicleAdapter(this, activity as Context, R.layout.vehicles_list_item, it as ArrayList<Vehicle>)
+        }
     }
 
-    override fun onClickEvent(data: Any) {
+    override fun onClickEvent(data: Any?) {
 
-        if(data is Vehicle) {
+        Log.i(TAG, "onClickEvent() called")
 
-            val args = Bundle()
-            args.putParcelable(EXTRA_VEHICLE, data)
+        data?.let {
 
-            val editForm = VehicleFormFragment()
-            editForm.arguments = args
+            if(it is Vehicle) {
 
-            this.listener?.onNavigateToFragment(editForm)
-        }
+                val args = Bundle()
+                args.putParcelable(EXTRA_VEHICLE, it)
 
-        else if(data is String) {
+                val editForm = VehicleFormFragment()
+                editForm.arguments = args
 
-            viewModel.deleteVehicle(data)
+                this.listener?.onNavigateToFragment(editForm)
+
+            } else { viewModel.deleteVehicle(it as String) }
         }
     }
 }

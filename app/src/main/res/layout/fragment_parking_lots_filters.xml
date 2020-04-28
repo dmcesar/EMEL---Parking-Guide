@@ -7,11 +7,18 @@
     android:background="@color/primary_darker"
     android:padding="20dp" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/filter"
-        style="@style/TextTitleTheme" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter"
+            style="@style/TextTitleTheme" />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -158,6 +165,82 @@
                     style="@style/HorizontalLineSeparatorTheme"/>
 
                 <Button
+                    android:id="@+id/button_toggle_park_fair_filter_list"
+                    style="@style/DropdownButtonTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="15dp"
+                    android:text="@string/toggle_park_fair_filter_list" />
+
+                <LinearLayout
+                    android:id="@+id/park_fair_filter_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <Switch
+                        android:id="@+id/filter_park_fair_green"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/accent"
+                        android:text="@string/fair_green"
+                        android:textOff="@string/off"
+                        android:textOn="@string/on"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="10dp"
+                        style="@style/HorizontalLineSeparatorTheme"/>
+
+                    <Switch
+                        android:id="@+id/filter_park_fair_yellow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/accent"
+                        android:text="@string/fair_yellow"
+                        android:textOff="@string/off"
+                        android:textOn="@string/on"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="10dp"
+                        style="@style/HorizontalLineSeparatorTheme"/>
+
+                    <Switch
+                        android:id="@+id/filter_park_fair_red"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/accent"
+                        android:text="@string/fair_red"
+                        android:textOff="@string/off"
+                        android:textOn="@string/on"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    style="@style/HorizontalLineSeparatorTheme"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical"
+                android:background="@color/primary">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    style="@style/HorizontalLineSeparatorTheme"/>
+
+                <Button
                     android:id="@+id/button_toggle_park_distance_filter_list"
                     style="@style/DropdownButtonTheme"
                     android:layout_width="match_parent"
@@ -200,72 +283,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:orientation="vertical"
-                android:background="@color/primary">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
-
-                <Button
-                    android:id="@+id/button_toggle_park_fair_filter_list"
-                    style="@style/DropdownButtonTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp"
-                    android:text="@string/toggle_park_fair_filter_list" />
-
-                <LinearLayout
-                    android:id="@+id/park_fair_filter_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <CheckBox
-                        android:id="@+id/filter_park_fair_green"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fair_green"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="10dp"
-                        style="@style/HorizontalLineSeparatorTheme"/>
-
-                    <CheckBox
-                        android:id="@+id/filter_park_fair_yellow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fair_yellow" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="10dp"
-                        style="@style/HorizontalLineSeparatorTheme"/>
-
-                    <CheckBox
-                        android:id="@+id/filter_park_fair_red"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fair_red" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
-
-            </LinearLayout>
-
             <Switch
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="20dp"
@@ -277,7 +294,6 @@
                 android:textOff="@string/off"
                 android:textOn="@string/on"/>
 
-            <!-- Brand label -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
