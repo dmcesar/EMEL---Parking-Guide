@@ -21,7 +21,6 @@ import com.example.projetocm_g11.interfaces.OnClickEvent
 import com.example.projetocm_g11.interfaces.OnFiltersListReceived
 import com.example.projetocm_g11.interfaces.OnNavigateToFragment
 import com.example.projetocm_g11.viewmodel.ParkingLotsViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_parking_lots_list.*
 import kotlinx.android.synthetic.main.fragment_parking_lots_list.view.*
 import kotlin.collections.ArrayList
@@ -44,6 +43,9 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         /* Generate filters fragment */
         val filtersFragment = ParkingLotsFiltersFragment()
 
+        /* Register this Fragment as observer for new filtersFragment's filters' list */
+        filtersFragment.registerListener(this)
+
         val args = Bundle()
 
         this.viewModel.filters.let { args.putParcelableArrayList(EXTRA_FILTERS_LIST, it) }
@@ -59,19 +61,24 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         /* Inflate layout */
         val view = inflater.inflate(R.layout.fragment_parking_lots_list, container, false)
 
+        /* Bind fragment to view */
+        ButterKnife.bind(this, view)
+
         /* Set layout for RecycleView*/
         view.parking_lots.layoutManager = LinearLayoutManager(activity as Context)
 
         /* Obtain ViewModel*/
         this.viewModel = ViewModelProviders.of(this).get(ParkingLotsViewModel::class.java)
 
-        /* Bind fragment to view */
-        ButterKnife.bind(this, view)
-
         return view
     }
 
-    override fun onStart() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        Log.i(TAG, "onViewCreated()")
+
+        /* Set init value for list */
+        this.viewModel.parkingLots.let { onDataChanged(it) }
 
         /* Activity listening for navigation requests (onClick item and onClick filters) */
         this.navigationListener = activity as OnNavigateToFragment
@@ -79,13 +86,7 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         /* This listening for ViewModel requests to update UI */
         this.viewModel.registerListener(this)
 
-        /* Set init value for list */
-        this.viewModel.parkingLots.let { onDataChanged(it) }
-
-        /* Order ViewModel to fetch lists from logic */
-        this.viewModel.fetchList()
-
-        super.onStart()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onStop() {
@@ -135,8 +136,16 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
 
         Log.i(TAG, "onFiltersListReceived() called")
 
+        activity?.onBackPressed()
+
         /* Order ViewModel to use logic to apply filters and then request to update UI (triggers onDataReceived) */
-        filters?.let { this.viewModel.applyFilters(it) }
+        filters?.let {
+
+            this.viewModel.applyFilters(it)
+
+            for(filter in it)
+                Log.i(TAG, filter.toString())
+        }
     }
 
     /* Action triggered when RecycleView item is clicked */

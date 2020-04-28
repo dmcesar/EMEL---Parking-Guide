@@ -10,13 +10,12 @@ class FiltersViewModel : ViewModel() {
 
     private val logic = FiltersLogic()
 
-    fun addFilter(filter: Filter) {
+    fun toggleFilter(filter: Filter) {
 
-        this.filters = this.logic.addFilter(filters, filter)
-    }
+        if(this.filters.contains(filter)) {
 
-    fun removeFilter(filter: Filter) {
+            this.filters.remove(filter)
 
-        this.filters = this.logic.removeFilter(filters, filter)
+        } else this.filters.add(filter)
     }
 }

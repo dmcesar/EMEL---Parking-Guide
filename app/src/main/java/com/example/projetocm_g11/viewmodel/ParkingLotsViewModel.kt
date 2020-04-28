@@ -16,13 +16,14 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
     var parkingLots = ArrayList<ParkingLot>()
     var filters = ArrayList<Filter>()
 
-    fun fetchList() {
+    private fun fetchList() {
 
         this.logic.getList()
     }
 
     fun applyFilters(list: ArrayList<Filter>) {
 
+        this.filters = list
     }
 
     fun registerListener(listener: OnDataReceived) {
@@ -30,7 +31,9 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
         this.listener = listener
         this.logic.registerListener(this)
 
-        listener.onDataReceived(parkingLots)
+        //listener.onDataReceived(parkingLots)
+
+        fetchList()
     }
 
     fun unregisterListener() {

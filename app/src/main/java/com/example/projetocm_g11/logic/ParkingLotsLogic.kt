@@ -14,11 +14,13 @@ class ParkingLotsLogic {
 
     private var listener: OnDataReceived? = null
 
-    private var parkingLots = ArrayList<ParkingLot>()
+    private lateinit var parkingLots: ArrayList<ParkingLot>
 
     fun getList() {
 
         CoroutineScope(Dispatchers.Default).launch {
+
+            parkingLots = ArrayList()
 
             val p1 = ParkingLot(
                 "P001",

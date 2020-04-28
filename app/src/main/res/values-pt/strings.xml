@@ -71,5 +71,6 @@
     <string name="fair_green">Tarifa verde</string>
     <string name="fair_yellow">Tarifa amarela</string>
     <string name="fair_red">Tarifa vermelha</string>
+    <string name="results">resultados</string>
 
 </resources>
