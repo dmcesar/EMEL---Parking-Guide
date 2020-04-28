@@ -73,5 +73,10 @@
     <string name="fair_yellow">Fair yellow</string>
     <string name="fair_red">Fair red</string>
     <string name="results">results</string>
+    <string name="underground">Underground</string>
+    <string name="surface">Surface</string>
+    <string name="available">Available</string>
+    <string name="unavailable">Unavailable</string>
+    <string name="alphabetically">Alphabetically</string>
 
 </resources>

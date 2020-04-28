@@ -12,9 +12,9 @@ import com.example.projetocm_g11.interfaces.OnClickEvent
 import kotlinx.android.synthetic.main.vehicles_list_item.view.*
 
 class VehicleAdapter(private val listener: OnClickEvent, private val context: Context, private val layout: Int, private val items: MutableList<Vehicle>) :
-    RecyclerView.Adapter<VehicleAdapter.HistoryViewHolder>() {
+    RecyclerView.Adapter<VehicleAdapter.VehiclesViewHolder>() {
 
-    class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class VehiclesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val deleteBut: ImageView = view.button_delete
         val brand: TextView = view.brand
@@ -23,16 +23,16 @@ class VehicleAdapter(private val listener: OnClickEvent, private val context: Co
         val plateDate: TextView = view.plate_date
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VehiclesViewHolder {
 
-        return HistoryViewHolder(
+        return VehiclesViewHolder(
             LayoutInflater.from(context).inflate(layout, parent, false)
         )
     }
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VehiclesViewHolder, position: Int) {
 
         holder.brand.text = items[position].brand
         holder.model.text = items[position].model

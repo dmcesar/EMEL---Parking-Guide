@@ -72,5 +72,10 @@
     <string name="fair_yellow">Tarifa amarela</string>
     <string name="fair_red">Tarifa vermelha</string>
     <string name="results">resultados</string>
+    <string name="underground">Subterrâneo</string>
+    <string name="surface">Superficie</string>
+    <string name="available">Aberto</string>
+    <string name="unavailable">Fechado</string>
+    <string name="alphabetically">Alfabeticamente</string>
 
 </resources>

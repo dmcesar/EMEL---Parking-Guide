@@ -25,12 +25,17 @@
             android:text="@string/filter"
             style="@style/TextTheme" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filters"
+            android:layout_marginVertical="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -279,7 +284,7 @@
                         android:id="@+id/filter_park_furthest"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/closest" />
+                        android:text="@string/furthest" />
 
                 </LinearLayout>
 

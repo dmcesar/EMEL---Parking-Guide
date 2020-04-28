@@ -75,8 +75,6 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        Log.i(TAG, "onViewCreated()")
-
         /* Set init value for list */
         this.viewModel.parkingLots.let { onDataChanged(it) }
 

@@ -8,5 +8,5 @@ data class Filter(val type: FilterType, val value: String = "") : Parcelable { }
 
 enum class FilterType {
 
-    TYPE, AVAILABILITY, FAIR, DISTANCE, ALPHABETICAL
+    TYPE, AVAILABILITY, FAIR, DISTANCE, ALPHABETICAL, NAME
 }
