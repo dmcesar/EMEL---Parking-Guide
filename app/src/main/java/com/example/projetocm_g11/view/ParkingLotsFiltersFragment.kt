@@ -1,6 +1,7 @@
 package com.example.projetocm_g11.view
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -283,7 +284,12 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_parking_lots_filters, container, false)
 
-        view.filters.layoutManager = LinearLayoutManager(activity as Context, LinearLayoutManager.HORIZONTAL, false)
+        if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            view.filters.layoutManager =
+                LinearLayoutManager(activity as Context, LinearLayoutManager.HORIZONTAL, false)
+
+        } else view.filters.layoutManager = LinearLayoutManager(activity as Context)
 
         ButterKnife.bind(this, view)
 

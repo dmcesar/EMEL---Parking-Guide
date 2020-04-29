@@ -1,6 +1,7 @@
 package com.example.projetocm_g11.logic
 
 import com.example.projetocm_g11.domain.data.Filter
+import com.example.projetocm_g11.domain.data.FilterType
 import com.example.projetocm_g11.domain.data.ParkingLot
 import com.example.projetocm_g11.domain.data.Type
 import com.example.projetocm_g11.interfaces.OnDataReceived
@@ -25,15 +26,12 @@ class ParkingLotsLogic {
 
                 val filteredList = ArrayList<ParkingLot>()
 
-
+                /*
                 filters.forEach { f -> parkingLots.asSequence().filter { p ->
-
-                    p.type == f.type
 
                 } }
 
-                // TODO: Apply filters
-
+                 */
             }
 
             else {

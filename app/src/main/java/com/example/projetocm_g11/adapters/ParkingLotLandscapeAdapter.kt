@@ -78,6 +78,7 @@ class ParkingLotLandscapeAdapter(private val listener: OnTouchEvent, private val
                         }
 
                         if(onTouchX == event.x) {
+
                             v?.performClick()
                             Log.i(TAG, "CLICKED")
                         }
