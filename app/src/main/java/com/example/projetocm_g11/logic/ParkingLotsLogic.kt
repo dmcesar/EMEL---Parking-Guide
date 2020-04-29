@@ -1,5 +1,6 @@
 package com.example.projetocm_g11.logic
 
+import android.util.Log
 import com.example.projetocm_g11.domain.data.Filter
 import com.example.projetocm_g11.domain.data.FilterType
 import com.example.projetocm_g11.domain.data.ParkingLot
@@ -14,24 +15,76 @@ import kotlin.collections.ArrayList
 
 class ParkingLotsLogic {
 
+    private val TAG = ParkingLotsLogic::class.java.simpleName
+
     private var listener: OnDataReceived? = null
 
-    private lateinit var parkingLots: ArrayList<ParkingLot>
+    private val parkingLots = mutableListOf<ParkingLot>()
 
     fun applyFilters(filters: ArrayList<Filter>) {
+
+        Log.i(TAG, "applyFilters() called")
 
         CoroutineScope(Dispatchers.Default).launch {
 
             if(filters.size > 0) {
 
-                val filteredList = ArrayList<ParkingLot>()
+                var sequence = parkingLots.asSequence()
+
+                Log.i(TAG, "Before filters applied -> ${sequence.toList().size}")
+
+                if(filters.contains(Filter(FilterType.TYPE, "SURFACE"))) {
+
+                    sequence = sequence.filter { p -> p.type == Type.SURFACE }
+                }
+
+                else if(filters.contains(Filter(FilterType.TYPE, "UNDERGROUND"))) {
+
+                    sequence = sequence.filter { p -> p.type == Type.SURFACE }
+                }
+
+                if(filters.contains(Filter(FilterType.AVAILABILITY, "AVAILABLE"))) {
+
+                    sequence = sequence.filter { p -> p.active }
+                }
+
+                else if(filters.contains(Filter(FilterType.AVAILABILITY, "UNAVAILABLE"))) {
+
+                    sequence = sequence.filter { p -> !p.active }
+                }
 
                 /*
-                filters.forEach { f -> parkingLots.asSequence().filter { p ->
 
-                } }
+                if(filters.contains(Filter(FilterType.FAIR, "GREEN"))) {
 
-                 */
+                }
+
+                if(filters.contains(Filter(FilterType.FAIR, "YELLOW"))) {
+
+                }
+
+                if(filters.contains(Filter(FilterType.FAIR, "RED"))) {
+
+                }
+
+                if(filters.contains(Filter(FilterType.DISTANCE, "CLOSEST"))) {
+
+                }
+
+                if(filters.contains(Filter(FilterType.DISTANCE, "FURTHEST"))) {
+
+                }
+
+                */
+
+                if(filters.contains(Filter(FilterType.ALPHABETICAL))) {
+
+                    sequence = sequence.sortedBy { p -> p.name }
+                }
+
+                Log.i(TAG, "After filters applied -> ${sequence.toList().size}")
+
+                notifyDataChanged(ArrayList(sequence.toList()))
             }
 
             else {
@@ -43,9 +96,11 @@ class ParkingLotsLogic {
 
     fun getList() {
 
+        Log.i(TAG, "getList() called")
+
         CoroutineScope(Dispatchers.Default).launch {
 
-            parkingLots = ArrayList()
+            parkingLots.clear()
 
             val p1 = ParkingLot(
                 "P001",
@@ -119,11 +174,11 @@ class ParkingLotsLogic {
     }
 
     /* Uses Main Thread: Notifies ViewModel of data changed*/
-    private suspend fun notifyDataChanged(list: ArrayList<ParkingLot>) {
+    private suspend fun notifyDataChanged(list: MutableList<ParkingLot>) {
 
         withContext(Dispatchers.Main) {
 
-            listener?.onDataReceived(list)
+            listener?.onDataReceived(ArrayList(list))
         }
     }
 }

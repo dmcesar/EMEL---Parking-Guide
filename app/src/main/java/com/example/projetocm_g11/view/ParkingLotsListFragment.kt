@@ -68,19 +68,19 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         /* Set layout for RecycleView*/
         view.parking_lots.layoutManager = LinearLayoutManager(activity as Context)
 
-        /* Obtain ViewModel*/
-        this.viewModel = ViewModelProviders.of(this).get(ParkingLotsViewModel::class.java)
-
         return view
     }
 
     override fun onStart() {
 
-        /* Set init value for list */
-        this.viewModel.parkingLots.let { onDataChanged(it) }
+        /* Obtain ViewModel*/
+        this.viewModel = ViewModelProviders.of(this).get(ParkingLotsViewModel::class.java)
 
         /* Activity listening for navigation requests (onClick item and onClick filters) */
         this.navigationListener = activity as OnNavigateToFragment
+
+        /* Set init value for list */
+        this.viewModel.parkingLots.let { onDataChanged(ArrayList(it)) }
 
         /* This listening for ViewModel requests to update UI */
         this.viewModel.registerListener(this)
@@ -88,14 +88,14 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         super.onStart()
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
 
         /* Unregister listeners */
         this.navigationListener = null
 
         this.viewModel.unregisterListener()
 
-        super.onStop()
+        super.onDestroy()
     }
 
     /* Updates RecycleView based on received data and screen orientation */

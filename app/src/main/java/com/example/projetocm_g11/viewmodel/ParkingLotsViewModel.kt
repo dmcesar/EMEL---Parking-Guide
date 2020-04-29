@@ -13,7 +13,7 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
     private var listener: OnDataReceived? = null
 
     /* Observable object */
-    var parkingLots = ArrayList<ParkingLot>()
+    var parkingLots = mutableListOf<ParkingLot>()
     var filters = ArrayList<Filter>()
 
     private fun fetchList() {
@@ -31,10 +31,6 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
 
         this.listener = listener
         this.logic.registerListener(this)
-
-        //listener.onDataReceived(parkingLots)
-
-        fetchList()
     }
 
     fun unregisterListener() {
@@ -45,7 +41,7 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
 
     private fun notifyDataChanged() {
 
-        this.listener?.onDataReceived(parkingLots)
+        this.listener?.onDataReceived(ArrayList(this.parkingLots))
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -54,5 +50,10 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
         data?.let { this.parkingLots = it as ArrayList<ParkingLot> }
 
         notifyDataChanged()
+    }
+
+    init {
+
+        fetchList()
     }
 }

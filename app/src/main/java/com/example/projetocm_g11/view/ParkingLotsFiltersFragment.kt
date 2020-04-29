@@ -44,30 +44,46 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         } else {
 
+            val surfaceFilter = Filter(FilterType.TYPE, "SURFACE")
+
+            val undergroundFilter = Filter(FilterType.TYPE, "UNDERGROUND")
+
             park_type_filter_list.visibility = View.VISIBLE
 
             button_toggle_park_type_filter_list.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_less, 0, 0, 0)
 
             filter_park_type_surface.setOnCheckedChangeListener { _, isChecked ->
 
-                val filter = Filter(FilterType.TYPE, "SURFACE")
-
                 if(isChecked) {
 
-                    this.viewModel.addFilter(filter)
+                    /* Add this filter */
+                    this.viewModel.addFilter(surfaceFilter)
 
-                } else this.viewModel.removeFilter(filter)
+                    /* Remove UNDERGROUND if checked */
+                    if(filter_park_type_underground.isChecked) {
+
+                        filter_park_type_underground.isChecked = false
+                        this.viewModel.removeFilter(undergroundFilter)
+                    }
+
+                } else this.viewModel.removeFilter(surfaceFilter)
             }
 
             filter_park_type_underground.setOnCheckedChangeListener { _, isChecked ->
 
-                val filter = Filter(FilterType.TYPE, "UNDERGROUND")
-
                 if(isChecked) {
 
-                    this.viewModel.addFilter(filter)
+                    /* Add this filter */
+                    this.viewModel.addFilter(undergroundFilter)
 
-                } else this.viewModel.removeFilter(filter)
+                    /* Remove UNDERGROUND if checked */
+                    if(filter_park_type_surface.isChecked) {
+
+                        this.viewModel.removeFilter(surfaceFilter)
+                        filter_park_type_surface.isChecked = false
+                    }
+
+                } else this.viewModel.removeFilter(undergroundFilter)
             }
         }
     }
@@ -83,34 +99,49 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         } else {
 
+            val availableFilter = Filter(FilterType.AVAILABILITY, "AVAILABLE")
+
+            val unavailableFilter = Filter(FilterType.AVAILABILITY, "UNAVAILABLE")
+
             park_availability_filter_list.visibility = View.VISIBLE
 
             button_toggle_park_availability_filter_list.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_less, 0, 0, 0)
 
             filter_park_open.setOnCheckedChangeListener{ _, isChecked ->
 
-                val filter = Filter(FilterType.AVAILABILITY, "AVAILABLE")
-
                 if(isChecked) {
 
-                    this.viewModel.addFilter(filter)
+                    this.viewModel.addFilter(availableFilter)
 
-                } else this.viewModel.removeFilter(filter)
+                    if(filter_park_closed.isChecked) {
+
+                        this.viewModel.removeFilter(unavailableFilter)
+                        filter_park_closed.isChecked = false
+                    }
+
+                } else this.viewModel.removeFilter(availableFilter)
             }
 
             filter_park_closed.setOnCheckedChangeListener{ _, isChecked ->
 
-                val filter = Filter(FilterType.AVAILABILITY, "UNAVAILABLE")
-
                 if(isChecked) {
 
-                    this.viewModel.addFilter(filter)
+                    /* Add this filter */
+                    this.viewModel.addFilter(unavailableFilter)
 
-                } else this.viewModel.removeFilter(filter)
+                    /* Remove UNDERGROUND if checked */
+                    if(filter_park_open.isChecked) {
+
+                        this.viewModel.removeFilter(availableFilter)
+                        filter_park_open.isChecked = false
+                    }
+
+                } else this.viewModel.removeFilter(unavailableFilter)
             }
         }
     }
 
+    /*
     @OnClick(R.id.button_toggle_park_fair_filter_list)
     fun onClickButtonToggleParkFairFilterList() {
 
@@ -160,6 +191,7 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
             }
         }
     }
+     */
 
     @OnClick(R.id.button_toggle_park_distance_filter_list)
     fun onClickButtonToggleParkDistanceFilterList() {
@@ -172,40 +204,48 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         } else {
 
+            val closestFilter = Filter(FilterType.DISTANCE, "CLOSEST")
+
+            val furthestFilter = Filter(FilterType.DISTANCE, "FURTHEST")
+
             park_distance_filter_list.visibility = View.VISIBLE
 
             button_toggle_park_distance_filter_list.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_less, 0, 0, 0)
+
+            filter_park_closest.setOnCheckedChangeListener{ _, isChecked ->
+
+                if(isChecked) {
+
+                    /* Add this filter */
+                    this.viewModel.addFilter(closestFilter)
+
+                    /* Remove UNDERGROUND if checked */
+                    if(filter_park_furthest.isChecked) {
+
+                        this.viewModel.removeFilter(furthestFilter)
+                        filter_park_furthest.isChecked = false
+                    }
+
+                } else this.viewModel.removeFilter(closestFilter)
+            }
+
+            filter_park_furthest.setOnCheckedChangeListener{ _, isChecked ->
+
+                if(isChecked) {
+
+                    /* Add this filter */
+                    this.viewModel.addFilter(furthestFilter)
+
+                    /* Remove UNDERGROUND if checked */
+                    if(filter_park_closest.isChecked) {
+
+                        this.viewModel.removeFilter(closestFilter)
+                        filter_park_closest.isChecked = false
+                    }
+
+                } else this.viewModel.removeFilter(furthestFilter)
+            }
         }
-    }
-
-    @OnClick(R.id.filter_park_closest)
-    fun onClickFilterParkClosest() {
-
-        if(filter_park_furthest.isChecked) {
-
-            filter_park_furthest.isChecked = false
-
-            val toRemove = Filter(FilterType.DISTANCE, "FURTHEST")
-            this.viewModel.removeFilter(toRemove)
-        }
-
-        val toAdd = Filter(FilterType.DISTANCE, "CLOSEST")
-        this.viewModel.addFilter(toAdd)
-    }
-
-    @OnClick(R.id.filter_park_furthest)
-    fun onClickFilterParkFurthest() {
-
-        if(filter_park_closest.isChecked) {
-
-            filter_park_closest.isChecked = false
-
-            val toRemove = Filter(FilterType.DISTANCE, "CLOSEST")
-            this.viewModel.removeFilter(toRemove)
-        }
-
-        val toAdd = Filter(FilterType.DISTANCE, "FURTHEST")
-        this.viewModel.addFilter(toAdd)
     }
 
     @OnClick(R.id.button_apply_filters)
@@ -257,11 +297,15 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         filter_park_closed.isChecked = list.contains(Filter(FilterType.AVAILABILITY, "UNAVAILABLE"))
 
+        /*
+
         filter_park_fair_green.isChecked = list.contains(Filter(FilterType.FAIR, "GREEN"))
 
         filter_park_fair_yellow.isChecked = list.contains(Filter(FilterType.FAIR, "YELLOW"))
 
         filter_park_fair_red.isChecked = list.contains(Filter(FilterType.FAIR, "RED"))
+
+        */
 
         filter_park_closest.isChecked = list.contains(Filter(FilterType.DISTANCE, "CLOSEST"))
 
