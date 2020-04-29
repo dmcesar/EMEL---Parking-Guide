@@ -63,9 +63,14 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
     }
 
     override fun onStart() {
-        
+
+        /* Set init value for list */
+        this.viewModel.vehicles.let { onDataChanged(it) }
+
         this.viewModel.registerListener(this)
+
         this.listener = activity as OnNavigateToFragment
+
         super.onStart()
     }
 
@@ -76,21 +81,23 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
         super.onStop()
     }
 
+    private fun onDataChanged(data: ArrayList<Vehicle>) {
+
+        if(data.size > 0) {
+
+            empty_list_text.visibility = View.GONE
+
+        } else empty_list_text.visibility = View.VISIBLE
+
+        vehicles.adapter = VehicleAdapter(this, activity as Context, R.layout.vehicles_list_item, data)
+    }
+
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
         Log.i(TAG, "onDataReceived() called")
 
-        data?.let {
-
-            if(it.size > 0) {
-
-                empty_list_text.visibility = View.GONE
-
-            } else empty_list_text.visibility = View.VISIBLE
-
-            vehicles.adapter = VehicleAdapter(this, activity as Context, R.layout.vehicles_list_item, it as ArrayList<Vehicle>)
-        }
+        data?.let { onDataChanged(it as ArrayList<Vehicle>) }
     }
 
     override fun onClickEvent(data: Any?) {

@@ -1,17 +1,25 @@
 package com.example.projetocm_g11.adapters
 
 import android.content.Context
-import android.view.*
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.View.OnTouchListener
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.domain.data.ParkingLot
-import com.example.projetocm_g11.interfaces.OnClickEvent
+import com.example.projetocm_g11.interfaces.OnTouchEvent
 import kotlinx.android.synthetic.main.parking_lots_portrait_list_item.view.*
 
-open class ParkingLotPortraitAdapter(private val listener: OnClickEvent, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
+
+open class ParkingLotPortraitAdapter(private val listener: OnTouchEvent, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
     RecyclerView.Adapter<ParkingLotPortraitAdapter.ParkingLotsPortraitViewHolder>() {
+
+    private val TAG = ParkingLotPortraitAdapter::class.java.simpleName
 
     open class ParkingLotsPortraitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -50,7 +58,7 @@ open class ParkingLotPortraitAdapter(private val listener: OnClickEvent, private
             else -> context.resources.getString(R.string.state_free)
         }
 
-        val availability = if(items[position].active)
+        val availability = if (items[position].active)
             context.resources.getString(R.string.park_open)
         else context.resources.getString(R.string.park_closed)
 
@@ -61,5 +69,39 @@ open class ParkingLotPortraitAdapter(private val listener: OnClickEvent, private
         holder.availability.text = availability
 
         holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
+
+        holder.itemView.setOnTouchListener(object : OnTouchListener {
+
+            var onTouchX = 0f
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+
+                when (event?.action) {
+
+                    MotionEvent.ACTION_DOWN -> {
+
+                        onTouchX = event.x
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+
+                        if(onTouchX < event.x) {
+
+                            listener.onSwipeEvent(items[position])
+                            Log.i(TAG, "SWIPE RIGHT")
+                        }
+
+                        if(onTouchX == event.x) {
+                            v?.performClick()
+                            Log.i(TAG, "CLICKED")
+                        }
+                    }
+
+                    else -> return true
+                }
+
+                return true
+            }
+        })
     }
 }

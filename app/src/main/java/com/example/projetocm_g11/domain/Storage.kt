@@ -14,14 +14,26 @@ class Storage {
 
             synchronized(this) {
 
-                if(instance == null) {
+                if (instance == null) {
 
-                    instance =
-                        Storage()
+                    instance = Storage()
+
+                    initList()
                 }
 
                 return instance as Storage
             }
+        }
+
+        private fun initList() {
+
+            val v1 = Vehicle("Toyota", "Supra", "12-AB-34")
+            val v2 = Vehicle("Peugeot", "508 GT", "56-CD-78")
+            val v3 = Vehicle("Porsche", "Taycan", "90-EF-12")
+
+            instance?.create(v1)
+            instance?.create(v2)
+            instance?.create(v3)
         }
     }
 

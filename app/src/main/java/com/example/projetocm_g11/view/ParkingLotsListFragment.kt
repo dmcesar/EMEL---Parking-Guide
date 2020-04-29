@@ -7,19 +7,18 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.projetocm_g11.interfaces.OnDataReceived
 
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.adapters.ParkingLotLandscapeAdapter
 import com.example.projetocm_g11.adapters.ParkingLotPortraitAdapter
 import com.example.projetocm_g11.domain.data.Filter
 import com.example.projetocm_g11.domain.data.ParkingLot
-import com.example.projetocm_g11.interfaces.OnClickEvent
-import com.example.projetocm_g11.interfaces.OnFiltersListReceived
-import com.example.projetocm_g11.interfaces.OnNavigateToFragment
+import com.example.projetocm_g11.interfaces.*
 import com.example.projetocm_g11.viewmodel.ParkingLotsViewModel
 import kotlinx.android.synthetic.main.fragment_parking_lots_list.*
 import kotlinx.android.synthetic.main.fragment_parking_lots_list.view.*
@@ -29,7 +28,7 @@ const val EXTRA_PARKING_LOT = "com.example.projetocm_g11.view.ParkingLotsListFra
 const val EXTRA_PARKING_LOTS_LIST_SIZE = "com.example.projetocm_g11.view.ParkingLotsListFragment.ListSize"
 const val EXTRA_FILTERS_LIST = "com.example.projetocm_g11.view.ParkingLotsListFragment.FiltersList"
 
-class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceived, OnClickEvent {
+class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceived, OnTouchEvent {
 
     private val TAG = ParkingLotsListFragment::class.java.simpleName
 
@@ -46,6 +45,7 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         /* Register this Fragment as observer for new filtersFragment's filters' list */
         filtersFragment.registerListener(this)
 
+        /* Fetch and put arguments */
         val args = Bundle()
 
         this.viewModel.filters.let { args.putParcelableArrayList(EXTRA_FILTERS_LIST, it) }
@@ -53,6 +53,7 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
 
         filtersFragment.arguments = args
 
+        /* Notify MainActivity to navigate to Fragment */
         this.navigationListener?.onNavigateToFragment(filtersFragment)
     }
 
@@ -73,7 +74,7 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onStart() {
 
         /* Set init value for list */
         this.viewModel.parkingLots.let { onDataChanged(it) }
@@ -84,7 +85,7 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         /* This listening for ViewModel requests to update UI */
         this.viewModel.registerListener(this)
 
-        super.onViewCreated(view, savedInstanceState)
+        super.onStart()
     }
 
     override fun onStop() {
@@ -140,10 +141,19 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         filters?.let {
 
             this.viewModel.applyFilters(it)
-
-            for(filter in it)
-                Log.i(TAG, filter.toString())
         }
+    }
+
+    override fun onSwipeEvent(data: Any?) {
+
+        val args = Bundle()
+
+        args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
+
+        val navigationFragment = NavigationFragment()
+        navigationFragment.arguments = args
+
+        this.navigationListener?.onNavigateToFragment(navigationFragment)
     }
 
     /* Action triggered when RecycleView item is clicked */

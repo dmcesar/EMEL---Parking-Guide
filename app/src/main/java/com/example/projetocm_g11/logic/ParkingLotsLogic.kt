@@ -1,5 +1,6 @@
 package com.example.projetocm_g11.logic
 
+import com.example.projetocm_g11.domain.data.Filter
 import com.example.projetocm_g11.domain.data.ParkingLot
 import com.example.projetocm_g11.domain.data.Type
 import com.example.projetocm_g11.interfaces.OnDataReceived
@@ -15,6 +16,32 @@ class ParkingLotsLogic {
     private var listener: OnDataReceived? = null
 
     private lateinit var parkingLots: ArrayList<ParkingLot>
+
+    fun applyFilters(filters: ArrayList<Filter>) {
+
+        CoroutineScope(Dispatchers.Default).launch {
+
+            if(filters.size > 0) {
+
+                val filteredList = ArrayList<ParkingLot>()
+
+
+                filters.forEach { f -> parkingLots.asSequence().filter { p ->
+
+                    p.type == f.type
+
+                } }
+
+                // TODO: Apply filters
+
+            }
+
+            else {
+
+                notifyDataChanged(parkingLots)
+            }
+        }
+    }
 
     fun getList() {
 
@@ -79,7 +106,7 @@ class ParkingLotsLogic {
             parkingLots.add(p3)
             parkingLots.add(p4)
 
-            notifyDataChanged()
+            notifyDataChanged(parkingLots)
         }
     }
 
@@ -94,11 +121,11 @@ class ParkingLotsLogic {
     }
 
     /* Uses Main Thread: Notifies ViewModel of data changed*/
-    private suspend fun notifyDataChanged() {
+    private suspend fun notifyDataChanged(list: ArrayList<ParkingLot>) {
 
         withContext(Dispatchers.Main) {
 
-            listener?.onDataReceived(parkingLots)
+            listener?.onDataReceived(list)
         }
     }
 }

@@ -24,6 +24,7 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
     fun applyFilters(list: ArrayList<Filter>) {
 
         this.filters = list
+        this.logic.applyFilters(filters)
     }
 
     fun registerListener(listener: OnDataReceived) {

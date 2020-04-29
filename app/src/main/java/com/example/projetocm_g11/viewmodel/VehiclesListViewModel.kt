@@ -11,18 +11,12 @@ class VehiclesListViewModel : ViewModel(), OnDataReceived {
 
     private var listener: OnDataReceived? = null
 
-    fun registerListener(listener: OnDataReceived) {
+    /* Observable object */
+    var vehicles = ArrayList<Vehicle>()
 
-        this.listener = listener
-        this.logic.registerListener(this)
+    private fun fetchList() {
 
         this.logic.read()
-    }
-
-    fun unregisterListener() {
-
-        this.listener = null
-        this.logic.unregisterListener()
     }
 
     fun registerVehicle(vehicle: Vehicle) {
@@ -40,9 +34,30 @@ class VehiclesListViewModel : ViewModel(), OnDataReceived {
         logic.delete(uuid)
     }
 
+    fun registerListener(listener: OnDataReceived) {
+
+        this.listener = listener
+        this.logic.registerListener(this)
+
+        fetchList()
+    }
+
+    fun unregisterListener() {
+
+        this.listener = null
+        this.logic.unregisterListener()
+    }
+
+    private fun onDataChanged() {
+
+        this.listener?.onDataReceived(this.vehicles)
+    }
+
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
-        data?.let { this.listener?.onDataReceived(it as ArrayList<Vehicle>) }
+        data?.let { this.vehicles = it as ArrayList<Vehicle> }
+
+        onDataChanged()
     }
 }
