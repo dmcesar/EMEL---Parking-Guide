@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -271,12 +269,29 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         filter_parks_alphabetically.isChecked = list.contains(Filter(FilterType.ALPHABETICAL))
 
-        filters.adapter = FiltersAdapter(
-            this,
-            activity as Context,
-            R.layout.filters_list_item,
-            list
-        )
+        updateAdapter(list)
+    }
+
+    private fun updateAdapter(list: ArrayList<Filter>) {
+
+        if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            filters.adapter = FiltersAdapter(
+                this,
+                activity as Context,
+                R.layout.filters_list_item_portrait,
+                list
+            )
+
+        } else {
+
+            filters.adapter = FiltersAdapter(
+                this,
+                activity as Context,
+                R.layout.filters_list_item_landscape,
+                list
+            )
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -300,15 +315,7 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
     override fun onStart() {
 
-        this.viewModel.filters.let {
-
-            filters.adapter = FiltersAdapter(
-                this,
-                activity as Context,
-                R.layout.filters_list_item,
-                it
-            )
-        }
+        this.viewModel.filters.let { updateAdapter(it) }
 
         this.viewModel.registerListener(this)
 

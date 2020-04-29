@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
     android:padding="5dp"
-    style="@style/ListItemTheme">
+    android:layout_marginVertical="5dp"
+    style="@style/ListItemTheme"
+    android:weightSum="10">
+
+    <TextView
+        android:layout_weight="8"
+        android:id="@+id/filter_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/TextTheme" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_width="0dp"
         android:layout_height="match_parent">
 
         <ImageButton
@@ -23,15 +31,8 @@
             android:background="@drawable/ic_cross"
             android:backgroundTint="@color/accent" />
 
-        <TextView
-            android:id="@+id/filter_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/TextTheme" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </LinearLayout>

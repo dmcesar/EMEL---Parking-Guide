@@ -11,7 +11,7 @@ import com.example.projetocm_g11.R
 import com.example.projetocm_g11.domain.data.Filter
 import com.example.projetocm_g11.domain.data.FilterType
 import com.example.projetocm_g11.interfaces.OnClickEvent
-import kotlinx.android.synthetic.main.filters_list_item.view.*
+import kotlinx.android.synthetic.main.filters_list_item_portrait.view.*
 
 class FiltersAdapter(private val listener: OnClickEvent, private val context: Context, private val layout: Int, private val items: MutableList<Filter>) :
     RecyclerView.Adapter<FiltersAdapter.FiltersViewHolder>() {
