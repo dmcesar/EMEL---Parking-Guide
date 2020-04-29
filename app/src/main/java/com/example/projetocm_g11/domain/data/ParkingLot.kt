@@ -10,9 +10,9 @@ class ParkingLot(
     val name: String,
     val active: Boolean,
     val identityID: Int,
-    private val maxCapacity: Int,
-    private val occupancy: Int,
-    var lastUpdatedAt: Date,
+    val maxCapacity: Int,
+    val occupancy: Int,
+    val lastUpdatedAt: Date,
     val latitude: Double,
     val longitude: Double,
     val type: Type

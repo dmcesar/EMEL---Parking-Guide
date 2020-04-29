@@ -42,8 +42,8 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
         if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             view.vehicles.layoutManager = LinearLayoutManager(activity as Context)
-
         }
+
         else view.vehicles.layoutManager = GridLayoutManager(activity as Context, 2)
 
         /* Set FAB onClickListener */
@@ -63,7 +63,7 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
     }
 
     override fun onStart() {
-
+        
         this.viewModel.registerListener(this)
         this.listener = activity as OnNavigateToFragment
         super.onStart()

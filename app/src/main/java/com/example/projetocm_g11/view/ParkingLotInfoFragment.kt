@@ -65,6 +65,8 @@ class ParkingLotInfoFragment : Fragment() {
             (activity as Context).resources.getString(R.string.park_open)
         else (activity as Context).resources.getString(R.string.park_closed)
 
+        val occupancy = "${this.parkingLot.occupancy} / ${this.parkingLot.maxCapacity}"
+
         val lastUpdatedAt = "${ (activity as Context).resources.getString(R.string.last_updated_at) }: " +
                 SimpleDateFormat("dd-MM-yyyy").format(this.parkingLot.lastUpdatedAt)
 
@@ -91,6 +93,7 @@ class ParkingLotInfoFragment : Fragment() {
         view.park_availability.text = active
         view.park_coordinates.text = coordinates
         view.last_updated_at.text = lastUpdatedAt
+        view.park_occupancy?.text = occupancy
 
         if(parkingLot.active) {
             view.park_availability.setTextColor(ContextCompat.getColor(activity as Context, R.color.forest_green))
