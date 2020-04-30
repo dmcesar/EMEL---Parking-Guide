@@ -33,53 +33,38 @@ class ParkingLotsLogic {
 
                 Log.i(TAG, "Before filters applied -> ${sequence.toList().size}")
 
-                if(filters.contains(Filter(FilterType.TYPE, "SURFACE"))) {
+                for(f in filters) {
 
-                    sequence = sequence.filter { p -> p.type == Type.SURFACE }
-                }
+                    when (f.type) {
 
-                else if(filters.contains(Filter(FilterType.TYPE, "UNDERGROUND"))) {
+                        FilterType.NAME -> {
 
-                    sequence = sequence.filter { p -> p.type == Type.SURFACE }
-                }
+                            sequence = sequence.filter { p -> p.name.contains(f.value) }
+                        }
 
-                if(filters.contains(Filter(FilterType.AVAILABILITY, "AVAILABLE"))) {
+                        FilterType.TYPE -> {
 
-                    sequence = sequence.filter { p -> p.active }
-                }
+                            sequence = if(f.value == "SURFACE") {
 
-                else if(filters.contains(Filter(FilterType.AVAILABILITY, "UNAVAILABLE"))) {
+                                sequence.filter { p -> p.type == Type.SURFACE }
 
-                    sequence = sequence.filter { p -> !p.active }
-                }
+                            } else sequence.filter { p -> p.type == Type.UNDERGROUND }
+                        }
 
-                /*
+                        FilterType.AVAILABILITY -> {
 
-                if(filters.contains(Filter(FilterType.FAIR, "GREEN"))) {
+                            sequence = if(f.value == "AVAILABLE") {
 
-                }
+                                sequence.filter { p -> p.active}
 
-                if(filters.contains(Filter(FilterType.FAIR, "YELLOW"))) {
+                            } else sequence.filter {p -> !p.active}
+                        }
 
-                }
+                        FilterType.ALPHABETICAL -> {
 
-                if(filters.contains(Filter(FilterType.FAIR, "RED"))) {
-
-                }
-
-                if(filters.contains(Filter(FilterType.DISTANCE, "CLOSEST"))) {
-
-                }
-
-                if(filters.contains(Filter(FilterType.DISTANCE, "FURTHEST"))) {
-
-                }
-
-                */
-
-                if(filters.contains(Filter(FilterType.ALPHABETICAL))) {
-
-                    sequence = sequence.sortedBy { p -> p.name }
+                            sequence = sequence.sortedBy { p -> p.name}
+                        }
+                    }
                 }
 
                 Log.i(TAG, "After filters applied -> ${sequence.toList().size}")
