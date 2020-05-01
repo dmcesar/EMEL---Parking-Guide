@@ -71,16 +71,22 @@ class ParkingLotLandscapeAdapter(private val listener: OnTouchEvent, private val
 
                     MotionEvent.ACTION_UP -> {
 
-                        if(onTouchX < event.x) {
+                        when {
+                            onTouchX < event.x -> {
 
-                            listener.onSwipeEvent(items[position])
-                            Log.i(TAG, "SWIPE RIGHT")
-                        }
+                                listener.onSwipeEvent(items[position], 1)
+                                Log.i(TAG, "SWIPE RIGHT")
+                            }
+                            onTouchX > event.x -> {
 
-                        if(onTouchX == event.x) {
+                                listener.onSwipeEvent(items[position], 0)
+                                Log.i(TAG, "SWIPE LEFT")
+                            }
+                            else -> {
 
-                            v?.performClick()
-                            Log.i(TAG, "CLICKED")
+                                v?.performClick()
+                                Log.i(TAG, "CLICKED")
+                            }
                         }
                     }
 

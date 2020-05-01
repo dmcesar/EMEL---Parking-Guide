@@ -313,6 +313,8 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         filter_parks_alphabetically.isChecked = list.contains(Filter(FilterType.ALPHABETICAL))
 
+        filter_parks_favorites.isChecked = list.contains(Filter(FilterType.FAVORITE))
+
         updateAdapter(list)
     }
 
@@ -368,6 +370,17 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
         filter_parks_alphabetically.setOnCheckedChangeListener{ _, isChecked ->
 
             val filter = Filter(FilterType.ALPHABETICAL)
+
+            if(isChecked) {
+
+                this.viewModel.addFilter(filter)
+
+            } else this.viewModel.removeFilter(filter)
+        }
+
+        filter_parks_favorites.setOnCheckedChangeListener{ _, isChecked ->
+
+            val filter = Filter(FilterType.FAVORITE)
 
             if(isChecked) {
 

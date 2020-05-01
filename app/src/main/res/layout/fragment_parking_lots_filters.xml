@@ -312,6 +312,17 @@
                 android:textOff="@string/off"
                 android:textOn="@string/on"/>
 
+            <Switch
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:id="@+id/filter_parks_favorites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:text="@string/filter_favorites"
+                android:textOff="@string/off"
+                android:textOn="@string/on"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

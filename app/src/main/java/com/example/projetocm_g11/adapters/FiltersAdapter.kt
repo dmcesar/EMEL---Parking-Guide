@@ -65,6 +65,9 @@ class FiltersAdapter(private val listener: OnClickEvent, private val context: Co
             items[position].type == FilterType.ALPHABETICAL ->
                 context.resources.getString(R.string.alphabetically)
 
+            items[position].type == FilterType.FAVORITE ->
+                context.resources.getString(R.string.favorites)
+
             else -> items[position].value
         }
 

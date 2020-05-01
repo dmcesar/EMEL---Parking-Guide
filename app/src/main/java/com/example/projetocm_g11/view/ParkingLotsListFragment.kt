@@ -143,16 +143,26 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         }
     }
 
-    override fun onSwipeEvent(data: Any?) {
+    override fun onSwipeEvent(data: Any?, direction: Int) {
 
-        val args = Bundle()
+        /* Swiped right: Show map */
+        if(direction == 1) {
 
-        args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
+            val args = Bundle()
 
-        val navigationFragment = NavigationFragment()
-        navigationFragment.arguments = args
+            args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
 
-        this.navigationListener?.onNavigateToFragment(navigationFragment)
+            val navigationFragment = NavigationFragment()
+            navigationFragment.arguments = args
+
+            this.navigationListener?.onNavigateToFragment(navigationFragment)
+        }
+
+        /* Swiped left: Tag/Untag as favorite */
+        else {
+
+            this.viewModel.toggleFavorite(data as String)
+        }
     }
 
     /* Action triggered when RecycleView item is clicked */

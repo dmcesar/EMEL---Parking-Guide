@@ -15,7 +15,8 @@ class ParkingLot(
     val lastUpdatedAt: Date,
     val latitude: Double,
     val longitude: Double,
-    val type: Type
+    val type: Type,
+    var isFavourite: Boolean = false
 ) : Parcelable {
 
     fun getCapacityPercent(): Int {

@@ -60,6 +60,11 @@ class ParkingLotsLogic {
                             } else sequence.filter {p -> !p.active}
                         }
 
+                        FilterType.FAVORITE -> {
+
+                            sequence = sequence.filter { p -> p.isFavourite }
+                        }
+
                         FilterType.ALPHABETICAL -> {
 
                             sequence = sequence.sortedBy { p -> p.name}
@@ -76,6 +81,22 @@ class ParkingLotsLogic {
 
                 notifyDataChanged(parkingLots)
             }
+        }
+    }
+
+    fun toggleFavorite(id: String) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            for (p in parkingLots) {
+
+                if (p.id == id) {
+
+                    p.isFavourite = !p.isFavourite
+                }
+            }
+
+            notifyDataChanged(parkingLots)
         }
     }
 

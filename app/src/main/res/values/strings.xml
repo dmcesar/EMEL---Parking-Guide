@@ -67,6 +67,7 @@
     <string name="toggle_park_fair_filter_list">Filter by fair (EXTRA)</string>
     <string name="filter_alphabetically">Filter alphabetically</string>
     <string name="filter_by_name">Filter by name</string>
+    <string name="filter_favorites">Filter favorites</string>
     <string name="closest">Closest</string>
     <string name="furthest">Furthest</string>
     <string name="fair_green">Fair green</string>
@@ -78,5 +79,6 @@
     <string name="available">Available</string>
     <string name="unavailable">Unavailable</string>
     <string name="alphabetically">Alphabetically</string>
+    <string name="favorites">Favorites</string>
 
 </resources>

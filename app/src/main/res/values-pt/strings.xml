@@ -66,6 +66,7 @@
     <string name="toggle_park_fair_filter_list">Filtar por tarifa (EXTRA)</string>
     <string name="filter_alphabetically">Filtar alfabeticamente</string>
     <string name="filter_by_name">Filtrar por nome</string>
+    <string name="filter_favorites">Filtrar por favoritos</string>
     <string name="closest">Mais próximos</string>
     <string name="furthest">Mais distantes</string>
     <string name="fair_green">Tarifa verde</string>
@@ -77,5 +78,6 @@
     <string name="available">Aberto</string>
     <string name="unavailable">Fechado</string>
     <string name="alphabetically">Alfabeticamente</string>
+    <string name="favorites">Favoritos</string>
 
 </resources>

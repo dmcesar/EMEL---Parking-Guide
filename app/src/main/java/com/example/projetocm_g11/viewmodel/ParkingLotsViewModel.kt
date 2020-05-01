@@ -27,6 +27,11 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
         this.logic.applyFilters(filters)
     }
 
+    fun toggleFavorite(id: String) {
+
+        this.logic.toggleFavorite(id)
+    }
+
     fun registerListener(listener: OnDataReceived) {
 
         this.listener = listener
