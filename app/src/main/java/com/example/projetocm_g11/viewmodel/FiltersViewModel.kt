@@ -1,24 +1,27 @@
 package com.example.projetocm_g11.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.projetocm_g11.domain.Logic
 import com.example.projetocm_g11.domain.data.Filter
 import com.example.projetocm_g11.interfaces.OnDataReceived
-import com.example.projetocm_g11.logic.FiltersLogic
 
 class FiltersViewModel : ViewModel(), OnDataReceived {
 
-    private val TAG = FiltersViewModel::class.java.simpleName
+    private val logic = Logic.getInstance()
 
     private var listener: OnDataReceived? = null
 
+    /* Observable objects */
     var filters = ArrayList<Filter>()
 
-    private val logic = FiltersLogic()
+    fun getFilters() {
 
-    fun update(list: ArrayList<Filter>) {
+        this.logic.getFilters()
+    }
 
-        this.logic.update(list)
+    fun applyFilters() {
+
+        this.logic.applyFilters()
     }
 
     fun addFilter(filter: Filter) {
@@ -31,25 +34,25 @@ class FiltersViewModel : ViewModel(), OnDataReceived {
         this.logic.removeFilter(filter)
     }
 
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListeners(listener: OnDataReceived) {
 
         this.listener = listener
-        this.logic.registerListener(this)
+        this.logic.registerFiltersListener(this)
     }
 
-    fun unregisterListener() {
+    fun unregisterListeners() {
 
         this.listener = null
-        this.logic.unregisterListener()
+        this.logic.unregisterFiltersListener()
     }
 
+    /* Notify observer of change in data */
     private fun notifyDataChanged() {
-
-        Log.i(TAG, this.filters.size.toString())
 
         this.listener?.onDataReceived(this.filters)
     }
 
+    /* Method called by observable (logic) */
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 

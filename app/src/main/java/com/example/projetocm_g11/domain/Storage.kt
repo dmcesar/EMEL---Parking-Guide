@@ -1,10 +1,16 @@
 package com.example.projetocm_g11.domain
 
+import com.example.projetocm_g11.domain.data.Filter
+import com.example.projetocm_g11.domain.data.ParkingLot
 import com.example.projetocm_g11.domain.data.Vehicle
 
 class Storage {
 
-    private val storage = HashMap<String, Vehicle>()
+    private lateinit var vehicles: HashMap<String, Vehicle>
+
+    private lateinit var parkingLots: HashMap<String, ParkingLot>
+
+    private val filters = ArrayList<Filter>()
 
     companion object {
 
@@ -17,43 +23,78 @@ class Storage {
                 if (instance == null) {
 
                     instance = Storage()
-
-                    initList()
                 }
 
                 return instance as Storage
             }
         }
+    }
 
-        private fun initList() {
+    /* Vehicles CRUD and init */
 
-            val v1 = Vehicle("Toyota", "Supra", "12-AB-34")
-            val v2 = Vehicle("Peugeot", "508 GT", "56-CD-78")
-            val v3 = Vehicle("Porsche", "Taycan", "90-EF-12")
+    fun initVehicles(list: ArrayList<Vehicle>) {
 
-            instance?.create(v1)
-            instance?.create(v2)
-            instance?.create(v3)
+        this.vehicles = list.associateBy({it.uuid}, {it}) as HashMap<String, Vehicle>
+    }
+
+    fun createVehicle(vehicle: Vehicle) {
+
+        this.vehicles[vehicle.uuid] = vehicle
+    }
+
+    fun readVehicles(): List<Vehicle> {
+
+        return this.vehicles.values.toList()
+    }
+
+    fun updateVehicle(vehicle: Vehicle) {
+
+        this.vehicles[vehicle.uuid] = vehicle
+    }
+
+    fun deleteVehicle(uuid: String) {
+
+        this.vehicles.remove(uuid)
+    }
+
+    /* Parking lots operations and init */
+
+    fun initParkingLots(list: ArrayList<ParkingLot>) {
+
+        this.parkingLots = list.associateBy({it.id}, {it}) as HashMap<String, ParkingLot>
+    }
+
+    fun readParkingLots(): List<ParkingLot> {
+
+        return this.parkingLots.values.toList()
+    }
+
+    fun toggleFavorite(id: String) {
+
+        this.parkingLots[id]?.isFavourite = !this.parkingLots[id]?.isFavourite!!
+    }
+
+    /* Filters operations */
+
+    fun readFilters(): List<Filter> {
+
+        return this.filters
+    }
+
+    fun addFilter(filter: Filter) {
+
+        this.filters.add(filter)
+    }
+
+    fun removeFilter(filter: Filter) {
+
+        for(f in this.filters) {
+
+            if(f == filter) {
+
+                this.filters.remove(f)
+                return
+            }
         }
-    }
-
-    fun create(vehicle: Vehicle) {
-
-        storage[vehicle.uuid] = vehicle
-    }
-
-    fun read(): List<Vehicle> {
-
-        return storage.values.toList()
-    }
-
-    fun update(vehicle: Vehicle) {
-
-        storage[vehicle.uuid] = vehicle
-    }
-
-    fun delete(uuid: String) {
-
-        storage.remove(uuid)
     }
 }

@@ -25,10 +25,8 @@ import kotlinx.android.synthetic.main.fragment_parking_lots_list.view.*
 import kotlin.collections.ArrayList
 
 const val EXTRA_PARKING_LOT = "com.example.projetocm_g11.view.ParkingLotsListFragment.ParkingLot"
-const val EXTRA_PARKING_LOTS_LIST_SIZE = "com.example.projetocm_g11.view.ParkingLotsListFragment.ListSize"
-const val EXTRA_FILTERS_LIST = "com.example.projetocm_g11.view.ParkingLotsListFragment.FiltersList"
 
-class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceived, OnTouchEvent {
+class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
 
     private val TAG = ParkingLotsListFragment::class.java.simpleName
 
@@ -42,22 +40,13 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         /* Generate filters fragment */
         val filtersFragment = ParkingLotsFiltersFragment()
 
-        /* Register this Fragment as observer for new filtersFragment's filters' list */
-        filtersFragment.registerListener(this)
-
-        /* Fetch and put arguments */
-        val args = Bundle()
-
-        this.viewModel.filters.let { args.putParcelableArrayList(EXTRA_FILTERS_LIST, it) }
-        this.viewModel.parkingLots.size.let { args.putInt(EXTRA_PARKING_LOTS_LIST_SIZE, it) }
-
-        filtersFragment.arguments = args
-
-        /* Notify MainActivity to navigate to Fragment */
+        /* Notify observer (MainActivity) to navigate to created fragment */
         this.navigationListener?.onNavigateToFragment(filtersFragment)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        Log.i(TAG, "onCreateView() called")
 
         /* Inflate layout */
         val view = inflater.inflate(R.layout.fragment_parking_lots_list, container, false)
@@ -65,10 +54,10 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         /* Bind fragment to view */
         ButterKnife.bind(this, view)
 
-        /* Set layout for RecycleView*/
+        /* Set layout for RecycleView */
         view.parking_lots.layoutManager = LinearLayoutManager(activity as Context)
 
-        /* Obtain ViewModel*/
+        /* Obtain ViewModel */
         this.viewModel = ViewModelProviders.of(this).get(ParkingLotsViewModel::class.java)
 
         return view
@@ -76,29 +65,38 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
 
     override fun onStart() {
 
-        /* Activity listening for navigation requests (onClick item and onClick filters) */
-        this.navigationListener = activity as OnNavigateToFragment
+        Log.i(TAG, "onStart() called")
 
         /* Set init value for list */
-        this.viewModel.parkingLots.let { onDataChanged(ArrayList(it)) }
+        this.viewModel.parkingLots.let { updateAdapter(ArrayList(it)) }
 
         /* This listening for ViewModel requests to update UI */
-        this.viewModel.registerListener(this)
+        this.viewModel.registerListeners(this)
+
+        /* Activity listening for navigation requests (onClick item and onClick filters) */
+        this.navigationListener = activity as OnNavigateToFragment
 
         super.onStart()
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
 
+        Log.i(TAG, "onDestroy() called")
+
+        /* Unregister as observable from navigationListener */
         this.navigationListener = null
 
-        this.viewModel.unregisterListener()
+        /* Unregister as observer from viewModel */
+        this.viewModel.unregisterListeners()
 
-        super.onStop()
+        super.onDestroy()
     }
 
-    /* Updates RecycleView based on received data and screen orientation */
-    private fun onDataChanged(data: ArrayList<ParkingLot>) {
+    /* Updates RecycleView based on data received from ViewModel.
+    * Sets adapter layout based on screen orientation. */
+    private fun updateAdapter(data: ArrayList<ParkingLot>) {
+
+        Log.i(TAG, "updateAdapter() called")
 
         if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
 
@@ -120,48 +118,39 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         }
     }
 
-    /* Action triggered when ViewModel requests to update UI */
+    /* Observer action triggered by ViewModel.
+    * Calls onDataChanged with data as ArrayList<ParkingLot>. */
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
         Log.i(TAG, "onDataReceived() called")
 
-        data?.let{ onDataChanged(it as ArrayList<ParkingLot>) }
-    }
-
-    /* Action triggered when ParkingLotsFiltersFragment requests to update UI */
-    override fun onFiltersListReceived(filters: ArrayList<Filter>?) {
-
-        Log.i(TAG, "onFiltersListReceived() called")
-
-        activity?.onBackPressed()
-
-        /* Order ViewModel to use logic to apply filters and then request to update UI (triggers onDataReceived) */
-        filters?.let {
-
-            this.viewModel.applyFilters(it)
-        }
+        data?.let{ updateAdapter(it as ArrayList<ParkingLot>) }
     }
 
     override fun onSwipeEvent(data: Any?, direction: Int) {
 
-        /* Swiped right: Show map */
-        if(direction == 1) {
+        Log.i(TAG, "onSwipeEvent() called")
 
-            val args = Bundle()
+        data?.let {
 
-            args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
+            /* Swiped right: Show map */
+            if (direction == 1) {
 
-            val navigationFragment = NavigationFragment()
-            navigationFragment.arguments = args
+                /* Create NavigationFragment */
+                val navigationFragment = NavigationFragment()
 
-            this.navigationListener?.onNavigateToFragment(navigationFragment)
-        }
+                /* Create arguments */
+                val args = Bundle()
+                args.putParcelable(EXTRA_PARKING_LOT, it as ParkingLot)
+                navigationFragment.arguments = args
 
-        /* Swiped left: Tag/Untag as favorite */
-        else {
+                /* Notify observer (MainActivity) to navigate to created fragment */
+                this.navigationListener?.onNavigateToFragment(navigationFragment)
+            }
 
-            this.viewModel.toggleFavorite(data as String)
+            /* Swiped left: Tag/Untag as favorite */
+            else this.viewModel.toggleFavorite(data as String)
         }
     }
 
@@ -170,15 +159,18 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
 
         Log.i(TAG, "onClickEvent() called")
 
-        /* Generate details Fragment */
-        val itemDetail = ParkingLotInfoFragment()
+        data?.let {
 
-        /* Add arguments */
-        val args = Bundle()
-        data?.let { args.putParcelable(EXTRA_PARKING_LOT, it as ParkingLot) }
-        itemDetail.arguments = args
+            /* Create ParkingLotInfoFragment */
+            val itemDetail = ParkingLotInfoFragment()
 
-        /* Notify observer to add new Fragment */
-        this.navigationListener?.onNavigateToFragment(itemDetail)
+            /* Create arguments */
+            val args = Bundle()
+            args.putParcelable(EXTRA_PARKING_LOT, it as ParkingLot)
+            itemDetail.arguments = args
+
+            /* Notify observer (MainActivity) to navigate to created fragment */
+            this.navigationListener?.onNavigateToFragment(itemDetail)
+        }
     }
 }

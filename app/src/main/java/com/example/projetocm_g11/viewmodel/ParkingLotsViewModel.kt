@@ -1,64 +1,56 @@
 package com.example.projetocm_g11.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.projetocm_g11.domain.data.Filter
+import com.example.projetocm_g11.domain.Logic
 import com.example.projetocm_g11.domain.data.ParkingLot
 import com.example.projetocm_g11.interfaces.OnDataReceived
-import com.example.projetocm_g11.logic.ParkingLotsLogic
 
 class ParkingLotsViewModel : ViewModel(), OnDataReceived {
 
-    private val logic = ParkingLotsLogic()
+    /* Init instance of logic */
+    private var logic: Logic = Logic.getInstance()
 
     private var listener: OnDataReceived? = null
 
     /* Observable object */
-    var parkingLots = mutableListOf<ParkingLot>()
-    var filters = ArrayList<Filter>()
+    var parkingLots = ArrayList<ParkingLot>()
 
-    private fun fetchList() {
+    /* Fetches list of parking lots*/
+    private fun getParkingLots() {
 
-        this.logic.getList()
+        this.logic.getParkingLots()
     }
 
-    fun applyFilters(list: ArrayList<Filter>) {
-
-        this.filters = list
-        this.logic.applyFilters(filters)
-    }
-
+    /* Toggles parking lots as favorite */
     fun toggleFavorite(id: String) {
 
         this.logic.toggleFavorite(id)
     }
 
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListeners(listener: OnDataReceived) {
 
         this.listener = listener
-        this.logic.registerListener(this)
+        this.logic.registerParkingLotsListener(this)
     }
 
-    fun unregisterListener() {
+    fun unregisterListeners() {
 
         this.listener = null
-        this.logic.unregisterListener()
+        this.logic.unregisterParkingLotsListener()
     }
 
+    /* Notify observer of change in data */
     private fun notifyDataChanged() {
 
-        this.listener?.onDataReceived(ArrayList(this.parkingLots))
+        this.listener?.onDataReceived(this.parkingLots)
     }
 
+    /* Method called by observable (logic) */
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
         data?.let { this.parkingLots = it as ArrayList<ParkingLot> }
 
         notifyDataChanged()
-    }
-
-    init {
-
-        fetchList()
     }
 }

@@ -31,9 +31,11 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
     private lateinit var viewModel: VehiclesListViewModel
 
-    private var listener: OnNavigateToFragment? = null
+    private var navigationListener: OnNavigateToFragment? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        Log.i(TAG, "onCreateView() called")
 
         /* Inflate layout */
         val view =  inflater.inflate(R.layout.fragment_vehicles_list, container, false)
@@ -42,9 +44,8 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
         if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             view.vehicles.layoutManager = LinearLayoutManager(activity as Context)
-        }
 
-        else view.vehicles.layoutManager = GridLayoutManager(activity as Context, 2)
+        } else view.vehicles.layoutManager = GridLayoutManager(activity as Context, 2)
 
         /* Set FAB onClickListener */
         view.fab.setOnClickListener {
@@ -53,7 +54,7 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
             val emptyFormFragment = VehicleFormFragment()
 
             // Notify MainActivity to navigate to Fragment
-            this.listener?.onNavigateToFragment(emptyFormFragment)
+            this.navigationListener?.onNavigateToFragment(emptyFormFragment)
         }
 
         /* Obtain ViewModel*/
@@ -64,24 +65,31 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
     override fun onStart() {
 
+        Log.i(TAG, "onStart() called")
+
         /* Set init value for list */
-        this.viewModel.vehicles.let { onDataChanged(it) }
+        this.viewModel.vehicles.let { updateAdapter(it) }
 
-        this.viewModel.registerListener(this)
+        this.viewModel.registerListeners(this)
+        this.viewModel.getVehicles()
 
-        this.listener = activity as OnNavigateToFragment
+        this.navigationListener = activity as OnNavigateToFragment
 
         super.onStart()
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
 
-        this.viewModel.unregisterListener()
-        this.listener = null
-        super.onStop()
+        Log.i(TAG, "onDestroy() called")
+
+        this.viewModel.unregisterListeners()
+
+        this.navigationListener = null
+
+        super.onDestroy()
     }
 
-    private fun onDataChanged(data: ArrayList<Vehicle>) {
+    private fun updateAdapter(data: ArrayList<Vehicle>) {
 
         if(data.size > 0) {
 
@@ -97,7 +105,7 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         Log.i(TAG, "onDataReceived() called")
 
-        data?.let { onDataChanged(it as ArrayList<Vehicle>) }
+        data?.let { updateAdapter(it as ArrayList<Vehicle>) }
     }
 
     override fun onClickEvent(data: Any?) {
@@ -114,7 +122,7 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
                 val editForm = VehicleFormFragment()
                 editForm.arguments = args
 
-                this.listener?.onNavigateToFragment(editForm)
+                this.navigationListener?.onNavigateToFragment(editForm)
 
             } else { viewModel.deleteVehicle(it as String) }
         }
