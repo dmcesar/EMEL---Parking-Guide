@@ -96,6 +96,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:weightSum="3"
         android:layout_weight="2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -104,25 +105,27 @@
         android:gravity="center">
 
         <ImageView
+            android:layout_weight="1"
             android:id="@+id/park_isFavorite"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_height="0dp"
             android:src="@drawable/ic_star"
-            android:layout_gravity="top|end" />
+            android:layout_gravity="end" />
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/park_type"
             style="@style/TextTheme"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center_vertical" />
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/last_updated_at"
             style="@style/TextTheme"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center_vertical" />
         
     </LinearLayout>

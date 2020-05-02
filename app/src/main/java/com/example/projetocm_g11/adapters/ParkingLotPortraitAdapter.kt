@@ -90,12 +90,12 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchEvent, private
 
                         when {
 
-                            onTouchX < event.x-> {
+                            onTouchX + 10 < event.x -> {
 
                                 listener.onSwipeEvent(items[position], 1)
                                 Log.i(TAG, "SWIPE RIGHT")
                             }
-                            onTouchX > event.x-> {
+                            onTouchX - 10 > event.x -> {
 
                                 listener.onSwipeEvent(items[position].id, 0)
                                 Log.i(TAG, "SWIPE LEFT")
