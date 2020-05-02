@@ -68,12 +68,30 @@
 
     </LinearLayout>
 
-    <TextView
-        style="@style/TextTheme"
-        android:id="@+id/park_availability"
+    <LinearLayout
+        android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:layout_weight="1" />
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/park_isFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_star"
+            android:layout_gravity="top|end" />
+
+        <TextView
+            style="@style/TextTheme"
+            android:id="@+id/park_availability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
 
 </LinearLayout>
+
+
+

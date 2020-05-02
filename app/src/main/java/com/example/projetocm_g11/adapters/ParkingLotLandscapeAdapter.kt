@@ -79,7 +79,7 @@ class ParkingLotLandscapeAdapter(private val listener: OnTouchEvent, private val
                             }
                             onTouchX > event.x -> {
 
-                                listener.onSwipeEvent(items[position], 0)
+                                listener.onSwipeEvent(items[position].id, 0)
                                 Log.i(TAG, "SWIPE LEFT")
                             }
                             else -> {

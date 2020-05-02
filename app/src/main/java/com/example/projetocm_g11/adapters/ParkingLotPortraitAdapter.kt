@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,7 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchEvent, private
         val name: TextView = view.park_name
         val occupancyState: TextView = view.park_occupancy_state
         val availability: TextView = view.park_availability
+        val isFavorite: ImageView = view.park_isFavorite
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParkingLotsPortraitViewHolder {
@@ -67,6 +69,7 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchEvent, private
         holder.name.text = items[position].name
         holder.occupancyState.text = state
         holder.availability.text = availability
+        holder.isFavorite.visibility = if(items[position].isFavourite) { View.VISIBLE } else View.GONE
 
         holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
 
@@ -86,12 +89,13 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchEvent, private
                     MotionEvent.ACTION_UP -> {
 
                         when {
-                            onTouchX < event.x -> {
+
+                            onTouchX < event.x-> {
 
                                 listener.onSwipeEvent(items[position], 1)
                                 Log.i(TAG, "SWIPE RIGHT")
                             }
-                            onTouchX > event.x -> {
+                            onTouchX > event.x-> {
 
                                 listener.onSwipeEvent(items[position].id, 0)
                                 Log.i(TAG, "SWIPE LEFT")
