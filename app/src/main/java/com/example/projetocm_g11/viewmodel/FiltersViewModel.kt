@@ -1,6 +1,5 @@
 package com.example.projetocm_g11.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.projetocm_g11.domain.data.Filter
 import com.example.projetocm_g11.interfaces.OnDataReceived
@@ -8,17 +7,15 @@ import com.example.projetocm_g11.logic.FiltersLogic
 
 class FiltersViewModel : ViewModel(), OnDataReceived {
 
-    private val TAG = FiltersViewModel::class.java.simpleName
-
     private var listener: OnDataReceived? = null
-
-    var filters = ArrayList<Filter>()
 
     private val logic = FiltersLogic()
 
-    fun update(list: ArrayList<Filter>) {
+    var filters = ArrayList<Filter>()
 
-        this.logic.update(list)
+    fun getAll() {
+
+        this.logic.getAll()
     }
 
     fun addFilter(filter: Filter) {
@@ -43,18 +40,17 @@ class FiltersViewModel : ViewModel(), OnDataReceived {
         this.logic.unregisterListener()
     }
 
-    private fun notifyDataChanged() {
+    private fun notifyDataChanged(list: ArrayList<Filter>) {
 
-        Log.i(TAG, this.filters.size.toString())
-
-        this.listener?.onDataReceived(this.filters)
+        this.listener?.onDataReceived(list)
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
-        data?.let { this.filters = it as ArrayList<Filter> }
+        data?.let {
 
-        notifyDataChanged()
+            notifyDataChanged(data as ArrayList<Filter>)
+        }
     }
 }

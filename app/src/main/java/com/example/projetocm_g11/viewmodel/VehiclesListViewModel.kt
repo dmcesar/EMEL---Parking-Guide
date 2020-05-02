@@ -14,7 +14,7 @@ class VehiclesListViewModel : ViewModel(), OnDataReceived {
     /* Observable object */
     var vehicles = ArrayList<Vehicle>()
 
-    private fun fetchList() {
+    fun getAll() {
 
         this.logic.read()
     }
@@ -38,8 +38,6 @@ class VehiclesListViewModel : ViewModel(), OnDataReceived {
 
         this.listener = listener
         this.logic.registerListener(this)
-
-        fetchList()
     }
 
     fun unregisterListener() {

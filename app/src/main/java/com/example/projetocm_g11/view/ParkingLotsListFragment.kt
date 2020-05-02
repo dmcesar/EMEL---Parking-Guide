@@ -25,10 +25,8 @@ import kotlinx.android.synthetic.main.fragment_parking_lots_list.view.*
 import kotlin.collections.ArrayList
 
 const val EXTRA_PARKING_LOT = "com.example.projetocm_g11.view.ParkingLotsListFragment.ParkingLot"
-const val EXTRA_PARKING_LOTS_LIST_SIZE = "com.example.projetocm_g11.view.ParkingLotsListFragment.ListSize"
-const val EXTRA_FILTERS_LIST = "com.example.projetocm_g11.view.ParkingLotsListFragment.FiltersList"
 
-class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceived, OnTouchEvent {
+class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
 
     private val TAG = ParkingLotsListFragment::class.java.simpleName
 
@@ -41,17 +39,6 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
 
         /* Generate filters fragment */
         val filtersFragment = ParkingLotsFiltersFragment()
-
-        /* Register this Fragment as observer for new filtersFragment's filters' list */
-        filtersFragment.registerListener(this)
-
-        /* Fetch and put arguments */
-        val args = Bundle()
-
-        this.viewModel.filters.let { args.putParcelableArrayList(EXTRA_FILTERS_LIST, it) }
-        this.viewModel.parkingLots.size.let { args.putInt(EXTRA_PARKING_LOTS_LIST_SIZE, it) }
-
-        filtersFragment.arguments = args
 
         /* Notify MainActivity to navigate to Fragment */
         this.navigationListener?.onNavigateToFragment(filtersFragment)
@@ -76,25 +63,28 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
 
     override fun onStart() {
 
-        /* Activity listening for navigation requests (onClick item and onClick filters) */
-        this.navigationListener = activity as OnNavigateToFragment
-
         /* Set init value for list */
         this.viewModel.parkingLots.let { onDataChanged(ArrayList(it)) }
+
+        /* Activity listening for navigation requests (onClick item and onClick filters) */
+        this.navigationListener = activity as OnNavigateToFragment
 
         /* This listening for ViewModel requests to update UI */
         this.viewModel.registerListener(this)
 
+        /* Get parking lots from storage and update UI */
+        this.viewModel.getAll()
+
         super.onStart()
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
 
         this.navigationListener = null
 
         this.viewModel.unregisterListener()
 
-        super.onStop()
+        super.onDestroy()
     }
 
     /* Updates RecycleView based on received data and screen orientation */
@@ -127,20 +117,6 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnFiltersListReceive
         Log.i(TAG, "onDataReceived() called")
 
         data?.let{ onDataChanged(it as ArrayList<ParkingLot>) }
-    }
-
-    /* Action triggered when ParkingLotsFiltersFragment requests to update UI */
-    override fun onFiltersListReceived(filters: ArrayList<Filter>?) {
-
-        Log.i(TAG, "onFiltersListReceived() called")
-
-        activity?.onBackPressed()
-
-        /* Order ViewModel to use logic to apply filters and then request to update UI (triggers onDataReceived) */
-        filters?.let {
-
-            this.viewModel.applyFilters(it)
-        }
     }
 
     override fun onSwipeEvent(data: Any?, direction: Int) {

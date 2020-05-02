@@ -33,7 +33,7 @@ class VehiclesLogic {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            storage.create(vehicle)
+            storage.addVehicle(vehicle)
 
             read()
         }
@@ -45,7 +45,7 @@ class VehiclesLogic {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val list = storage.read()
+            val list = storage.getVehicles()
 
             withContext(Dispatchers.Main) {
 
@@ -60,7 +60,7 @@ class VehiclesLogic {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            storage.update(vehicle)
+            storage.updateVehicle(vehicle)
 
             read()
         }
@@ -72,7 +72,7 @@ class VehiclesLogic {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            storage.delete(uuid)
+            storage.removeVehicle(uuid)
 
             read()
         }

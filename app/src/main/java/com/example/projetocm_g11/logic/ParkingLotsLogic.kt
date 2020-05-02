@@ -1,6 +1,7 @@
 package com.example.projetocm_g11.logic
 
 import android.util.Log
+import com.example.projetocm_g11.domain.Storage
 import com.example.projetocm_g11.domain.data.Filter
 import com.example.projetocm_g11.domain.data.FilterType
 import com.example.projetocm_g11.domain.data.ParkingLot
@@ -19,9 +20,9 @@ class ParkingLotsLogic {
 
     private var listener: OnDataReceived? = null
 
-    private val parkingLots = mutableListOf<ParkingLot>()
+    private val storage = Storage.getInstance()
 
-    fun applyFilters(filters: ArrayList<Filter>) {
+    private fun applyFilters(list: ArrayList<ParkingLot>, filters: ArrayList<Filter>) {
 
         Log.i(TAG, "applyFilters() called")
 
@@ -29,7 +30,7 @@ class ParkingLotsLogic {
 
             if(filters.size > 0) {
 
-                var sequence = parkingLots.asSequence()
+                var sequence = list.asSequence()
 
                 Log.i(TAG, "Before filters applied -> ${sequence.toList().size}")
 
@@ -79,8 +80,21 @@ class ParkingLotsLogic {
 
             else {
 
-                notifyDataChanged(parkingLots)
+                notifyDataChanged(list)
             }
+        }
+    }
+
+    fun getParkingLots() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val parkingLots = storage.getParkingLots()
+
+            val filters = storage.getFilters()
+
+            /* Applies filters and notifies observer */
+            applyFilters(parkingLots, filters)
         }
     }
 
@@ -88,84 +102,18 @@ class ParkingLotsLogic {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            for (p in parkingLots) {
+            storage.toggleFavorite(id)
 
-                if (p.id == id) {
-
-                    p.isFavourite = !p.isFavourite
-                }
-            }
-
-            notifyDataChanged(parkingLots)
+            getParkingLots()
         }
     }
 
-    fun getList() {
+    /* Uses Main Thread: Notifies ViewModel of data changed */
+    private suspend fun notifyDataChanged(list: ArrayList<ParkingLot>) {
 
-        Log.i(TAG, "getList() called")
+        withContext(Dispatchers.Main) {
 
-        CoroutineScope(Dispatchers.Default).launch {
-
-            parkingLots.clear()
-
-            val p1 = ParkingLot(
-                "P001",
-                "El Corte Inglés",
-                true,
-                1,
-                800,
-                750,
-                Date(),
-                38.75463622,
-                -9.3414141,
-                Type.UNDERGROUND
-            )
-
-            val p2 = ParkingLot(
-                "P002",
-                "Campo Grande",
-                true,
-                2,
-                200,
-                40,
-                Date(),
-                76.3245424,
-                90.324143,
-                Type.SURFACE
-            )
-
-            val p3 = ParkingLot(
-                "P003",
-                "Baia de Cascais",
-                false,
-                3,
-                50,
-                50,
-                Date(),
-                -50.324324,
-                -7.214122,
-                Type.UNDERGROUND
-            )
-
-            val p4 = ParkingLot(
-                "P019",
-                "CascaisShopping",
-                true,
-                4,
-                1000,
-                650,
-                Date(),
-                -80.24324,
-                43.541343,
-                Type.UNDERGROUND
-            )
-
-            parkingLots.add(p1)
-            parkingLots.add(p2)
-            parkingLots.add(p3)
-            parkingLots.add(p4)
-
-            notifyDataChanged(parkingLots)
+            listener?.onDataReceived(ArrayList(list))
         }
     }
 
@@ -177,14 +125,5 @@ class ParkingLotsLogic {
     fun unregisterListener() {
 
         this.listener = null
-    }
-
-    /* Uses Main Thread: Notifies ViewModel of data changed*/
-    private suspend fun notifyDataChanged(list: MutableList<ParkingLot>) {
-
-        withContext(Dispatchers.Main) {
-
-            listener?.onDataReceived(ArrayList(list))
-        }
     }
 }

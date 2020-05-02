@@ -26,8 +26,6 @@ import kotlinx.android.synthetic.main.fragment_parking_lots_filters.view.*
 
 class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
-    private val TAG = ParkingLotsFiltersFragment::class.java.simpleName
-
     /* Assembles filters list */
     private lateinit var viewModel: FiltersViewModel
 
@@ -258,33 +256,12 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
             this.viewModel.addFilter(filter)
         }
 
-        this.listener?.onFiltersListReceived(viewModel.filters)
+        (activity as MainActivity).onBackPressed()
     }
 
     fun registerListener(listener: OnFiltersListReceived) {
 
         this.listener = listener
-    }
-
-    private fun handleArgs() {
-
-        /* Retrieve extras */
-        val previousFilters = this.arguments?.getParcelableArrayList<Filter>(EXTRA_FILTERS_LIST)
-        val resultsSize = this.arguments?.getInt(EXTRA_PARKING_LOTS_LIST_SIZE)
-
-        /* Set results_count text */
-
-        resultsSize?.let {
-
-            val resultsCount = "$resultsSize ${(activity as Context).resources.getString(R.string.results)}"
-            results_count.text = resultsCount
-        }
-
-        previousFilters?.let {
-
-            /* Init ViewModel's filters list */
-            this.viewModel.update(it)
-        }
     }
 
     private fun updateFilters(list: ArrayList<Filter>) {
@@ -345,6 +322,10 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_parking_lots_filters, container, false)
 
+        ButterKnife.bind(this, view)
+
+        this.viewModel = ViewModelProviders.of(this).get(FiltersViewModel::class.java)
+
         if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
 
             view.filters.layoutManager =
@@ -352,22 +333,7 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         } else view.filters.layoutManager = LinearLayoutManager(activity as Context)
 
-        ButterKnife.bind(this, view)
-
-        this.viewModel = ViewModelProviders.of(this).get(FiltersViewModel::class.java)
-
-        return view
-    }
-
-    override fun onStart() {
-
-        this.viewModel.filters.let { updateAdapter(it) }
-
-        this.viewModel.registerListener(this)
-
-        handleArgs()
-
-        filter_parks_alphabetically.setOnCheckedChangeListener{ _, isChecked ->
+        view.filter_parks_alphabetically.setOnCheckedChangeListener{ _, isChecked ->
 
             val filter = Filter(FilterType.ALPHABETICAL)
 
@@ -378,7 +344,7 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
             } else this.viewModel.removeFilter(filter)
         }
 
-        filter_parks_favorites.setOnCheckedChangeListener{ _, isChecked ->
+        view.filter_parks_favorites.setOnCheckedChangeListener{ _, isChecked ->
 
             val filter = Filter(FilterType.FAVORITE)
 
@@ -389,27 +355,33 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
             } else this.viewModel.removeFilter(filter)
         }
 
+        return view
+    }
+
+    override fun onStart() {
+
+        this.viewModel.filters.let { updateAdapter(it) }
+
+        this.viewModel.registerListener(this)
+
+        this.viewModel.getAll()
+
         super.onStart()
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
 
         this.viewModel.unregisterListener()
+
         this.listener = null
-        super.onStop()
-    }
 
-    private fun onDataChanged(list: ArrayList<Filter>) {
-
-        updateFilters(list)
+        super.onDestroy()
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
-        Log.i(TAG, "onDataReceived -> ${data?.size}")
-
-        data?.let { onDataChanged(it as ArrayList<Filter>) }
+        data?.let { updateFilters(it as ArrayList<Filter>) }
     }
 
     override fun onClickEvent(data: Any?) {

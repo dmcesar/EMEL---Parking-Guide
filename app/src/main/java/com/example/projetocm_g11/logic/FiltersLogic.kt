@@ -1,6 +1,6 @@
 package com.example.projetocm_g11.logic
 
-import android.util.Log
+import com.example.projetocm_g11.domain.Storage
 import com.example.projetocm_g11.domain.data.Filter
 import com.example.projetocm_g11.interfaces.OnDataReceived
 import kotlinx.coroutines.CoroutineScope
@@ -10,21 +10,17 @@ import kotlinx.coroutines.withContext
 
 class FiltersLogic {
 
-    private val TAG = FiltersLogic::class.java.simpleName
-
     private var listener: OnDataReceived? = null
 
-    private var filters = ArrayList<Filter>()
+    private val storage = Storage.getInstance()
 
-    fun update(list: ArrayList<Filter>) {
+    fun getAll() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            filters = list
+            val list = storage.getFilters()
 
-            Log.i(TAG, "Updated list")
-
-            notifyDataChanged()
+            notifyDataChanged(list)
         }
     }
 
@@ -32,14 +28,9 @@ class FiltersLogic {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            if(!filters.contains(filter)) {
+            storage.addFilter(filter)
 
-                filters.add(filter)
-
-                Log.i(TAG, "Added $filter")
-
-                notifyDataChanged()
-            }
+            getAll()
         }
     }
 
@@ -47,14 +38,17 @@ class FiltersLogic {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            if(filters.contains(filter)) {
+            storage.removeFilter(filter)
 
-                filters.remove(filter)
+            getAll()
+        }
+    }
 
-                Log.i(TAG, "Removed $filter")
+    private suspend fun notifyDataChanged(list: ArrayList<Filter>) {
 
-                notifyDataChanged()
-            }
+        withContext(Dispatchers.Main) {
+
+            listener?.onDataReceived(list)
         }
     }
 
@@ -66,13 +60,5 @@ class FiltersLogic {
     fun unregisterListener() {
 
         this.listener = null
-    }
-
-    private suspend fun notifyDataChanged() {
-
-        withContext(Dispatchers.Main) {
-
-            listener?.onDataReceived(filters)
-        }
     }
 }

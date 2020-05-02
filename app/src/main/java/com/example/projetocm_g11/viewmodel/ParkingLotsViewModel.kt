@@ -13,18 +13,11 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
     private var listener: OnDataReceived? = null
 
     /* Observable object */
-    var parkingLots = mutableListOf<ParkingLot>()
-    var filters = ArrayList<Filter>()
+    var parkingLots = ArrayList<ParkingLot>()
 
-    private fun fetchList() {
+    fun getAll() {
 
-        this.logic.getList()
-    }
-
-    fun applyFilters(list: ArrayList<Filter>) {
-
-        this.filters = list
-        this.logic.applyFilters(filters)
+        this.logic.getParkingLots()
     }
 
     fun toggleFavorite(id: String) {
@@ -55,10 +48,5 @@ class ParkingLotsViewModel : ViewModel(), OnDataReceived {
         data?.let { this.parkingLots = it as ArrayList<ParkingLot> }
 
         notifyDataChanged()
-    }
-
-    init {
-
-        fetchList()
     }
 }
