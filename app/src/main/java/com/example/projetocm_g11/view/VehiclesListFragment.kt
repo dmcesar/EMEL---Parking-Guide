@@ -76,13 +76,13 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
         super.onStart()
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
 
         this.viewModel.unregisterListener()
 
         this.listener = null
 
-        super.onDestroy()
+        super.onStop()
     }
 
     private fun onDataChanged(data: ArrayList<Vehicle>) {

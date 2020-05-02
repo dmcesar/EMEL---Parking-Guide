@@ -78,13 +78,13 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
         super.onStart()
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
 
         this.navigationListener = null
 
         this.viewModel.unregisterListener()
 
-        super.onDestroy()
+        super.onStop()
     }
 
     /* Updates RecycleView based on received data and screen orientation */
