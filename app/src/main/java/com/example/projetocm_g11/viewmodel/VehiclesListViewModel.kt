@@ -1,50 +1,51 @@
 package com.example.projetocm_g11.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.projetocm_g11.domain.Logic
 import com.example.projetocm_g11.domain.data.Vehicle
 import com.example.projetocm_g11.interfaces.OnDataReceived
+import com.example.projetocm_g11.logic.VehiclesLogic
 
 class VehiclesListViewModel : ViewModel(), OnDataReceived {
 
-    private val logic = Logic.getInstance()
+    private val logic = VehiclesLogic()
 
     private var listener: OnDataReceived? = null
 
     /* Observable object */
     var vehicles = ArrayList<Vehicle>()
 
-    fun getVehicles() {
+    private fun fetchList() {
 
-        this.logic.getVehicles()
+        this.logic.read()
     }
 
     fun registerVehicle(vehicle: Vehicle) {
 
-        logic.addVehicle(vehicle)
+        logic.create(vehicle)
     }
 
     fun updateVehicle(vehicle: Vehicle) {
 
-        logic.updateVehicle(vehicle)
+        logic.update(vehicle)
     }
 
     fun deleteVehicle(uuid: String) {
 
-        logic.removeVehicle(uuid)
+        logic.delete(uuid)
     }
 
-    fun registerListeners(listener: OnDataReceived) {
+    fun registerListener(listener: OnDataReceived) {
 
         this.listener = listener
-        this.logic.registerVehiclesListener(this)
+        this.logic.registerListener(this)
+
+        fetchList()
     }
 
-    fun unregisterListeners() {
+    fun unregisterListener() {
 
         this.listener = null
-        this.logic.unregisterVehiclesListener()
+        this.logic.unregisterListener()
     }
 
     private fun onDataChanged() {

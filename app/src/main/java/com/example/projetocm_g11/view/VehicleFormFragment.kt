@@ -41,7 +41,7 @@ class VehicleFormFragment : Fragment() {
             return
         }
 
-        if(this.vehicle == null) {
+        if(this.vehicle == null ) {
 
             this.vehicle = Vehicle(
                 input_brand.text.toString(),
@@ -69,8 +69,6 @@ class VehicleFormFragment : Fragment() {
 
     /* Validates form based on type of form (Create or Update) and input patterns*/
     private fun validate(): Boolean {
-
-        Log.i(TAG, "validate() called")
 
         val licencePattern = "([A-Za-z]{2}|[0-9]{2})-([A-Za-z]{2}|[0-9]{2})-([A-Za-z]{2}|[0-9]{2})"
         val datePattern = "\\d{2}-\\d{4}"
@@ -127,8 +125,6 @@ class VehicleFormFragment : Fragment() {
 
     private fun updateFormData() {
 
-        Log.i(TAG, "updateFormData() called")
-
         brand?.text = vehicle?.brand
         model?.text = vehicle?.model
         plate?.text = vehicle?.plate
@@ -136,8 +132,6 @@ class VehicleFormFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        Log.i(TAG, "onCreateView() called")
 
         val view: View?
 
@@ -160,8 +154,6 @@ class VehicleFormFragment : Fragment() {
     }
 
     override fun onStart() {
-
-        Log.i(TAG, "onStart() called")
 
         input_plate_date.addTextChangedListener(object : TextWatcher {
 
