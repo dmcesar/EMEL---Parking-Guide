@@ -16,7 +16,6 @@ import com.example.projetocm_g11.domain.data.ParkingLot
 import com.example.projetocm_g11.interfaces.OnTouchEvent
 import kotlinx.android.synthetic.main.parking_lots_portrait_list_item.view.*
 
-
 open class ParkingLotPortraitAdapter(private val listener: OnTouchEvent, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
     RecyclerView.Adapter<ParkingLotPortraitAdapter.ParkingLotsPortraitViewHolder>() {
 

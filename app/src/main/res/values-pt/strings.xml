@@ -15,6 +15,7 @@
 
     <!-- Buttons -->
     <string name="go_map">Navegar</string>
+    <string name="go_info">Informações de estacionamento</string>
     <string name="register">Registar</string>
     <string name="update">Atualizar</string>
     <string name="park_me_now">Estacionar Agora</string>
@@ -62,7 +63,7 @@
     <string name="apply">Aplicar</string>
     <string name="toggle_park_type_filter_list">Filtrar por tipo</string>
     <string name="toggle_park_availability_filter_list">Filtar por disponibilidade</string>
-    <string name="toggle_park_distance_filter_list">Filtar por distância</string>
+    <string name="toggle_park_distance_filter_list">Filtar por distância (EXTRA)</string>
     <string name="toggle_park_fair_filter_list">Filtar por tarifa (EXTRA)</string>
     <string name="filter_alphabetically">Filtar alfabeticamente</string>
     <string name="filter_by_name">Filtrar por nome</string>
@@ -79,5 +80,9 @@
     <string name="unavailable">Fechado</string>
     <string name="alphabetically">Alfabeticamente</string>
     <string name="favorites">Favoritos</string>
+    <string name="type_example">Tipo de estacionamento: Rotativo</string>
+    <string name="schedule_example">Horário: 24 horas</string>
+    <string name="observations">Observações</string>
+    <string name="observations_example">Observações sobre o estacionamento</string>
 
 </resources>

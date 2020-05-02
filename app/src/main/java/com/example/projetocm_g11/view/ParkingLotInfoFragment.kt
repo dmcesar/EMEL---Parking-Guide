@@ -1,7 +1,6 @@
 package com.example.projetocm_g11.view
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +16,8 @@ import com.example.projetocm_g11.domain.data.Type
 import com.example.projetocm_g11.interfaces.OnNavigateToFragment
 import kotlinx.android.synthetic.main.fragment_parking_lot_info.view.*
 import java.text.SimpleDateFormat
+
+const val EXTRA_PARK_COORDINATES = "com.example.projetocm-g11.view.ParkingPlaceInfoFragment.PARK_COORDINATES"
 
 class ParkingLotInfoFragment : Fragment() {
 
@@ -34,6 +35,21 @@ class ParkingLotInfoFragment : Fragment() {
         navigationFragment.arguments = args
 
         this.listener?.onNavigateToFragment(navigationFragment)
+    }
+
+    @OnClick(R.id.button_go_info)
+    fun onClickGoInfo() {
+
+        val args = Bundle()
+
+        val coordinates = doubleArrayOf(this.parkingLot.latitude, this.parkingLot.longitude)
+
+        args.putDoubleArray(EXTRA_PARK_COORDINATES, coordinates)
+
+        val infoFragment = ParkingPlaceInformationFragment()
+        infoFragment.arguments = args
+
+        this.listener?.onNavigateToFragment(infoFragment)
     }
 
     private fun registerListener() {

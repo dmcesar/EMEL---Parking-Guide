@@ -126,4 +126,12 @@
         android:layout_margin="30dp"
         android:text="@string/go_map" />
 
+    <Button
+        android:id="@+id/button_go_info"
+        style="@style/AppButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:text="@string/go_info" />
+
 </LinearLayout>

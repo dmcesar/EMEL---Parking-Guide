@@ -19,6 +19,7 @@
     <string name="update">Update</string>
     <string name="park_me_now">Park me now!</string>
     <string name="go_map">Set course</string>
+    <string name="go_info">Parking place information</string>
     <string name="toggle_service_stations">Service Stations</string>
     <string name="toggle_general_information">EMEL General</string>
     <string name="phone_general_information">Phone: 211163060</string>
@@ -80,5 +81,9 @@
     <string name="unavailable">Unavailable</string>
     <string name="alphabetically">Alphabetically</string>
     <string name="favorites">Favorites</string>
+    <string name="type_example">Parking type: Rotational</string>
+    <string name="schedule_example">Schedule: 24 hours</string>
+    <string name="observations">Observations</string>
+    <string name="observations_example">Parking place observations</string>
 
 </resources>

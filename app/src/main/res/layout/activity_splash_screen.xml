@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginHorizontal="20dp"
+    android:padding="20dp"
     tools:context=".view.SplashScreenActivity">
 
     <TextView
@@ -13,6 +13,15 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:layout_marginTop="100dp"
+        android:layout_marginBottom="40dp"
         style="@style/AppNameTheme" />
+
+    <ProgressBar
+        android:id="@+id/loading_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminateOnly="true"
+        android:max="100"/>
 
 </LinearLayout>

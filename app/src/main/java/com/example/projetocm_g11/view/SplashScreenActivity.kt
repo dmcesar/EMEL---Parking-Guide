@@ -3,8 +3,10 @@ package com.example.projetocm_g11.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import com.example.projetocm_g11.R
+import kotlinx.android.synthetic.main.activity_splash_screen.*
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -22,5 +24,15 @@ class SplashScreenActivity : AppCompatActivity() {
             finish()
 
         }, splashTimeOut)
+
+        object: CountDownTimer(3000, 3000 / 50) {
+
+            override fun onFinish() { }
+
+            override fun onTick(p0: Long) {
+
+                loading_progress.progress++
+            }
+        }.start()
     }
 }
