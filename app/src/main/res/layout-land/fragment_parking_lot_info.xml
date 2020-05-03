@@ -96,13 +96,30 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp" />
 
-        <TextView
-            android:id="@+id/park_occupancy_state"
-            style="@style/TextTheme"
+        <LinearLayout
             android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            />
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/park_occupancy_state"
+                style="@style/TextTheme"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/button_go_info"
+                style="@style/AppButton"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="5dp"
+                android:text="@string/go_info" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_weight="1"
@@ -124,7 +141,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity=""
+                android:layout_marginVertical="5dp"
                 android:text="@string/go_map" />
 
         </LinearLayout>
