@@ -15,6 +15,6 @@ interface ParkingLotsDAO {
     @Query("SELECT * FROM parking_lots")
     suspend fun getAll(): List<ParkingLot>
 
-    @Update
-    suspend fun update(parkingLot: ParkingLot)
+    @Query("UPDATE parking_lots SET isFavourite = :value WHERE id = :id")
+    suspend fun update(id: String, value: Boolean)
 }

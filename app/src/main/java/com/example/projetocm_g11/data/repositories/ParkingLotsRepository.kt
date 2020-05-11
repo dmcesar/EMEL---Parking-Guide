@@ -100,11 +100,11 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
     * Operation is done locally since API does not provide parameter.
     * After operation is finished, read locally updated data from repository and notify observer
     */
-    fun update(parkingLot: ParkingLot) {
+    fun update(id: String, isFavorite: Boolean) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            local.update(parkingLot)
+            local.update(id, isFavorite)
 
             getFromLocal()
         }

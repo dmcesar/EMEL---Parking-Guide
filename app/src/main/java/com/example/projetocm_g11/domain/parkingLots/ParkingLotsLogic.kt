@@ -87,7 +87,7 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
 
     fun toggleFavorite(parkingLot: ParkingLot) {
 
-        repository.update(parkingLot)
+        repository.update(parkingLot.id, !parkingLot.isFavourite)
     }
 
     /* Notifies ViewModel of data changed */
