@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ds">
+
+        <attr name="backgroundColor" format="color" />
+        <attr name="primaryColorLight" format="color" />
+        <attr name="onPrimaryColor" format="color" />
+        <attr name="onAccentColor" format="color" />
+        <attr name="onBackgroundColor" format="color" />
+
+        <attr name="cardColor" format="color" />
+        <attr name="buttonColor" format="color" />
+        <attr name="tintColor" format="color" />
+
+    </declare-styleable>
+</resources>

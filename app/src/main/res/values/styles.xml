@@ -1,109 +1,86 @@
 <resources>
 
-    <!-- App theme -->
-    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_darker</item>
-        <item name="colorAccent">@color/accent</item>
-
-        <item name="android:windowBackground">@color/primary_darker</item>
-
-        <item name="android:textColorHint">@color/accent</item>
-        <item name="colorControlNormal">@color/accent</item>
-        <item name="colorControlActivated">@color/amber</item>
-        <item name="colorControlHighlight">@color/amber</item>
-        <item name="itemTextColor">@color/accent</item>
-        <item name="android:textColor">@color/accent</item>
-    </style>
-
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
+        <!-- Apps main color -->
+        <item name="colorPrimary">@color/primaryColor</item>
+
+        <!-- Main color darker variant -->
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+
+        <!-- FABs, switches, progress bars, links -->
+        <item name="colorAccent">@color/lightGrey</item>
+
+        <item name="backgroundColor">@color/white</item>
+        <item name="primaryColorLight">@color/primaryLightColor</item>
+        <item name="onPrimaryColor">@color/white</item>
+        <item name="onAccentColor">@color/black</item>
+        <item name="onBackgroundColor">@color/black</item>
+
+        <!-- Cards background color (vehicles, parking lots) -->
+        <item name="cardColor">@color/lightGrey</item>
+
+        <!-- Buttons background color -->
+        <item name="buttonColor">@color/lightGrey</item>
+
+        <!-- Icons color -->
+        <item name="tintColor">@color/black</item>
+
+        <item name="drawerArrowStyle">@style/DrawerButtonStyle</item>
+
     </style>
 
-    <style name="AppNameTheme" parent="@android:style/Widget.TextView">
-        <item name="android:fontFamily">@font/quicksand_light</item>
-        <item name="android:textColor">@color/accent</item>
-        <item name="android:textSize">50sp</item>
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
+    <style name="DrawerButtonStyle" parent="Widget.AppCompat.DrawerArrowToggle" >
+        <item name="color">?attr/onPrimaryColor</item>
+    </style>
+
+    <style name="ItemCardStyle">
+        <item name="android:elevation">2dp</item>
+        <item name="android:background">@drawable/card</item>
+    </style>
+
+    <style name="SquareButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:elevation">2dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/square_button</item>
+    </style>
+
+    <style name="RoundButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:elevation">2dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/round_button</item>
+    </style>
+
+    <style name="DrawerHeaderTextStyle">
+        <item name="android:textSize">25sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
-    <!-- Toolbar -->
-    <style name="ToolbarTheme" parent="DarkTheme">
-        <item name="android:background">@color/primary</item>
-        <item name="android:textColorPrimary">@color/accent</item>
-        <item name="android:textColorSecondary">@color/accent</item>
+    <style name="HighlightTextStyle">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Buttons -->
-    <style name="ParkMeNowButtonStyle">
-        <item name ="android:background">@drawable/toolbar_button</item>
-        <item name ="android:textColor">@color/accent</item>
-    </style>
-
-    <style name="AppButton" parent="Widget.AppCompat.Button">
-        <item name="android:background">@color/primary</item>
-        <item name="android:textColor">@color/accent</item>
+    <style name="TextStyle">
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="SubmitButtonTheme" parent="Widget.AppCompat.Button">
-        <item name="android:background">@color/primary</item>
-        <item name="android:drawableEnd">@drawable/ic_upload</item>
-        <item name="android:textColor">@color/accent</item>
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">?attr/onBackgroundColor</item>
+        <item name="android:background">@drawable/edit_text</item>
+        <item name="hintTextColor">?attr/onBackgroundColor</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor</item>
     </style>
 
-    <style name="DropdownButtonTheme" parent="Widget.AppCompat.Button">
-        <item name="android:background">@color/primary</item>
-        <item name="android:textColor">@color/accent</item>
-        <item name="android:drawableStart">@drawable/ic_more</item>
-    </style>
+    <style name="SwitchStyle">
 
-    <style name="FabTheme" parent="Widget.Design.FloatingActionButton">
-        <item name="android:src">@drawable/ic_add</item>
-        <item name="android:background">@color/accent</item>
-        <item name="android:tint">@color/amber</item>
-    </style>
-
-
-    <style name="ListTheme">
-        <item name="android:background">@color/primary_darker</item>
-    </style>
-
-    <style name="ListItemTheme">
-        <item name="android:background">@drawable/item_list_background</item>
-    </style>
-
-
-    <style name="VerticalLineSeparatorTheme">
-        <item name="android:background">@color/accent</item>
-    </style>
-
-    <style name="HorizontalLineSeparatorTheme">
-        <item name="android:background">@color/accent</item>
-    </style>
-
-
-    <style name="TextTitleBoldTheme" parent="Widget.AppCompat.TextView">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/accent</item>
-    </style>
-
-    <style name="TextTitleTheme" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/accent</item>
-    </style>
-
-    <style name="TextTheme" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/accent</item>
-    </style>
-
-    <style name="EditTextTheme" parent="Widget.AppCompat.EditText">
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/accent</item>
+        <item name="android:trackTint">?attr/primaryColorLight</item>
+        <item name="android:thumbTint">@drawable/switch_thumb</item>
     </style>
 
 </resources>

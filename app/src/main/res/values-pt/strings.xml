@@ -48,7 +48,7 @@
     <string name="state_full">Lotado</string>
     <string name="state_potentially_full">Potencialmente lotado</string>
     <string name="state_free">Livre</string>
-    <string name="empty_list_text">Clique no botão \"+\" Para registar os seus veículos.</string>
+    <string name="empty_list_text">Clique no botão \"+\" para registar os seus veículos.</string>
     <string name="service_station_A">Loja do Cidadão do Saldanha\nMercado 31 de Janeiro, Rua Engenheiro Vieira da Silva\nHorário: Segunda à Sexta das 9:00 às 19:00</string>
     <string name="service_station_B">Loja do Cidadão das Laranjeiras\nRua Abranches Ferrão, 10\nHorário: Segunda à Sexta das 8:30 às 19:30\nSábado das 9:30 às 15:00</string>
     <string name="service_station_C">Edifício central do Município de Lisboa\nCampo Grande, 25\nHorário: Segunda à Sexta das 9:00 às 19:00</string>

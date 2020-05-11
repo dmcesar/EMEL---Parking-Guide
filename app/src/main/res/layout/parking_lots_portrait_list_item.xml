@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/ListItemTheme"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
     android:orientation="horizontal"
-    android:weightSum="4">
+    android:weightSum="4"
+    style="@style/ItemCardStyle" >
 
     <!-- Circular progress bar indicating park capacity -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,26 +26,27 @@
             android:indeterminate="false"
             android:max="100"
             android:progressDrawable="@drawable/circular"
-            android:secondaryProgress="100"/>
+            android:secondaryProgress="100" />
 
         <TextView
             android:id="@+id/park_capacity_text"
-            style="@style/TextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        style="@style/VerticalLineSeparatorTheme"
         android:layout_marginVertical="12dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        android:background="?attr/onAccentColor" />
 
     <LinearLayout
         android:layout_weight="2"
@@ -56,15 +57,17 @@
 
         <TextView
             android:id="@+id/park_name"
-            style="@style/TextTitleBoldTheme"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/HighlightTextStyle"
+            android:textColor="?attr/onAccentColor" />
 
         <TextView
             android:id="@+id/park_occupancy_state"
-            style="@style/TextTheme"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
 
     </LinearLayout>
 
@@ -84,12 +87,13 @@
             android:src="@drawable/ic_star" />
 
         <TextView
-            style="@style/TextTheme"
             android:id="@+id/park_availability"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

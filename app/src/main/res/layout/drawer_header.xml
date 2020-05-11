@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:padding="16dp"
-    android:gravity="bottom|start"
-    android:background="@color/primary">
+    android:gravity="center_vertical"
+    android:background="@color/primaryColor" >
 
-    <TextView
-        style="@style/AppNameTheme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/emel" />
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="125dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logo" />
 
-    <TextView
-        style="@style/AppNameTheme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/parking" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/emel"
+            style="@style/DrawerHeaderTextStyle"
+            android:textColor="?attr/onPrimaryColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/parking"
+            style="@style/DrawerHeaderTextStyle"
+            android:textColor="?attr/onPrimaryColor" />
+
+    </LinearLayout>
 
 </LinearLayout>

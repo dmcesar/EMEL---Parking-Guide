@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ListItemTheme"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
     android:layout_marginHorizontal="10dp"
     android:padding="10dp"
-    android:weightSum="5">
+    android:weightSum="5"
+    style="@style/ItemCardStyle" >
 
     <LinearLayout
         android:layout_weight="2"
@@ -20,22 +20,24 @@
             android:id="@+id/brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextTitleBoldTheme" />
+            style="@style/HighlightTextStyle"
+            android:textColor="?attr/onAccentColor" />
 
         <TextView
             android:id="@+id/model"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextTheme" />
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
 
     </LinearLayout>
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        style="@style/VerticalLineSeparatorTheme"
         android:layout_marginVertical="6dp"
-        android:layout_marginHorizontal="10dp"/>
+        android:layout_marginHorizontal="10dp"
+        android:background="?attr/onAccentColor" />
 
     <LinearLayout
         android:layout_weight="2"
@@ -47,13 +49,15 @@
             android:id="@+id/plate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextTitleBoldTheme" />
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
 
         <TextView
             android:id="@+id/plate_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextTheme"/>
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
 
     </LinearLayout>
 
@@ -71,6 +75,7 @@
             android:src="@drawable/ic_delete"
             android:scaleType="fitEnd"
             android:layout_centerInParent="true" />
+
     </RelativeLayout>
 
 </LinearLayout>

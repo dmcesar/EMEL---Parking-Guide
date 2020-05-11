@@ -6,19 +6,19 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     android:layout_marginHorizontal="5dp"
-    style="@style/ListItemTheme">
+    style="@style/ItemCardStyle" >
 
     <TextView
         android:id="@+id/filter_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextTheme" />
+        style="@style/TextStyle"
+        android:textColor="?attr/onAccentColor" />
 
     <ImageButton
         android:id="@+id/button_remove_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_cross"
-        android:backgroundTint="@color/accent" />
+        android:background="@drawable/ic_cross" />
 
 </LinearLayout>

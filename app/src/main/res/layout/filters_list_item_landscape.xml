@@ -6,15 +6,16 @@
     android:layout_height="wrap_content"
     android:padding="5dp"
     android:layout_marginVertical="5dp"
-    style="@style/ListItemTheme"
-    android:weightSum="10">
+    android:weightSum="10"
+    style="@style/ItemCardStyle" >
 
     <TextView
         android:layout_weight="8"
         android:id="@+id/filter_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/TextTheme" />
+        style="@style/TextStyle"
+        android:textColor="?attr/onAccentColor" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_weight="2"
@@ -28,8 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/ic_cross"
-            android:backgroundTint="@color/accent" />
+            android:background="@drawable/ic_cross" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,7 +3,8 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,28 +17,31 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:gravity="start"
-            style="@style/TextTitleTheme"
-            android:text="@string/contacts" />
+            android:text="@string/contacts"
+            style="@style/HighlightTextStyle"
+            android:textColor="?attr/onBackgroundColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:orientation="vertical"
-            android:background="@color/primary">
+            android:background="?attr/colorAccent" >
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                style="@style/HorizontalLineSeparatorTheme"/>
+                android:background="?attr/onAccentColor" />
 
             <Button
                 android:id="@+id/button_service_stations"
-                style="@style/DropdownButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"
-                android:text="@string/toggle_service_stations" />
+                android:drawableStart="@drawable/ic_more"
+                android:text="@string/toggle_service_stations"
+                android:textColor="?attr/onAccentColor"
+                style="@style/SquareButtonStyle" />
 
             <LinearLayout
                 android:id="@+id/service_stations"
@@ -45,44 +49,48 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:background="?attr/colorAccent" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/service_station_A"
-                    style="@style/TextTheme" />
+                    style="@style/TextStyle"
+                    android:textColor="?attr/onAccentColor" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="10dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/service_station_B"
-                    style="@style/TextTheme" />
+                    style="@style/TextStyle"
+                    android:textColor="?attr/onAccentColor" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="10dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/service_station_C"
-                    style="@style/TextTheme" />
+                    style="@style/TextStyle"
+                    android:textColor="?attr/onAccentColor" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                style="@style/HorizontalLineSeparatorTheme"/>
+                android:background="?attr/onAccentColor" />
 
         </LinearLayout>
 
@@ -91,21 +99,22 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:orientation="vertical"
-            android:background="@color/primary">
+            android:background="?attr/colorAccent" >
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                style="@style/HorizontalLineSeparatorTheme"/>
+                android:background="?attr/onAccentColor" />
 
             <Button
                 android:id="@+id/button_general_information"
-                style="@style/DropdownButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_more"
                 android:paddingHorizontal="15dp"
-                android:text="@string/toggle_general_information" />
+                android:text="@string/toggle_general_information"
+                android:textColor="?attr/onAccentColor"
+                style="@style/SquareButtonStyle" />
 
             <LinearLayout
                 android:id="@+id/general_information"
@@ -113,35 +122,38 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:background="?attr/colorAccent" >
 
                 <Button
                     android:id="@+id/button_phone_general_information"
-                    style="@style/DropdownButtonTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/phone_general_information"
                     android:gravity="start|center_vertical"
-                    android:drawableEnd="@drawable/ic_phone"/>
+                    android:drawableEnd="@drawable/ic_phone"
+                    android:textColor="?attr/onAccentColor"
+                    style="@style/SquareButtonStyle" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="10dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/general_information"
-                    style="@style/TextTheme" />
+                    style="@style/TextStyle"
+                    android:textColor="?attr/onAccentColor" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                style="@style/HorizontalLineSeparatorTheme"/>
+                android:background="?attr/onAccentColor" />
 
         </LinearLayout>
 
@@ -150,21 +162,22 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:orientation="vertical"
-            android:background="@color/primary">
+            android:background="?attr/colorAccent">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                style="@style/HorizontalLineSeparatorTheme"/>
+                android:background="?attr/onAccentColor" />
 
             <Button
                 android:id="@+id/button_removed_vehicles_park"
-                style="@style/DropdownButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_more"
                 android:paddingHorizontal="15dp"
-                android:text="@string/toggle_removed_vehicles_park" />
+                android:text="@string/toggle_removed_vehicles_park"
+                android:textColor="?attr/onAccentColor"
+                style="@style/SquareButtonStyle" />
 
             <LinearLayout
                 android:id="@+id/removed_vehicles_park"
@@ -172,44 +185,48 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:background="?attr/colorAccent" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/removed_vehicles_park_A"
-                    style="@style/TextTheme" />
+                    style="@style/TextStyle"
+                    android:textColor="?attr/onAccentColor" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="10dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/removed_vehicles_park_B"
-                    style="@style/TextTheme" />
+                    style="@style/TextStyle"
+                    android:textColor="?attr/onAccentColor" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="10dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/removed_vehicles_park_C"
-                    style="@style/TextTheme" />
+                    style="@style/TextStyle"
+                    android:textColor="?attr/onAccentColor" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                style="@style/HorizontalLineSeparatorTheme"/>
+                android:background="?attr/onAccentColor" />
 
         </LinearLayout>
 
@@ -218,20 +235,22 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:orientation="vertical"
-            android:background="@color/primary">
+            android:background="?attr/colorAccent" >
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                style="@style/HorizontalLineSeparatorTheme"/>
+                android:background="?attr/onAccentColor" />
 
             <Button
                 android:id="@+id/button_removed_vehicles"
-                style="@style/DropdownButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"
-                android:text="@string/toggle_removed_vehicles" />
+                android:drawableStart="@drawable/ic_more"
+                android:text="@string/toggle_removed_vehicles"
+                android:textColor="?attr/onAccentColor"
+                style="@style/SquareButtonStyle" />
 
             <LinearLayout
                 android:id="@+id/removed_vehicles"
@@ -239,35 +258,38 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:background="?attr/colorAccent" >
 
                 <Button
                     android:id="@+id/button_phone_removed_vehicles"
-                    style="@style/AppButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/phone_removed_vehicles"
                     android:gravity="start|center_vertical"
-                    android:drawableEnd="@drawable/ic_phone"/>
+                    android:drawableEnd="@drawable/ic_phone"
+                    android:textColor="?attr/onAccentColor"
+                    style="@style/SquareButtonStyle" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="10dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/general_information"
-                    style="@style/TextTheme" />
+                    android:textColor="?attr/onAccentColor"
+                    style="@style/TextStyle"/>
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                style="@style/HorizontalLineSeparatorTheme"/>
+                android:background="?attr/onAccentColor" />
 
         </LinearLayout>
 

@@ -4,63 +4,71 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_darker"
-    android:padding="20dp" >
+    android:padding="20dp"
+    android:background="?attr/backgroundColor" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="?attr/backgroundColor" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter"
-            style="@style/TextTitleTheme" />
+            style="@style/HighlightTextStyle"
+            android:textColor="?attr/onBackgroundColor" />
 
         <TextView
             android:id="@+id/results_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filter"
-            style="@style/TextTheme" />
+            style="@style/TextStyle"
+            android:textColor="?attr/onBackgroundColor" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filters"
             android:layout_marginVertical="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="?attr/backgroundColor" />
 
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="?attr/backgroundColor" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:orientation="vertical"
-                android:background="@color/primary">
+                android:background="?attr/colorAccent" >
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
                 <Button
                     android:id="@+id/button_toggle_park_type_filter_list"
-                    style="@style/DropdownButtonTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="15dp"
-                    android:text="@string/toggle_park_type_filter_list" />
+                    android:text="@string/toggle_park_type_filter_list"
+                    android:drawableStart="@drawable/ic_more"
+                    android:textColor="?attr/onAccentColor"
+                    style="@style/SquareButtonStyle" />
 
                 <LinearLayout
                     android:id="@+id/park_type_filter_list"
@@ -68,38 +76,41 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:background="?attr/colorAccent" >
 
                     <Switch
                         android:id="@+id/filter_park_type_surface"
+                        style="@style/SwitchStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
                         android:text="@string/type_surface"
                         android:textOff="@string/off"
-                        android:textOn="@string/on"/>
+                        android:textOn="@string/on"
+                        android:textColor="?attr/onAccentColor" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="10dp"
-                        style="@style/HorizontalLineSeparatorTheme"/>
+                        android:background="?attr/onAccentColor" />
 
                     <Switch
                         android:id="@+id/filter_park_type_underground"
+                        style="@style/SwitchStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
                         android:text="@string/type_underground"
                         android:textOff="@string/off"
-                        android:textOn="@string/on"/>
+                        android:textOn="@string/on"
+                        android:textColor="?attr/onAccentColor" />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
             </LinearLayout>
 
@@ -108,20 +119,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:orientation="vertical"
-                android:background="@color/primary">
+                android:background="?attr/colorAccent" >
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
                 <Button
                     android:id="@+id/button_toggle_park_availability_filter_list"
-                    style="@style/DropdownButtonTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="15dp"
-                    android:text="@string/toggle_park_availability_filter_list" />
+                    android:text="@string/toggle_park_availability_filter_list"
+                    android:drawableStart="@drawable/ic_more"
+                    android:textColor="?attr/onAccentColor"
+                    style="@style/SquareButtonStyle" />
 
                 <LinearLayout
                     android:id="@+id/park_availability_filter_list"
@@ -129,136 +142,65 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:background="?attr/colorAccent" >
 
                     <Switch
                         android:id="@+id/filter_park_open"
+                        style="@style/SwitchStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
                         android:text="@string/park_open"
                         android:textOff="@string/off"
-                        android:textOn="@string/on"/>
+                        android:textOn="@string/on"
+                        android:textColor="?attr/onAccentColor" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="10dp"
-                        style="@style/HorizontalLineSeparatorTheme"/>
+                        android:background="?attr/onAccentColor" />
 
                     <Switch
                         android:id="@+id/filter_park_closed"
+                        style="@style/SwitchStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
                         android:text="@string/park_closed"
                         android:textOff="@string/off"
-                        android:textOn="@string/on"/>
+                        android:textOn="@string/on"
+                        android:textColor="?attr/onAccentColor" />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
             </LinearLayout>
-
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:orientation="vertical"
-                android:background="@color/primary">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
-
-                <Button
-                    android:id="@+id/button_toggle_park_fair_filter_list"
-                    style="@style/DropdownButtonTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="15dp"
-                    android:text="@string/toggle_park_fair_filter_list" />
-
-                <LinearLayout
-                    android:id="@+id/park_fair_filter_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <Switch
-                        android:id="@+id/filter_park_fair_green"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
-                        android:text="@string/fair_green"
-                        android:textOff="@string/off"
-                        android:textOn="@string/on"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="10dp"
-                        style="@style/HorizontalLineSeparatorTheme"/>
-
-                    <Switch
-                        android:id="@+id/filter_park_fair_yellow"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
-                        android:text="@string/fair_yellow"
-                        android:textOff="@string/off"
-                        android:textOn="@string/on"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="10dp"
-                        style="@style/HorizontalLineSeparatorTheme"/>
-
-                    <Switch
-                        android:id="@+id/filter_park_fair_red"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
-                        android:text="@string/fair_red"
-                        android:textOff="@string/off"
-                        android:textOn="@string/on"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
-
-            </LinearLayout> -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:orientation="vertical"
-                android:background="@color/primary">
+                android:background="?attr/colorAccent" >
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
                 <Button
                     android:id="@+id/button_toggle_park_distance_filter_list"
-                    style="@style/DropdownButtonTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="15dp"
-                    android:text="@string/toggle_park_distance_filter_list" />
+                    android:text="@string/toggle_park_distance_filter_list"
+                    android:drawableStart="@drawable/ic_more"
+                    android:textColor="?attr/onAccentColor"
+                    style="@style/SquareButtonStyle" />
 
                 <LinearLayout
                     android:id="@+id/park_distance_filter_list"
@@ -266,77 +208,76 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:background="?attr/colorAccent" >
 
                     <Switch
                         android:id="@+id/filter_park_closest"
+                        style="@style/SwitchStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
                         android:text="@string/closest"
                         android:textOff="@string/off"
-                        android:textOn="@string/on"/>
+                        android:textOn="@string/on"
+                        android:textColor="?attr/onAccentColor" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="10dp"
-                        style="@style/HorizontalLineSeparatorTheme"/>
+                        android:background="?attr/colorAccent" />
 
                     <Switch
                         android:id="@+id/filter_park_furthest"
+                        style="@style/SwitchStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
                         android:text="@string/furthest"
                         android:textOff="@string/off"
-                        android:textOn="@string/on"/>
+                        android:textOn="@string/on"
+                        android:textColor="?attr/onAccentColor" />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    style="@style/HorizontalLineSeparatorTheme"/>
+                    android:background="?attr/onAccentColor" />
 
             </LinearLayout>
 
             <Switch
+                android:id="@+id/filter_parks_alphabetically"
+                style="@style/SwitchStyle"
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="20dp"
-                android:id="@+id/filter_parks_alphabetically"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/accent"
                 android:text="@string/filter_alphabetically"
                 android:textOff="@string/off"
-                android:textOn="@string/on"/>
+                android:textOn="@string/on"
+                android:textColor="?attr/onAccentColor" />
 
             <Switch
+                android:id="@+id/filter_parks_favorites"
+                style="@style/SwitchStyle"
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="20dp"
-                android:id="@+id/filter_parks_favorites"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/accent"
                 android:text="@string/filter_favorites"
                 android:textOff="@string/off"
-                android:textOn="@string/on"/>
+                android:textOn="@string/on"
+                android:textColor="?attr/onAccentColor" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
+                android:id="@+id/filter_park_name"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp">
-
-                <EditText
-                    android:id="@+id/filter_park_name"
-                    style="@style/EditTextTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="@string/filter_by_name" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginVertical="10dp"
+                android:inputType="text"
+                android:hint="@string/filter_by_name" />
 
             <Button
                 android:id="@+id/button_apply_filters"
@@ -344,7 +285,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/apply"
-                style="@style/AppButton" />
+                android:textColor="?attr/onAccentColor"
+                style="@style/SquareButtonStyle" />
 
         </LinearLayout>
 

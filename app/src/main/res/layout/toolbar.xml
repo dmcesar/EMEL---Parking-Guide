@@ -5,7 +5,8 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:theme="@style/ToolbarTheme">
+    android:elevation="4dp"
+    android:background="?attr/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,11 +18,11 @@
 
         <Button
             android:id="@+id/button_park_me_now"
-            style="@style/ParkMeNowButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/park_me_now"
-            android:paddingHorizontal="12dp" />
+            android:paddingHorizontal="12dp"
+            style="@style/RoundButtonStyle" />
 
     </LinearLayout>
 

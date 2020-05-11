@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/ListItemTheme"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
     android:orientation="horizontal"
-    android:weightSum="5">
+    android:weightSum="5"
+    style="@style/ItemCardStyle" >
 
     <LinearLayout
         android:layout_weight="1"
@@ -32,26 +32,28 @@
                 android:indeterminate="false"
                 android:max="100"
                 android:progressDrawable="@drawable/circular"
-                android:secondaryProgress="100"/>
+                android:secondaryProgress="100" />
 
             <TextView
                 android:id="@+id/park_capacity_text"
-                style="@style/TextTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                style="@style/TextStyle"
+                android:textColor="?attr/onAccentColor" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/park_occupancy_state"
-            style="@style/TextTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
 
     </LinearLayout>
     
@@ -59,7 +61,7 @@
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_margin="12dp"
-        style="@style/VerticalLineSeparatorTheme" />
+        android:background="?attr/onAccentColor" />
     
     <LinearLayout
         android:layout_weight="2"
@@ -72,26 +74,29 @@
         <TextView
             android:layout_weight="1"
             android:id="@+id/park_name"
-            style="@style/TextTitleBoldTheme"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            style="@style/HighlightTextStyle"
+            android:textColor="?attr/onAccentColor" />
 
         <TextView
             android:layout_weight="1"
             android:id="@+id/park_coordinates"
-            style="@style/TextTheme"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
 
         <TextView
             android:layout_weight="1"
             android:id="@+id/park_availability"
-            style="@style/TextTheme"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
         
     </LinearLayout>
 
@@ -115,18 +120,19 @@
         <TextView
             android:layout_weight="1"
             android:id="@+id/park_type"
-            style="@style/TextTheme"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:textColor="?attr/onAccentColor" />
 
         <TextView
             android:layout_weight="1"
             android:id="@+id/last_updated_at"
-            style="@style/TextTheme"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            style="@style/TextStyle"
+            android:textColor="?attr/onAccentColor" />
         
     </LinearLayout>
 
