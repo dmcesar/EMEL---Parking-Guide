@@ -10,7 +10,8 @@
     <!-- Dark theme colors -->
     <color name="primaryColorDarkTheme">#424242</color>
     <color name="primaryLightColorDarkTheme">#6d6d6d</color>
-    <color name="primaryDarkColorDarkTheme">#1b1b1b</color>
+    <color name="primaryDarkColorDarkTheme">#292929</color>
+    <color name="primaryDarkerColorDarkTheme">#1b1b1b</color>
     <color name="primaryTextColorDarkTheme">#ffffff</color>
 
     <!-- Other colors -->

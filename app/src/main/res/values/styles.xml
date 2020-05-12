@@ -33,22 +33,24 @@
     <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- Apps main color -->
-        <item name="colorPrimary">@color/primaryColorDarkTheme</item>
+        <item name="colorPrimary">@color/primaryDarkColorDarkTheme</item>
 
         <!-- Main color darker variant -->
-        <item name="colorPrimaryDark">@color/primaryDarkColorDarkTheme</item>
-
+        <item name="colorPrimaryDark">@color/primaryDarkerColorDarkTheme</item>
+§
         <!-- FABs, switches, progress bars, links -->
-        <item name="colorAccent">@color/primaryColorDarkTheme</item>
+        <item name="colorAccent">@color/primaryLightColorDarkTheme</item>
 
-        <item name="backgroundColor">@color/primaryLightColorDarkTheme</item>
+
+        card -> toolbar
+        toolbar-> background
+        background-> card
+        <item name="backgroundColor">@color/primaryColorDarkTheme</item>
         <item name="primaryColorLight">@color/primaryLightColorDarkTheme</item>
         <item name="onPrimaryColor">@color/white</item>
         <item name="onAccentColor">@color/white</item>
         <item name="onBackgroundColor">@color/white</item>
 
-        <!-- Cards background color (vehicles, parking lots) -->
-        <item name="cardColor">@color/primaryColorDarkTheme</item>
 
         <!-- Buttons background color -->
         <item name="buttonColor">@color/lightGrey</item>
