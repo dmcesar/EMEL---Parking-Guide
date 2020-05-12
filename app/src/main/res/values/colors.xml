@@ -11,6 +11,8 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="lightGrey">#eeeeee</color>
+    <color name="darkGrey">#2B2D2F</color>
+    <color name="darkerGrey">#222222</color>
     <color name="errorColor">#b00020</color>
 
     <color name="amber">#FFBF00</color>
