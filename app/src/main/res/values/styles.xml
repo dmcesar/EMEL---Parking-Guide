@@ -98,7 +98,7 @@
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">?attr/onBackgroundColor</item>
         <item name="android:background">@drawable/edit_text</item>
-        <item name="hintTextColor">?attr/onBackgroundColor</item>
+        <item name="android:textColorHint">?attr/onBackgroundColor</item>
         <item name="android:textCursorDrawable">@drawable/text_cursor</item>
     </style>
 

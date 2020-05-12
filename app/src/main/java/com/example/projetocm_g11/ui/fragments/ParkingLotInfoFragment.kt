@@ -75,7 +75,7 @@ class ParkingLotInfoFragment : Fragment() {
         val coordinates = "${ (activity as Context).resources.getString(R.string.coordinates) }: " +
                 "(${this.parkingLot.latitude}, ${this.parkingLot.longitude})"
 
-        val type = if(this.parkingLot.getTypeEnum() == Type.SURFACE)
+        val type = if(this.parkingLot.getTypeEnum() == Type.UNDERGROUND)
             (activity as Context).resources.getString(R.string.type_underground)
         else (activity as Context).resources.getString(R.string.type_surface)
 

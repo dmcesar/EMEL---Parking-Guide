@@ -80,6 +80,8 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
         /* This listening for ViewModel requests to update UI */
         this.viewModel.registerListener(this)
 
+        this.viewModel.parkingLots.let { onDataChanged(it) }
+
         if(this.arguments == null) {
 
             Log.i(TAG, "No arguments to read from")
