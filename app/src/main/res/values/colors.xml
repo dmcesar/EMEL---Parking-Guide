@@ -7,12 +7,16 @@
     <color name="primaryDarkColor">#074600</color>
     <color name="primaryTextColor">#ffffff</color>
 
+    <!-- Dark theme colors -->
+    <color name="primaryColorDarkTheme">#424242</color>
+    <color name="primaryLightColorDarkTheme">#6d6d6d</color>
+    <color name="primaryDarkColorDarkTheme">#1b1b1b</color>
+    <color name="primaryTextColorDarkTheme">#ffffff</color>
+
     <!-- Other colors -->
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="lightGrey">#eeeeee</color>
-    <color name="darkGrey">#2B2D2F</color>
-    <color name="darkerGrey">#222222</color>
     <color name="errorColor">#b00020</color>
 
     <color name="amber">#FFBF00</color>

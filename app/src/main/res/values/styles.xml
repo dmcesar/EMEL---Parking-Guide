@@ -31,29 +31,30 @@
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
         <!-- Apps main color -->
-        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimary">@color/primaryColorDarkTheme</item>
 
         <!-- Main color darker variant -->
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorDarkTheme</item>
 
         <!-- FABs, switches, progress bars, links -->
-        <item name="colorAccent">@color/darkGrey</item>
+        <item name="colorAccent">@color/primaryColorDarkTheme</item>
 
-        <item name="backgroundColor">@color/darkerGrey</item>
-        <item name="primaryColorLight">@color/primaryDarkColor</item>
-        <item name="onPrimaryColor">@color/black</item>
+        <item name="backgroundColor">@color/primaryLightColorDarkTheme</item>
+        <item name="primaryColorLight">@color/primaryLightColorDarkTheme</item>
+        <item name="onPrimaryColor">@color/white</item>
         <item name="onAccentColor">@color/white</item>
         <item name="onBackgroundColor">@color/white</item>
 
         <!-- Cards background color (vehicles, parking lots) -->
-        <item name="cardColor">@color/lightGrey</item>
+        <item name="cardColor">@color/primaryColorDarkTheme</item>
 
         <!-- Buttons background color -->
         <item name="buttonColor">@color/lightGrey</item>
 
         <!-- Icons color -->
-        <item name="tintColor">@color/white</item>
+        <item name="tintColor">@color/black</item>
 
         <item name="drawerArrowStyle">@style/DrawerButtonStyle</item>
 
