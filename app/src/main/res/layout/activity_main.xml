@@ -32,6 +32,7 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer_menu"
+        android:background="?attr/backgroundColor"
         app:itemIconTint="?attr/onBackgroundColor"
         app:itemTextColor="?attr/onBackgroundColor" />
 

@@ -2,62 +2,79 @@
 
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <!-- Apps main color -->
-        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="onPrimaryColor">@color/white</item>
 
-        <!-- Main color darker variant -->
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="primaryColorLight">@color/lightGreen</item>
 
-        <!-- FABs, switches, progress bars, links -->
+        <item name="colorPrimaryDark">@color/darkGreen</item>
+        <item name="onPrimaryDarkColor">@color/white</item>
+
         <item name="colorAccent">@color/lightGrey</item>
+        <item name="onAccentColor">@color/black</item>
 
         <item name="backgroundColor">@color/white</item>
-        <item name="primaryColorLight">@color/primaryLightColor</item>
-        <item name="onPrimaryColor">@color/white</item>
-        <item name="onAccentColor">@color/black</item>
         <item name="onBackgroundColor">@color/black</item>
 
         <!-- Cards background color (vehicles, parking lots) -->
         <item name="cardColor">@color/lightGrey</item>
+        <item name="onCardColor">@color/black</item>
 
         <!-- Buttons background color -->
         <item name="buttonColor">@color/lightGrey</item>
+        <item name="onButtonColor">@color/black</item>
 
-        <!-- Icons color -->
-        <item name="tintColor">@color/black</item>
+        <!-- Toolbar background color -->
+        <item name="toolbarColor">@color/green</item>
 
+        <!-- FAB background color -->
+        <item name="fabColor">@color/darkGreen</item>
+        <item name="fabIconColor">@color/white</item>
+
+        <item name="switchThumbOnColor">@color/darkGreen</item>
+        <item name="switchThumbOffColor">@color/lightGrey</item>
+
+
+        <!-- Drawer toggle icon color -->
         <item name="drawerArrowStyle">@style/DrawerButtonStyle</item>
 
     </style>
 
-    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DarkTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
 
-        <!-- Apps main color -->
-        <item name="colorPrimary">@color/primaryDarkColorDarkTheme</item>
-
-        <!-- Main color darker variant -->
-        <item name="colorPrimaryDark">@color/primaryDarkerColorDarkTheme</item>
-§
-        <!-- FABs, switches, progress bars, links -->
-        <item name="colorAccent">@color/primaryLightColorDarkTheme</item>
-
-
-        card -> toolbar
-        toolbar-> background
-        background-> card
-        <item name="backgroundColor">@color/primaryColorDarkTheme</item>
-        <item name="primaryColorLight">@color/primaryLightColorDarkTheme</item>
+        <item name="colorPrimary">@color/green</item>
         <item name="onPrimaryColor">@color/white</item>
+
+        <item name="primaryColorLight">@color/lightGreen</item>
+
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="onPrimaryDarkColor">@color/white</item>
+
+        <item name="colorAccent">@color/grey</item>
         <item name="onAccentColor">@color/white</item>
+
+        <item name="backgroundColor">@color/darkGrey</item>
         <item name="onBackgroundColor">@color/white</item>
 
+        <!-- Cards background color (vehicles, parking lots) -->
+        <item name="cardColor">@color/grey</item>
+        <item name="onCardColor">@color/white</item>
 
         <!-- Buttons background color -->
-        <item name="buttonColor">@color/lightGrey</item>
+        <item name="buttonColor">@color/grey</item>
+        <item name="onButtonColor">@color/white</item>
 
-        <!-- Icons color -->
-        <item name="tintColor">@color/black</item>
+        <!-- Toolbar background color -->
+        <item name="toolbarColor">@color/green</item>
 
+        <!-- FAB background color -->
+        <item name="fabColor">@color/green</item>
+        <item name="fabIconColor">@color/white</item>
+
+        <item name="switchThumbOnColor">@color/green</item>
+        <item name="switchThumbOffColor">@color/white</item>
+
+        <!-- Drawer toggle icon color -->
         <item name="drawerArrowStyle">@style/DrawerButtonStyle</item>
 
     </style>
@@ -75,12 +92,14 @@
         <item name="android:elevation">2dp</item>
         <item name="android:textSize">15sp</item>
         <item name="android:background">@drawable/square_button</item>
+        <item name="android:textColor">?attr/onButtonColor</item>
     </style>
 
     <style name="RoundButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:elevation">2dp</item>
         <item name="android:textSize">15sp</item>
         <item name="android:background">@drawable/round_button</item>
+        <item name="android:textColor">?attr/onButtonColor</item>
     </style>
 
     <style name="DrawerHeaderTextStyle">
@@ -94,11 +113,11 @@
     </style>
 
     <style name="TextStyle">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">?attr/onBackgroundColor</item>
         <item name="android:background">@drawable/edit_text</item>
         <item name="android:textColorHint">?attr/onBackgroundColor</item>
@@ -106,9 +125,7 @@
     </style>
 
     <style name="SwitchStyle">
-
         <item name="android:trackTint">?attr/primaryColorLight</item>
         <item name="android:thumbTint">@drawable/switch_thumb</item>
     </style>
-
 </resources>

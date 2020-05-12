@@ -43,7 +43,7 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:backgroundTint="?attr/colorPrimaryDark"
+        android:backgroundTint="?attr/fabColor"
         android:src="@drawable/ic_add"/>
 
 </RelativeLayout>

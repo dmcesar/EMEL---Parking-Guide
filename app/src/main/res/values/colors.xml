@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Light theme colors -->
-    <color name="primaryColor">#3b7216</color>
-    <color name="primaryLightColor">#6aa144</color>
-    <color name="primaryDarkColor">#074600</color>
-    <color name="primaryTextColor">#ffffff</color>
+    <color name="green">#3b7216</color>
+    <color name="lightGreen">#6aa144</color>
+    <color name="darkGreen">#074600</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="darkGrey">#121212</color>
+    <color name="grey">#383838</color>
+    <color name="lightGrey">#eeeeee</color>
+    <color name="errorColor">#b00020</color>
 
-    <!-- Dark theme colors -->
     <color name="primaryColorDarkTheme">#424242</color>
     <color name="primaryLightColorDarkTheme">#6d6d6d</color>
     <color name="primaryDarkColorDarkTheme">#292929</color>
@@ -15,11 +18,6 @@
     <color name="primaryTextColorDarkTheme">#ffffff</color>
 
     <!-- Other colors -->
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-    <color name="lightGrey">#eeeeee</color>
-    <color name="errorColor">#b00020</color>
-
     <color name="amber">#FFBF00</color>
     <color name="dark_red">#8B0000</color>
     <color name="forest_green">#228B22</color>

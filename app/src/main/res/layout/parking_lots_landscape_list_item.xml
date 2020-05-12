@@ -43,7 +43,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 style="@style/TextStyle"
-                android:textColor="?attr/onAccentColor" />
+                android:textColor="?attr/onCardColor" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             style="@style/TextStyle"
-            android:textColor="?attr/onAccentColor" />
+            android:textColor="?attr/onCardColor" />
 
     </LinearLayout>
     
@@ -61,7 +61,7 @@
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_margin="12dp"
-        android:background="?attr/onAccentColor" />
+        android:background="?attr/onCardColor" />
     
     <LinearLayout
         android:layout_weight="2"
@@ -78,7 +78,7 @@
             android:layout_height="0dp"
             android:gravity="center_vertical"
             style="@style/HighlightTextStyle"
-            android:textColor="?attr/onAccentColor" />
+            android:textColor="?attr/onCardColor" />
 
         <TextView
             android:layout_weight="1"
@@ -87,7 +87,7 @@
             android:layout_height="0dp"
             android:gravity="center_vertical"
             style="@style/TextStyle"
-            android:textColor="?attr/onAccentColor" />
+            android:textColor="?attr/onCardColor" />
 
         <TextView
             android:layout_weight="1"
@@ -96,7 +96,7 @@
             android:layout_height="0dp"
             android:gravity="center_vertical"
             style="@style/TextStyle"
-            android:textColor="?attr/onAccentColor" />
+            android:textColor="?attr/onCardColor" />
         
     </LinearLayout>
 
@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center_vertical"
-            android:textColor="?attr/onAccentColor" />
+            android:textColor="?attr/onCardColor" />
 
         <TextView
             android:layout_weight="1"
@@ -132,7 +132,7 @@
             android:layout_height="0dp"
             android:gravity="center_vertical"
             style="@style/TextStyle"
-            android:textColor="?attr/onAccentColor" />
+            android:textColor="?attr/onCardColor" />
         
     </LinearLayout>
 

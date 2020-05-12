@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingHorizontal="40dp"
-    tools:context=".ui.activities.SplashScreenActivity">
+    tools:context=".ui.activities.SplashScreenActivity"
+    android:background="@color/green" >
 
     <ImageView
         android:id="@+id/logo"
@@ -27,6 +28,6 @@
         android:layout_marginTop="20dp"
         android:text="@string/app_name"
         style="@style/HighlightTextStyle"
-        android:textColor="?attr/onBackgroundColor" />
+        android:textColor="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

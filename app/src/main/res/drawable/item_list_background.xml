@@ -9,6 +9,6 @@
         android:width="1dp"
         android:fillColor="@color/white" />  <!-- Background color -->
 
-    <solid android:color="@color/primaryColor" /> <!-- Border color -->
+    <solid android:color="@color/green" /> <!-- Border color -->
 
 </shape>

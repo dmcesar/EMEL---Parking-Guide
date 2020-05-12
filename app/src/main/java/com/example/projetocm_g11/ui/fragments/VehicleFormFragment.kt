@@ -186,8 +186,6 @@ class VehicleFormFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                Log.i(TAG, "$count - $before")
-
                 if (start == 1 && count > before) {
                     appendDash = true
                 }

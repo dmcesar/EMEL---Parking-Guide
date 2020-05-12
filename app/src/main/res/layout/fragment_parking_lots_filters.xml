@@ -20,14 +20,6 @@
             style="@style/HighlightTextStyle"
             android:textColor="?attr/onBackgroundColor" />
 
-        <TextView
-            android:id="@+id/results_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter"
-            style="@style/TextStyle"
-            android:textColor="?attr/onBackgroundColor" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filters"
             android:layout_marginVertical="20dp"

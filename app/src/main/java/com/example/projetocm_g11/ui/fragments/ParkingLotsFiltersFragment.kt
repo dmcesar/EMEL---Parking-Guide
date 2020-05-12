@@ -261,11 +261,11 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
         super.onStart()
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
 
         this.viewModel.unregisterListener()
 
-        super.onDestroy()
+        super.onStop()
     }
 
     @Suppress("UNCHECKED_CAST")

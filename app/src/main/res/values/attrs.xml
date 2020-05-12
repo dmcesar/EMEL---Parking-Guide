@@ -3,15 +3,28 @@
 
     <declare-styleable name="ds">
 
-        <attr name="backgroundColor" format="color" />
         <attr name="primaryColorLight" format="color" />
+
         <attr name="onPrimaryColor" format="color" />
+        <attr name="onPrimaryDarkColor" format="color" />
         <attr name="onAccentColor" format="color" />
+
+        <attr name="backgroundColor" format="color" />
         <attr name="onBackgroundColor" format="color" />
 
+        <attr name="toolbarColor" format="color" />
+
+        <attr name="fabColor" format="color" />
+        <attr name="fabIconColor" format="color" />
+
         <attr name="cardColor" format="color" />
+        <attr name="onCardColor" format="color" />
+
         <attr name="buttonColor" format="color" />
-        <attr name="tintColor" format="color" />
+        <attr name="onButtonColor" format="color" />
+
+        <attr name="switchThumbOnColor" format="color" />
+        <attr name="switchThumbOffColor" format="color" />
 
     </declare-styleable>
 </resources>
