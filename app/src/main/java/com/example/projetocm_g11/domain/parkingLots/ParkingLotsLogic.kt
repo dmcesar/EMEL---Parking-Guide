@@ -1,15 +1,16 @@
 package com.example.projetocm_g11.domain.parkingLots
 
 import android.util.Log
+import com.example.projetocm_g11.data.local.entities.Filter
 import com.example.projetocm_g11.data.local.list.Storage
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.local.entities.Type
-import com.example.projetocm_g11.data.repositories.ParkingLotsRepository
+import com.example.projetocm_g11.data.local.room.dao.ParkingLotsDAO
 import com.example.projetocm_g11.ui.listeners.OnDataReceived
 import kotlinx.coroutines.*
 import kotlin.collections.ArrayList
 
-class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataReceived {
+class ParkingLotsLogic(private val database: ParkingLotsDAO) {
 
     private val TAG = ParkingLotsLogic::class.java.simpleName
 
@@ -18,106 +19,84 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
     /* Observer is notified with an ArrayList<ParkingLot> */
     private var listener: OnDataReceived? = null
 
-    private fun applyFilters(list: ArrayList<ParkingLot>) {
+    private fun applyFilters(unfilteredList: ArrayList<ParkingLot>, filters: ArrayList<Filter>): ArrayList<ParkingLot> {
 
-        Log.i(TAG, "applyFilters() called")
+        if (filters.size > 0) {
 
-        CoroutineScope(Dispatchers.IO).launch {
+            var filteredList = unfilteredList.asSequence()
 
-            val filters = storage.getAll()
+            Log.i(TAG, "Before filters applied -> ${filteredList.toList().size}")
 
-            withContext(Dispatchers.Default) {
+            for (f in filters) {
 
-                if (filters.size > 0) {
+                when (f.value) {
 
-                    var sequence = list.asSequence()
+                    "SURFACE" -> filteredList = filteredList.filter { p -> p.getTypeEnum() == Type.SURFACE }
 
-                    Log.i(TAG, "Before filters applied -> ${sequence.toList().size}")
+                    "UNDERGROUND" -> filteredList = filteredList.filter { p -> p.getTypeEnum() == Type.UNDERGROUND }
 
-                    for (f in filters) {
+                    "AVAILABLE" -> filteredList = filteredList.filter { p -> p.active == 1 }
 
-                        when (f.value) {
+                    "UNAVAILABLE" -> filteredList = filteredList.filter { p -> p.active == 0 }
 
-                            "SURFACE" -> sequence.filter { p -> p.getTypeEnum() == Type.SURFACE }
+                    "FAVORITE" -> filteredList = filteredList.filter { p -> p.isFavourite }
 
-                            "UNDERGROUND" -> sequence.filter { p -> p.getTypeEnum() == Type.UNDERGROUND }
+                    "ALPHABETICAL" -> filteredList = filteredList.sortedBy { p -> p.name }
 
-                            "AVAILABLE" -> sequence.filter { p -> p.active == 1 }
-
-                            "UNAVAILABLE" -> sequence.filter { p -> p.active == 0 }
-
-                            "FAVORITE" -> sequence = sequence.filter { p -> p.isFavourite }
-
-                            "ALPHABETICAL" -> sequence = sequence.sortedBy { p -> p.name }
-
-                            else -> sequence = sequence.filter { p -> p.name.contains(f.value) }
-                        }
-                    }
-
-                    Log.i(TAG, "After filters applied -> ${sequence.toList().size}")
-
-                    withContext(Dispatchers.Main) {
-
-                        notifyDataChanged(ArrayList(sequence.toList()))
-                    }
-
-                } else {
-
-                    withContext(Dispatchers.Main) {
-
-                        notifyDataChanged(list)
-                    }
+                    else -> filteredList = filteredList.filter { p -> p.name.contains(f.value) }
                 }
             }
+
+            Log.i(TAG, "After filters applied -> ${filteredList.toList().size}")
+
+            return ArrayList(filteredList.toList())
+
+        } else {
+
+            return unfilteredList
         }
     }
 
-    /*
-    * Reads data from API or local DB
-    * After reading, onDataReceived is called which launches a new Coroutine where the filters are
-    * read and applied.
-    * Finally, after applying filters, observer is notified
-    */
+    /* Read locally stored data and notify observer */
     fun getParkingLots() {
 
-        Log.i(TAG, "getParkingLots()")
+        CoroutineScope(Dispatchers.IO).launch {
 
-        repository.getAll()
+            val list = ArrayList(database.getAll())
+            val filters = storage.getAll()
+
+            val filteredList = applyFilters(list, filters)
+
+            notifyDataChanged(filteredList)
+        }
     }
 
     fun toggleFavorite(parkingLot: ParkingLot) {
 
-        repository.update(parkingLot.id, !parkingLot.isFavourite)
+        CoroutineScope(Dispatchers.IO).launch {
+
+            database.updateFavoriteStatus(parkingLot.id, !parkingLot.isFavourite)
+
+            getParkingLots()
+        }
     }
 
-    /* Notifies ViewModel of data changed */
-    private fun notifyDataChanged(list: ArrayList<ParkingLot>) {
+    /* Notifies ViewModel */
+    private suspend fun notifyDataChanged(list: ArrayList<ParkingLot>) {
 
-        listener?.onDataReceived(ArrayList(list))
+        withContext(Dispatchers.Main) {
+
+            listener?.onDataReceived(ArrayList(list))
+        }
     }
 
     fun registerListener(listener: OnDataReceived) {
 
         this.listener = listener
-        this.repository.registerListener(this)
     }
 
     fun unregisterListener() {
 
         this.listener = null
-        this.repository.unregisterListener()
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    override fun onDataReceived(data: ArrayList<*>?) {
-
-        Log.i(TAG, "onDataReceived()")
-
-        data?.let {
-
-            it as ArrayList<ParkingLot>
-
-            applyFilters(it)
-        }
     }
 }

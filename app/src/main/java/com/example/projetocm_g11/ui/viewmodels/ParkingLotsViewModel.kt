@@ -17,12 +17,7 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
     /* Retrieves local database instance */
     private val localDatabase = LocalDatabase.getInstance(application).parkingLotsDAO()
 
-    private val logic = ParkingLotsLogic(
-        ParkingLotsRepository(
-            localDatabase,
-            RetrofitBuilder.getInstance(ENDPOINT)
-        )
-    )
+    private val logic = ParkingLotsLogic(localDatabase)
 
     private var listener: OnDataReceived? = null
 

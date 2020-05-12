@@ -15,6 +15,8 @@ import com.example.projetocm_g11.R
 import com.example.projetocm_g11.ui.adapters.ParkingLotLandscapeAdapter
 import com.example.projetocm_g11.ui.adapters.ParkingLotPortraitAdapter
 import com.example.projetocm_g11.data.local.entities.ParkingLot
+import com.example.projetocm_g11.ui.activities.EXTRA_PARKING_LOTS
+import com.example.projetocm_g11.ui.activities.EXTRA_UPDATED
 import com.example.projetocm_g11.ui.listeners.*
 import com.example.projetocm_g11.ui.viewmodels.ParkingLotsViewModel
 import kotlinx.android.synthetic.main.fragment_parking_lots_list.*
@@ -30,6 +32,18 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
     private var navigationListener: OnNavigateToFragment? = null
 
     private lateinit var viewModel: ParkingLotsViewModel
+
+    private fun handleArgs() {
+
+        val parkingLots = this.arguments?.getParcelableArrayList<ParkingLot>(EXTRA_PARKING_LOTS)
+        val updated = this.arguments?.getBoolean(EXTRA_UPDATED)
+
+        parkingLots?.let { onDataChanged(it) }
+        Log.i(TAG, "Updated: " + updated.toString())
+        // TODO: Notify if data outdated
+
+        this.arguments = null
+    }
 
     @OnClick(R.id.button_filter)
     fun showPopupFilter() {
@@ -60,17 +74,25 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
 
     override fun onStart() {
 
-        /* Set init value for list */
-        this.viewModel.parkingLots.let { onDataChanged(ArrayList(it)) }
-
         /* Activity listening for navigation requests (onClick item and onClick filters) */
         this.navigationListener = activity as OnNavigateToFragment
 
         /* This listening for ViewModel requests to update UI */
         this.viewModel.registerListener(this)
 
-        /* Get parking lots from storage and update UI */
-        this.viewModel.getAll()
+        if(this.arguments == null) {
+
+            Log.i(TAG, "No arguments to read from")
+
+            this.viewModel.getAll()
+
+        } else {
+
+            Log.i(TAG, "Arguments passed")
+
+            /* Obtain arguments, init list and notify if data is potentially outdated */
+            handleArgs()
+        }
 
         super.onStart()
     }
@@ -111,8 +133,6 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
-        Log.i(TAG, "onDataReceived() called")
-
         data?.let{ onDataChanged(it as ArrayList<ParkingLot>) }
     }
 
@@ -141,8 +161,6 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
 
     /* Action triggered when RecycleView item is clicked */
     override fun onClickEvent(data: Any?) {
-
-        Log.i(TAG, "onClickEvent() called")
 
         /* Generate details Fragment */
         val itemDetail =

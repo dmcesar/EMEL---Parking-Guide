@@ -6,9 +6,11 @@ import com.example.projetocm_g11.data.local.room.dao.ParkingLotsDAO
 import com.example.projetocm_g11.data.remote.requests.ParkingLotsRequestHeader
 import com.example.projetocm_g11.data.remote.services.ParkingLotsService
 import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedWithOrigin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 
 private const val API_TOKEN = "93600bb4e7fee17750ae478c22182dda"
@@ -18,7 +20,7 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
     private val TAG = ParkingLotsRepository::class.java.simpleName
 
     /* Notifies observer (ParkingLotsLogic) with ArrayList<ParkingLots> */
-    private var listener: OnDataReceived? = null
+    private var listener: OnDataReceivedWithOrigin? = null
 
     /*
     * Requests all parking lots from API.
@@ -33,6 +35,32 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
             /* Tries to read data from remote API */
             getFromRemote()
         }
+    }
+
+    private suspend fun updateLocal(remoteData: ArrayList<ParkingLot>): ArrayList<ParkingLot> {
+
+        val locallyUpdatedList = ArrayList<ParkingLot>()
+
+        remoteData.forEach { p ->
+
+            val cntOccurrences = local.getCountWithID(p.id)
+
+            Log.i(TAG, p.name + " " + cntOccurrences.toString())
+
+            /* If entry with same ID already exists, update data and add updated data to output list */
+            if(cntOccurrences == 1) {
+
+                local.updateData(p.id, p.active, p.lastUpdatedAt, p.occupancy)
+                locallyUpdatedList.add(local.get(p.id))
+
+            } else{
+
+                local.insert(p)
+                locallyUpdatedList.add(p)
+            }
+        }
+
+        return locallyUpdatedList
     }
 
     private suspend fun getFromRemote() {
@@ -70,13 +98,14 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
                     )
 
                     list.add(parkingLot)
-
-                    /* Update local DB with received item */
-                    local.insert(parkingLot)
                 }
             }
 
-            notifyObserver(list)
+            /* Update local repository based on new data (preserves favorite status) */
+            val locallyUpdatedList = updateLocal(list)
+
+            /* Notify observer with latest data */
+            notifyObserver(locallyUpdatedList, true)
 
         } else {
 
@@ -92,30 +121,18 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
 
         val list = ArrayList(local.getAll())
 
-        notifyObserver(list)
+        notifyObserver(list, false)
     }
 
-    /*
-    * Updates parking lot's "favorite" status.
-    * Operation is done locally since API does not provide parameter.
-    * After operation is finished, read locally updated data from repository and notify observer
-    */
-    fun update(id: String, isFavorite: Boolean) {
+    private suspend fun notifyObserver(list: ArrayList<ParkingLot>, updated: Boolean) {
 
-        CoroutineScope(Dispatchers.IO).launch {
+        withContext(Dispatchers.Main) {
 
-            local.update(id, isFavorite)
-
-            getFromLocal()
+            listener?.onDataReceivedWithOrigin(list, updated)
         }
     }
 
-    private fun notifyObserver(list: ArrayList<ParkingLot>) {
-
-        this.listener?.onDataReceived(list)
-    }
-
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListener(listener: OnDataReceivedWithOrigin) {
 
         this.listener = listener
     }

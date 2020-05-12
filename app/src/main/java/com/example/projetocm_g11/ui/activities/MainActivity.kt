@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.projetocm_g11.ui.utils.NavigationManager
 import com.example.projetocm_g11.ui.listeners.OnNavigateToFragment
 import com.example.projetocm_g11.R
+import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.ui.fragments.ContactsFragment
 import com.example.projetocm_g11.ui.fragments.ParkingLotsListFragment
 import com.example.projetocm_g11.ui.fragments.SettingsFragment
@@ -103,9 +104,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(!screenRotated(savedInstanceState)) {
 
+            val data = intent?.getParcelableArrayListExtra<ParkingLot>(EXTRA_PARKING_LOTS)
+            val updated = intent?.getBooleanExtra(EXTRA_UPDATED, false)
+
+            val args = Bundle()
+
+            args.putParcelableArrayList(EXTRA_PARKING_LOTS, data)
+
+            if (updated != null) {
+                args.putBoolean(EXTRA_UPDATED, updated)
+            }
+
+            val fragment = ParkingLotsListFragment()
+            fragment.arguments = args
+
             // Navigate to list fragment
             NavigationManager.goToFragment(supportFragmentManager,
-                ParkingLotsListFragment()
+                fragment
             )
         }
     }
