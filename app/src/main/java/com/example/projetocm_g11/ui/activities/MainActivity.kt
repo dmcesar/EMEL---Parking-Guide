@@ -1,6 +1,7 @@
 package com.example.projetocm_g11.ui.activities
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -30,6 +31,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     OnNavigateToFragment {
 
     private val TAG = MainActivity::class.java.simpleName
+
+    private var currentThemeID: Int = 0
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -96,8 +99,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun launchThemeThread() {
 
-        val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
-
         val dateFormatter = SimpleDateFormat("HH:mm")
 
         val morningDate = dateFormatter.parse("08:00")
@@ -107,11 +108,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val millisToSleep: Long = 1000 * 20
 
         CoroutineScope(Dispatchers.Default).launch {
+
             while(true) {
 
                 Log.i(TAG, "Validating theme according to current time")
-
-                // TODO: Check battery level
 
                 /* Check what time it is */
                 val currentHour = dateFormatter.format(Date())
@@ -120,39 +120,46 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 val currentDate = dateFormatter.parse(currentHour)
 
-                if (currentDate.after(morningDate) && currentDate.before(afternoonDate)) {
+                if(currentThemeID == R.style.DarkTheme) {
 
-                    /* App should be in LightTheme */
+                    if (currentDate.after(morningDate) && currentDate.before(afternoonDate)) {
 
-                    Log.i(TAG, "Switching to LightTheme")
+                        /* App should be in LightTheme */
 
-                    withContext(Dispatchers.Main) {
+                        Log.i(TAG, "Switching to LightTheme")
 
-                        theme.applyStyle(R.style.LightTheme, true)
-
-                        finish()
-                        startActivity(intent)
-                        //setTheme(R.style.LightTheme)
-                        //recreate()
+                        changeCurrentTheme(R.style.LightTheme)
                     }
 
-                } else {
+                } else if(currentThemeID == R.style.LightTheme){
 
-                    /* App should be in DarkTheme */
+                    if (currentDate.before(morningDate) || currentDate.after(afternoonDate)) {
 
-                    Log.i(TAG, "Switching to DarkTheme")
+                        /* App should be in DarkTheme */
 
-                    withContext(Dispatchers.Main) {
+                        Log.i(TAG, "Switching to DarkTheme")
 
-                        theme.applyStyle(R.style.DarkTheme, true)
-
-                        //setTheme(R.style.DarkTheme)
-                        finish()
-                        startActivity(intent)
+                        changeCurrentTheme(R.style.DarkTheme)
                     }
                 }
+
+                /* Wait and repeat */
                 delay(millisToSleep)
             }
+        }
+    }
+
+    private suspend fun changeCurrentTheme(id: Int) {
+
+        withContext(Dispatchers.Main) {
+
+            /* Save current theme ID */
+            currentThemeID = id
+
+            setTheme(id)
+
+            /* Refresh activity? */
+            recreate()
         }
     }
 
@@ -180,10 +187,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        Log.i(TAG, "onCreate()")
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        /* Initial theme is default Light theme */
+        this.currentThemeID = R.style.LightTheme
 
         // Provides drawer access within toolbar
         setSupportActionBar(toolbar)
