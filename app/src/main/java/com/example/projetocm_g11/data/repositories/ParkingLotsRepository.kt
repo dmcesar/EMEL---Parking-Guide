@@ -22,21 +22,6 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
     /* Notifies observer (ParkingLotsLogic) with ArrayList<ParkingLots> */
     private var listener: OnDataReceivedWithOrigin? = null
 
-    /*
-    * Requests all parking lots from API.
-    * If response is not successful, read potentially outdated data from local storage.
-    */
-    fun getAll() {
-
-        Log.i(TAG, "getAll()")
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            /* Tries to read data from remote API */
-            getFromRemote()
-        }
-    }
-
     private suspend fun updateLocal(remoteData: ArrayList<ParkingLot>): ArrayList<ParkingLot> {
 
         val locallyUpdatedList = ArrayList<ParkingLot>()
@@ -61,7 +46,7 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
         return locallyUpdatedList
     }
 
-    private suspend fun getFromRemote() {
+    suspend fun getFromRemote() {
 
         Log.i(TAG, "getFromRemote()")
 
@@ -69,6 +54,8 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
 
         /* Create endpoint service */
         val service = remote.create(ParkingLotsService::class.java)
+
+        Log.i(TAG, "waiting response")
 
         /* Send request with authentication token receive response */
         val response = service.getAll(token = API_TOKEN)
@@ -113,7 +100,7 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
         }
     }
 
-    private suspend fun getFromLocal() {
+    suspend fun getFromLocal() {
 
         Log.i(TAG, "getFromLocal()")
 

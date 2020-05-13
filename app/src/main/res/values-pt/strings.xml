@@ -84,5 +84,8 @@
     <string name="schedule_example">Horário: 24 horas</string>
     <string name="observations">Observações</string>
     <string name="observations_example">Observações sobre o estacionamento</string>
+    <string name="outdatedDataTitle">Erro de ligação</string>
+    <string name="outdatedDataMessage">Não foi possível conectar ao servidor. A mostrar dados potêncialmente desatualizados.</string>
+    <string name="OK">OK</string>
 
 </resources>

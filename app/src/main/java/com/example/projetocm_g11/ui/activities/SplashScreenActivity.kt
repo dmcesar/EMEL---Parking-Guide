@@ -1,6 +1,9 @@
 package com.example.projetocm_g11.ui.activities
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -42,6 +45,14 @@ class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOrigin {
         finish()
     }
 
+    private fun checkInternetConnection(): Boolean {
+
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+
+        return activeNetwork?.isConnected == true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -72,7 +83,18 @@ class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOrigin {
 
         this.viewModel.registerListener(this)
 
-        this.viewModel.requestData()
+        if(checkInternetConnection()) {
+
+            Log.i(TAG, "Internet connection detected, requesting data from remote.")
+
+            this.viewModel.requestDataFromRemote()
+
+        } else {
+
+            Log.i(TAG, "No internet connection detected, requesting data from local.")
+
+            this.viewModel.requestDataFromLocal()
+        }
 
         super.onStart()
     }

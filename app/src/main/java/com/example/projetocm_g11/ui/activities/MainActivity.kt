@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             /* Save current theme ID */
             sharedPreferences.edit().putInt(EXTRA_THEME, id).apply()
 
-            setTheme(id)
+            //setTheme(id)
 
             /* Refresh activity? */
             finish()

@@ -85,5 +85,8 @@
     <string name="schedule_example">Schedule: 24 hours</string>
     <string name="observations">Observations</string>
     <string name="observations_example">Parking place observations</string>
+    <string name="outdatedDataTitle">Connection error</string>
+    <string name="outdatedDataMessage">Could not fetch data from server. Displaying potentially outdated data.</string>
+    <string name="OK">OK</string>
 
 </resources>

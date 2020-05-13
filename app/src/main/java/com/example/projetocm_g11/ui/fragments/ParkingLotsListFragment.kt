@@ -1,5 +1,6 @@
 package com.example.projetocm_g11.ui.fragments
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -39,14 +40,24 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
         val updated = this.arguments?.getBoolean(EXTRA_UPDATED)
 
         parkingLots?.let { onDataChanged(it) }
-        Log.i(TAG, "Updated: " + updated.toString())
-        // TODO: Notify if data outdated
+
+        updated?.let {
+
+            if(!it) {
+
+                AlertDialog.Builder(activity as Context)
+                    .setTitle(R.string.outdatedDataTitle)
+                    .setMessage(R.string.outdatedDataMessage)
+                    .setNegativeButton(R.string.OK, null)
+                    .show()
+            }
+        }
 
         this.arguments = null
     }
 
     @OnClick(R.id.button_filter)
-    fun showPopupFilter() {
+    fun onClickGoFiltersFragment() {
 
         /* Generate filters fragment */
         val filtersFragment = ParkingLotsFiltersFragment()

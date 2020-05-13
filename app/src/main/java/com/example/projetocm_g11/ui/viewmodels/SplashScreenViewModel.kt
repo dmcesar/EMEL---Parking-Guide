@@ -24,9 +24,14 @@ class SplashScreenViewModel(application: Application) : AndroidViewModel(applica
 
     private var listener: OnDataReceivedWithOrigin? = null
 
-    fun requestData() {
+    fun requestDataFromRemote() {
 
-        this.logic.getData()
+        this.logic.getFromRemote()
+    }
+
+    fun requestDataFromLocal() {
+
+        this.logic.getFromLocal()
     }
 
     fun registerListener(listener: OnDataReceivedWithOrigin) {
