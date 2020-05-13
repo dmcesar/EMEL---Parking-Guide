@@ -1,5 +1,6 @@
 package com.example.projetocm_g11.ui.activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,12 @@ import com.example.projetocm_g11.ui.fragments.VehiclesListFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.logging.SimpleFormatter
+
+const val EXTRA_THEME = "com.example.projetocm_g11.ui.activities.THEME"
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     OnNavigateToFragment {
@@ -87,6 +94,90 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return savedInstanceState != null
     }
 
+    private fun launchThemeThread() {
+
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
+
+        val dateFormatter = SimpleDateFormat("HH:mm")
+
+        val morningDate = dateFormatter.parse("08:00")
+        val afternoonDate = dateFormatter.parse("16:00")
+
+        /* Checks every 5 minutes */
+        val millisToSleep: Long = 1000 * 20
+
+        CoroutineScope(Dispatchers.Default).launch {
+            while(true) {
+
+                Log.i(TAG, "Validating theme according to current time")
+
+                // TODO: Check battery level
+
+                /* Check what time it is */
+                val currentHour = dateFormatter.format(Date())
+
+                Log.i(TAG, "Current time is: $currentHour")
+
+                val currentDate = dateFormatter.parse(currentHour)
+
+                if (currentDate.after(morningDate) && currentDate.before(afternoonDate)) {
+
+                    /* App should be in LightTheme */
+
+                    Log.i(TAG, "Switching to LightTheme")
+
+                    withContext(Dispatchers.Main) {
+
+                        theme.applyStyle(R.style.LightTheme, true)
+
+                        finish()
+                        startActivity(intent)
+                        //setTheme(R.style.LightTheme)
+                        //recreate()
+                    }
+
+                } else {
+
+                    /* App should be in DarkTheme */
+
+                    Log.i(TAG, "Switching to DarkTheme")
+
+                    withContext(Dispatchers.Main) {
+
+                        theme.applyStyle(R.style.DarkTheme, true)
+
+                        //setTheme(R.style.DarkTheme)
+                        finish()
+                        startActivity(intent)
+                    }
+                }
+                delay(millisToSleep)
+            }
+        }
+    }
+
+    private fun initListFragment() {
+
+        val data = intent?.getParcelableArrayListExtra<ParkingLot>(EXTRA_PARKING_LOTS)
+        val updated = intent?.getBooleanExtra(EXTRA_UPDATED, false)
+
+        val args = Bundle()
+
+        args.putParcelableArrayList(EXTRA_PARKING_LOTS, data)
+
+        if (updated != null) {
+            args.putBoolean(EXTRA_UPDATED, updated)
+        }
+
+        val fragment = ParkingLotsListFragment()
+        fragment.arguments = args
+
+        // Navigate to list fragment
+        NavigationManager.goToFragment(supportFragmentManager,
+            fragment
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         Log.i(TAG, "onCreate()")
@@ -104,24 +195,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(!screenRotated(savedInstanceState)) {
 
-            val data = intent?.getParcelableArrayListExtra<ParkingLot>(EXTRA_PARKING_LOTS)
-            val updated = intent?.getBooleanExtra(EXTRA_UPDATED, false)
+            /* Launches thread that checks time. When time is between 18:00-8:00, sets App theme to DarkTheme.
+            * When time is between 8:00-18:00, sets App Theme to Light Theme */
+            launchThemeThread()
 
-            val args = Bundle()
-
-            args.putParcelableArrayList(EXTRA_PARKING_LOTS, data)
-
-            if (updated != null) {
-                args.putBoolean(EXTRA_UPDATED, updated)
-            }
-
-            val fragment = ParkingLotsListFragment()
-            fragment.arguments = args
-
-            // Navigate to list fragment
-            NavigationManager.goToFragment(supportFragmentManager,
-                fragment
-            )
+            /* Creates and starts ParkingLotsListFragment with previously fetched data */
+            initListFragment()
         }
     }
 
