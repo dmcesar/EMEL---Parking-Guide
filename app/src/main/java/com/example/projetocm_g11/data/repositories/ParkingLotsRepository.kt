@@ -45,8 +45,6 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
 
             val cntOccurrences = local.getCountWithID(p.id)
 
-            Log.i(TAG, p.name + " " + cntOccurrences.toString())
-
             /* If entry with same ID already exists, update data and add updated data to output list */
             if(cntOccurrences == 1) {
 

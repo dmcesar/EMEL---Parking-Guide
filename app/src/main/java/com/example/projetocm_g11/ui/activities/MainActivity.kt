@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.logging.SimpleFormatter
 
 const val EXTRA_THEME = "com.example.projetocm_g11.ui.activities.THEME"
 
@@ -31,8 +30,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     OnNavigateToFragment {
 
     private val TAG = MainActivity::class.java.simpleName
-
-    private var currentThemeID: Int = 0
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -105,11 +102,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val afternoonDate = dateFormatter.parse("16:00")
 
         /* Checks every 5 minutes */
-        val millisToSleep: Long = 1000 * 20
+        val millisToSleep: Long = 1000 * 20 * 5
 
         CoroutineScope(Dispatchers.Default).launch {
 
             while(true) {
+
+                /* Get last theme from shared preferences. If no ID was found, set ID to LightTheme*/
+                val currentThemeID = getCurrentThemeID()
 
                 Log.i(TAG, "Validating theme according to current time")
 
@@ -122,6 +122,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 if(currentThemeID == R.style.DarkTheme) {
 
+                    Log.i(TAG, "Current theme is DarkTheme")
+
                     if (currentDate.after(morningDate) && currentDate.before(afternoonDate)) {
 
                         /* App should be in LightTheme */
@@ -129,9 +131,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Log.i(TAG, "Switching to LightTheme")
 
                         changeCurrentTheme(R.style.LightTheme)
+
+                        /* Terminate coroutine */
+                        break
                     }
 
-                } else if(currentThemeID == R.style.LightTheme){
+                    else { Log.i(TAG, "Staying in DarkTheme") }
+
+                }
+
+                else if(currentThemeID == R.style.LightTheme) {
+
+                    Log.i(TAG, "Current theme is LightTheme")
 
                     if (currentDate.before(morningDate) || currentDate.after(afternoonDate)) {
 
@@ -140,7 +151,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Log.i(TAG, "Switching to DarkTheme")
 
                         changeCurrentTheme(R.style.DarkTheme)
+
+                        /* Terminate coroutine */
+                        break
                     }
+
+                    else { Log.i(TAG, "Staying in LightTheme") }
                 }
 
                 /* Wait and repeat */
@@ -149,17 +165,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    private fun getCurrentThemeID(): Int {
+
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return R.style.LightTheme
+
+        return sharedPreferences.getInt(EXTRA_THEME, R.style.LightTheme)
+    }
+
     private suspend fun changeCurrentTheme(id: Int) {
+
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
 
         withContext(Dispatchers.Main) {
 
             /* Save current theme ID */
-            currentThemeID = id
+            sharedPreferences.edit().putInt(EXTRA_THEME, id).apply()
 
             setTheme(id)
 
             /* Refresh activity? */
-            recreate()
+            finish()
+            startActivity(intent)
         }
     }
 
@@ -188,10 +214,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        /* Initial theme is default Light theme */
-        this.currentThemeID = R.style.LightTheme
+        val themeID = getCurrentThemeID()
+        setTheme(themeID)
+
+        setContentView(R.layout.activity_main)
 
         // Provides drawer access within toolbar
         setSupportActionBar(toolbar)
@@ -203,13 +230,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(!screenRotated(savedInstanceState)) {
 
-            /* Launches thread that checks time. When time is between 18:00-8:00, sets App theme to DarkTheme.
-            * When time is between 8:00-18:00, sets App Theme to Light Theme */
-            launchThemeThread()
-
             /* Creates and starts ParkingLotsListFragment with previously fetched data */
             initListFragment()
         }
+    }
+
+    override fun onStart() {
+
+        /* Launches thread that checks time. When time is between 18:00-8:00, sets App theme to DarkTheme.
+            * When time is between 8:00-18:00, sets App Theme to Light Theme */
+        launchThemeThread()
+
+        super.onStart()
     }
 
     override fun onNavigateToFragment(fragment: Fragment?) {
