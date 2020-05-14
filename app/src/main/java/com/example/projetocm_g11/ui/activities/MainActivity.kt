@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                         Log.i(TAG, "Switching to LightTheme")
 
-                        changeCurrentTheme(R.style.LightTheme)
+                        queueTheme(R.style.LightTheme)
                     }
 
                     else { Log.i(TAG, "Staying in DarkTheme") }
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                         Log.i(TAG, "Switching to DarkTheme")
 
-                        changeCurrentTheme(R.style.DarkTheme)
+                        queueTheme(R.style.DarkTheme)
                     }
 
                     else { Log.i(TAG, "Staying in LightTheme") }
@@ -189,7 +189,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return sharedPreferences.getInt(EXTRA_THEME, R.style.LightTheme)
     }
 
-    private suspend fun changeCurrentTheme(id: Int) {
+    private suspend fun queueTheme(id: Int) {
 
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
 
@@ -237,8 +237,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        Log.i(TAG, "Recreated activity")
-
         super.onCreate(savedInstanceState)
 
         /* Fetch theme ID from sharedPreferences, apply theme and store ID */
@@ -258,13 +256,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(!screenRotated(savedInstanceState)) {
 
-            /* Launches thread that checks time. When time is between 18:00-8:00, sets App theme to DarkTheme.
-            * When time is between 8:00-18:00, sets App Theme to Light Theme */
-            launchThemeThread()
-
             /* Creates and starts ParkingLotsListFragment with previously fetched data */
             initListFragment()
         }
+    }
+
+    override fun onStart() {
+
+        /* Launches thread that checks time. When time is between 18:00-8:00, sets App theme to DarkTheme.
+        * When time is between 8:00-18:00, sets App Theme to Light Theme */
+        launchThemeThread()
+
+        super.onStart()
     }
 
     override fun onNavigateToFragment(fragment: Fragment?) {
