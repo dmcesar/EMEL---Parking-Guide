@@ -86,6 +86,7 @@
     <string name="observations_example">Observações sobre o estacionamento</string>
     <string name="outdatedDataTitle">Erro de ligação</string>
     <string name="outdatedDataMessage">Não foi possível conectar ao servidor. A mostrar dados potêncialmente desatualizados.</string>
+    <string name="noDataMessage">Não foi possível conectar ao servidor e não existem dados localmente. Verifique a ligação à internet e tente outra vez.</string>
     <string name="OK">OK</string>
 
 </resources>

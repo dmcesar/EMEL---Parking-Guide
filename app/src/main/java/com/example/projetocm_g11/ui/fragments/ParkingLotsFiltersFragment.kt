@@ -73,84 +73,6 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
         }
     }
 
-    @OnClick(R.id.button_toggle_park_availability_filter_list)
-    fun onClickButtonToggleParkAvailabilityFilterList() {
-
-        if(park_availability_filter_list.visibility == View.VISIBLE) {
-
-            park_availability_filter_list.visibility = View.GONE
-
-            button_toggle_park_availability_filter_list.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_more, 0, 0, 0)
-
-        } else {
-
-            val availableFilter = Filter("AVAILABLE")
-
-            val unavailableFilter = Filter("UNAVAILABLE")
-
-            park_availability_filter_list.visibility = View.VISIBLE
-
-            button_toggle_park_availability_filter_list.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_less, 0, 0, 0)
-
-            filter_park_open.setOnCheckedChangeListener{ _, isChecked ->
-
-                if(isChecked) {
-
-                    this.viewModel.insert(availableFilter)
-
-                } else this.viewModel.delete(availableFilter)
-            }
-
-            filter_park_closed.setOnCheckedChangeListener{ _, isChecked ->
-
-                if(isChecked) {
-
-                    this.viewModel.insert(unavailableFilter)
-
-                } else this.viewModel.delete(unavailableFilter)
-            }
-        }
-    }
-
-    @OnClick(R.id.button_toggle_park_distance_filter_list)
-    fun onClickButtonToggleParkDistanceFilterList() {
-
-        if(park_distance_filter_list.visibility == View.VISIBLE) {
-
-            park_distance_filter_list.visibility = View.GONE
-
-            button_toggle_park_distance_filter_list.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_more, 0, 0, 0)
-
-        } else {
-
-            val closestFilter = Filter("CLOSEST")
-
-            val furthestFilter = Filter("FURTHEST")
-
-            park_distance_filter_list.visibility = View.VISIBLE
-
-            button_toggle_park_distance_filter_list.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_less, 0, 0, 0)
-
-            filter_park_closest.setOnCheckedChangeListener{ _, isChecked ->
-
-                if(isChecked) {
-
-                    this.viewModel.insert(closestFilter)
-
-                } else this.viewModel.delete(closestFilter)
-            }
-
-            filter_park_furthest.setOnCheckedChangeListener{ _, isChecked ->
-
-                if(isChecked) {
-
-                    this.viewModel.insert(furthestFilter)
-
-                } else this.viewModel.delete(furthestFilter)
-            }
-        }
-    }
-
     @OnClick(R.id.button_apply_filters)
     fun onClickButtonApplyFilters() {
 
@@ -174,13 +96,7 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         filter_park_open.isChecked = list.contains(Filter("AVAILABLE"))
 
-        filter_park_closed.isChecked = list.contains(Filter("UNAVAILABLE"))
-
         filter_park_closest.isChecked = list.contains(Filter("CLOSEST"))
-
-        filter_park_furthest.isChecked = list.contains(Filter("FURTHEST"))
-
-        filter_parks_alphabetically.isChecked = list.contains(Filter("ALPHABETICAL"))
 
         filter_parks_favorites.isChecked = list.contains(Filter("FAVORITE"))
 
@@ -225,9 +141,20 @@ class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         } else view.filters.layoutManager = LinearLayoutManager(activity as Context)
 
-        view.filter_parks_alphabetically.setOnCheckedChangeListener{ _, isChecked ->
+        view.filter_park_open.setOnCheckedChangeListener{ _, isChecked ->
 
-            val filter = Filter("ALPHABETICAL")
+            val filter = Filter("AVAILABLE")
+
+            if(isChecked) {
+
+                this.viewModel.insert(filter)
+
+            } else this.viewModel.delete(filter)
+        }
+
+        view.filter_park_closest.setOnCheckedChangeListener{ _, isChecked ->
+
+            val filter = Filter("CLOSEST")
 
             if(isChecked) {
 

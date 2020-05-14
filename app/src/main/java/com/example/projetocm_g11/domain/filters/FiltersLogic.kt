@@ -56,26 +56,6 @@ class FiltersLogic {
                             storage.delete(opposite)
                         }
                     }
-
-                    "AVAILABLE" -> {
-
-                        val opposite = Filter("UNAVAILABLE")
-
-                        if (list.contains(opposite)) {
-
-                            storage.delete(opposite)
-                        }
-                    }
-
-                    "UNAVAILABLE" -> {
-
-                        val opposite = Filter("AVAILABLE")
-
-                        if (list.contains(opposite)) {
-
-                            storage.delete(opposite)
-                        }
-                    }
                 }
 
                 storage.insert(filter)

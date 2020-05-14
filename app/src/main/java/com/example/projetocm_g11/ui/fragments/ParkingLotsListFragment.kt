@@ -39,17 +39,32 @@ class ParkingLotsListFragment : Fragment(), OnDataReceived, OnTouchEvent {
         val parkingLots = this.arguments?.getParcelableArrayList<ParkingLot>(EXTRA_PARKING_LOTS)
         val updated = this.arguments?.getBoolean(EXTRA_UPDATED)
 
-        parkingLots?.let { onDataChanged(it) }
+        parkingLots?.let {
 
-        updated?.let {
+                list ->
+            {
 
-            if(!it) {
+                /* Update UI with received data */
+                onDataChanged(list)
 
-                AlertDialog.Builder(activity as Context)
-                    .setTitle(R.string.outdatedDataTitle)
-                    .setMessage(R.string.outdatedDataMessage)
-                    .setNegativeButton(R.string.OK, null)
-                    .show()
+                updated?.let {
+
+                    /* If data is not from remote, alert user */
+                    if (!it) {
+
+                        val message = if (list.size == 0) {
+                            R.string.noDataMessage
+                        } else {
+                            R.string.outdatedDataMessage
+                        }
+
+                        AlertDialog.Builder(activity as Context)
+                            .setTitle(R.string.outdatedDataTitle)
+                            .setMessage(message)
+                            .setNegativeButton(R.string.OK, null)
+                            .show()
+                    }
+                }
             }
         }
 

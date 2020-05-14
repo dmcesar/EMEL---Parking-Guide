@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 validateTheme()
             }
 
-
-
             R.id.nav_vehicles -> {
 
                 NavigationManager.goToFragment(supportFragmentManager,
@@ -137,8 +135,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             while(true) {
 
+                /* Wait */
+                delay(millisToSleep)
+
                 /* Get last theme from shared preferences. If no ID was found, set ID to LightTheme*/
-                val currentThemeID = getCurrentThemeID()
+                val currentThemeID = getStoredThemeID()
 
                 /* Check what time it is */
                 val currentHour = dateFormatter.format(Date())
@@ -175,37 +176,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     else { Log.i(TAG, "Staying in LightTheme") }
                 }
-
-                /* Wait and repeat */
-                delay(millisToSleep)
             }
         }
     }
 
-    private fun getCurrentThemeID(): Int {
+    private fun getStoredThemeID(): Int {
 
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return R.style.LightTheme
 
         return sharedPreferences.getInt(EXTRA_THEME, R.style.LightTheme)
     }
 
-    private suspend fun queueTheme(id: Int) {
+    private fun queueTheme(id: Int) {
 
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
-
-        withContext(Dispatchers.Main) {
-
-            /* Save current theme ID */
-            sharedPreferences.edit().putInt(EXTRA_THEME, id).apply()
-
-            //finish()
-            //startActivity(intent)
-        }
+        
+        /* Save current theme ID in sharedPreferences */
+        sharedPreferences.edit().putInt(EXTRA_THEME, id).apply()
+            
     }
 
     private fun validateTheme() {
 
-        val lastAppliedTheme = getCurrentThemeID()
+        val lastAppliedTheme = getStoredThemeID()
 
         if(currentAppliedThemeID != lastAppliedTheme) {
 
@@ -240,7 +233,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
 
         /* Fetch theme ID from sharedPreferences, apply theme and store ID */
-        val themeID = getCurrentThemeID()
+        val themeID = getStoredThemeID()
         setTheme(themeID)
         currentAppliedThemeID = themeID
 
