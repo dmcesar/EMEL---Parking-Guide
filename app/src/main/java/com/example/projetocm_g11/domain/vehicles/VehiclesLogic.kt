@@ -57,13 +57,13 @@ class VehiclesLogic(private val storage: VehiclesDAO) {
     }
 
     /* Deletes the entry from table vehicles in the local database */
-    fun delete(vehicle: Vehicle) {
+    fun delete(id: String) {
 
         Log.i(TAG, "delete() called")
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            storage.delete(vehicle)
+            storage.delete(id)
 
             read()
         }

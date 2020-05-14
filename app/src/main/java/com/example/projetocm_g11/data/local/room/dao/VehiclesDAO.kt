@@ -15,6 +15,6 @@ interface VehiclesDAO {
     @Update
     suspend fun update(vehicle: Vehicle)
 
-    @Delete
-    suspend fun delete(vehicle: Vehicle)
+    @Query("DELETE FROM vehicles WHERE uuid = :id")
+    suspend fun delete(id: String)
 }

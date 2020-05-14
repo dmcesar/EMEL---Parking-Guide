@@ -122,7 +122,7 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
                 this.listener?.onNavigateToFragment(editForm)
 
-            } else { viewModel.delete(it as Vehicle) }
+            } else { viewModel.delete(it as String) }
         }
     }
 }

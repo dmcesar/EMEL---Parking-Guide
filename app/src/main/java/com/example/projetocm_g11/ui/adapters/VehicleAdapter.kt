@@ -40,6 +40,6 @@ class VehicleAdapter(private val listener: OnClickEvent, private val context: Co
         holder.plateDate.text = items[position].getDate()
 
         holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
-        holder.deleteBut.setOnClickListener {  listener.onClickEvent(items[position]) }
+        holder.deleteBut.setOnClickListener {  listener.onClickEvent(items[position].uuid) }
     }
 }

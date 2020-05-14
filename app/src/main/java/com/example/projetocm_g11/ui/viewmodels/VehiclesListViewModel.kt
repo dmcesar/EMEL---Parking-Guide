@@ -36,9 +36,9 @@ class VehiclesListViewModel(application: Application) : AndroidViewModel(applica
         logic.update(vehicle)
     }
 
-    fun delete(vehicle: Vehicle) {
+    fun delete(id: String) {
 
-        logic.delete(vehicle)
+        logic.delete(id)
     }
 
     fun registerListener(listener: OnDataReceived) {
