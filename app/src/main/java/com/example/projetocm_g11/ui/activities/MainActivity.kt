@@ -31,26 +31,50 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private val TAG = MainActivity::class.java.simpleName
 
+    private var currentAppliedThemeID: Int = 0
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         // Navigate to selected fragment
         when(item.itemId) {
 
-            R.id.nav_parkings_lots -> NavigationManager.goToFragment(supportFragmentManager,
-                ParkingLotsListFragment()
-            )
+            R.id.nav_parkings_lots -> {
 
-            R.id.nav_vehicles -> NavigationManager.goToFragment(supportFragmentManager,
-                VehiclesListFragment()
-            )
+                NavigationManager.goToFragment(supportFragmentManager,
+                    ParkingLotsListFragment()
+                )
 
-            R.id.nav_contacts -> NavigationManager.goToFragment(supportFragmentManager,
-                ContactsFragment()
-            )
+                validateTheme()
+            }
 
-            R.id.nav_settings -> NavigationManager.goToFragment(supportFragmentManager,
-                SettingsFragment()
-            )
+
+
+            R.id.nav_vehicles -> {
+
+                NavigationManager.goToFragment(supportFragmentManager,
+                    VehiclesListFragment()
+                )
+
+                validateTheme()
+            }
+
+            R.id.nav_contacts -> {
+
+                NavigationManager.goToFragment(supportFragmentManager,
+                    ContactsFragment()
+                )
+
+                validateTheme()
+            }
+
+            R.id.nav_settings -> {
+
+                NavigationManager.goToFragment(supportFragmentManager,
+                    SettingsFragment()
+                )
+
+                validateTheme()
+            }
 
             R.id.nav_quit -> finish()
         }
@@ -72,7 +96,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             supportFragmentManager.backStackEntryCount == 1 ->
                 finish()
 
-            else -> super.onBackPressed()
+            else -> {
+
+                validateTheme()
+
+                super.onBackPressed()
+            }
         }
     }
 
@@ -111,8 +140,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 /* Get last theme from shared preferences. If no ID was found, set ID to LightTheme*/
                 val currentThemeID = getCurrentThemeID()
 
-                Log.i(TAG, "Validating theme according to current time")
-
                 /* Check what time it is */
                 val currentHour = dateFormatter.format(Date())
 
@@ -122,8 +149,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 if(currentThemeID == R.style.DarkTheme) {
 
-                    Log.i(TAG, "Current theme is DarkTheme")
-
                     if (currentDate.after(morningDate) && currentDate.before(afternoonDate)) {
 
                         /* App should be in LightTheme */
@@ -131,9 +156,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Log.i(TAG, "Switching to LightTheme")
 
                         changeCurrentTheme(R.style.LightTheme)
-
-                        /* Terminate coroutine */
-                        break
                     }
 
                     else { Log.i(TAG, "Staying in DarkTheme") }
@@ -142,8 +164,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 else if(currentThemeID == R.style.LightTheme) {
 
-                    Log.i(TAG, "Current theme is LightTheme")
-
                     if (currentDate.before(morningDate) || currentDate.after(afternoonDate)) {
 
                         /* App should be in DarkTheme */
@@ -151,9 +171,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Log.i(TAG, "Switching to DarkTheme")
 
                         changeCurrentTheme(R.style.DarkTheme)
-
-                        /* Terminate coroutine */
-                        break
                     }
 
                     else { Log.i(TAG, "Staying in LightTheme") }
@@ -181,11 +198,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             /* Save current theme ID */
             sharedPreferences.edit().putInt(EXTRA_THEME, id).apply()
 
-            //setTheme(id)
+            //finish()
+            //startActivity(intent)
+        }
+    }
 
-            /* Refresh activity? */
-            finish()
-            startActivity(intent)
+    private fun validateTheme() {
+
+        val lastAppliedTheme = getCurrentThemeID()
+
+        if(currentAppliedThemeID != lastAppliedTheme) {
+
+            recreate()
         }
     }
 
@@ -213,10 +237,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        Log.i(TAG, "Recreated activity")
+
         super.onCreate(savedInstanceState)
 
+        /* Fetch theme ID from sharedPreferences, apply theme and store ID */
         val themeID = getCurrentThemeID()
         setTheme(themeID)
+        currentAppliedThemeID = themeID
 
         setContentView(R.layout.activity_main)
 
@@ -230,21 +258,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if(!screenRotated(savedInstanceState)) {
 
+            /* Launches thread that checks time. When time is between 18:00-8:00, sets App theme to DarkTheme.
+            * When time is between 8:00-18:00, sets App Theme to Light Theme */
+            launchThemeThread()
+
             /* Creates and starts ParkingLotsListFragment with previously fetched data */
             initListFragment()
         }
     }
 
-    override fun onStart() {
-
-        /* Launches thread that checks time. When time is between 18:00-8:00, sets App theme to DarkTheme.
-            * When time is between 8:00-18:00, sets App Theme to Light Theme */
-        launchThemeThread()
-
-        super.onStart()
-    }
-
     override fun onNavigateToFragment(fragment: Fragment?) {
+
+        validateTheme()
 
         fragment?.let { NavigationManager.goToFragment(supportFragmentManager, it) }
     }
