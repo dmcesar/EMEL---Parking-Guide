@@ -77,8 +77,8 @@
     <string name="results">results</string>
     <string name="underground">Underground</string>
     <string name="surface">Surface</string>
-    <string name="available">Available</string>
-    <string name="unavailable">Unavailable</string>
+    <string name="available">Open</string>
+    <string name="unavailable">Closed</string>
     <string name="alphabetically">Alphabetically</string>
     <string name="favorites">Favorites</string>
     <string name="type_example">Parking type: Rotational</string>

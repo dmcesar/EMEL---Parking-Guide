@@ -259,6 +259,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             /* Creates and starts ParkingLotsListFragment with previously fetched data */
             initListFragment()
         }
+
     }
 
     override fun onStart() {
@@ -276,4 +277,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         fragment?.let { NavigationManager.goToFragment(supportFragmentManager, it) }
     }
+
 }
