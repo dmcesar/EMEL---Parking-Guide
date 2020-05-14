@@ -202,7 +202,7 @@ class VehicleFormFragment : Fragment() {
 
             button_delete.setOnClickListener {
 
-                viewModel.delete(this.vehicle as Vehicle)
+                this.vehicle?.let { this.viewModel.delete(it.uuid) }
 
                 Toast.makeText(activity as Context, "Vehicle deleted.", Toast.LENGTH_LONG).show()
 
