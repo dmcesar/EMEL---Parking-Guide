@@ -87,6 +87,14 @@
     <string name="outdatedDataTitle">Erro de ligação</string>
     <string name="outdatedDataMessage">Não foi possível conectar ao servidor. A mostrar dados potêncialmente desatualizados.</string>
     <string name="noDataMessage">Não foi possível conectar ao servidor e não existem dados localmente. Verifique a ligação à internet e tente outra vez.</string>
+    <string name="battery_life_low">Nível de bateria baixo</string>
+    <string name="switch_to_dark_mode">Trocar tema para Dark Mode para preservar bateria?</string>
     <string name="OK">OK</string>
+    <string name="NO">Não</string>
+    <string name="setting_sensor_delete_filters_title">Limpar filtros</string>
+    <string name="setting_sensor_delete_filters_summary">Limpar filtros ao abanar dispositivo</string>
+    <string name="setting_switch_themes_title">Trocar tema automáticamente</string>
+    <string name="setting_switch_themes_summary">Trocar tema de acordo com a hora e nível da bateria</string>
+    <string name="themes_category">Temas</string>
 
 </resources>

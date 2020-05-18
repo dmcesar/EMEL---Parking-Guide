@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <SwitchPreference
+        android:key="themes_automatically"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="@string/setting_switch_themes_title"
+        android:summary="@string/setting_switch_themes_summary"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
+        app:allowDividerBelow="true" />
+
+    <SwitchPreferenceCompat
+        android:key="filters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="@string/setting_sensor_delete_filters_title"
+        android:summary="@string/setting_sensor_delete_filters_summary"
+        android:textOff="@string/off"
+        android:textOn="@string/on" />
+
+</PreferenceScreen>

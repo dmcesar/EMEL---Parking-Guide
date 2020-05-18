@@ -88,6 +88,14 @@
     <string name="outdatedDataTitle">Connection error</string>
     <string name="outdatedDataMessage">Could not fetch data from server. Displaying potentially outdated data.</string>
     <string name="noDataMessage">Could not fetch data from server and no data is stored locally. Check internet connection and try again.</string>
+    <string name="battery_life_low">Battery life low</string>
+    <string name="switch_to_dark_mode">Switch to dark mode to save battery?</string>
     <string name="OK">OK</string>
+    <string name="NO">No</string>
+    <string name="themes_category">Themes</string>
+    <string name="setting_switch_themes_title">Switch theme automatically</string>
+    <string name="setting_switch_themes_summary">Switch themes according to time of day and battery life</string>
+    <string name="setting_sensor_delete_filters_title">Delete filters</string>
+    <string name="setting_sensor_delete_filters_summary">Delete filters when device is shaken</string>
 
 </resources>

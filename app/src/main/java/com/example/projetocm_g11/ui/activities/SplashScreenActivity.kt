@@ -18,8 +18,10 @@ import com.example.projetocm_g11.ui.viewmodels.ParkingLotsViewModel
 import com.example.projetocm_g11.ui.viewmodels.SplashScreenViewModel
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 
-const val EXTRA_PARKING_LOTS = "com.example.projectocm_g11.ui.activities.PARKING_LOTS"
-const val EXTRA_UPDATED = "com.example.projectocm_g11.ui.activities.UPDATED"
+const val EXTRA_PARKING_LOTS = "com.example.projectocm_g11.ui.activities.SplashScreenActivity.PARKING_LOTS"
+const val EXTRA_UPDATED = "com.example.projectocm_g11.ui.activities.SplashScreenActivity.UPDATED"
+
+const val PREFERENCE_SWITCH_THEMES_NOTIFY = "com.example.projetocm_g11.ui.activities.SplashScreenActivity.NOTIFY"
 
 class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOrigin {
 
@@ -33,6 +35,13 @@ class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOrigin {
 
     private var data: ArrayList<ParkingLot>? = null
     private var updated: Boolean? = null
+
+    private fun initSessionPreferences() {
+
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
+
+        sharedPreferences?.edit()?.putBoolean(PREFERENCE_SWITCH_THEMES_NOTIFY, true)?.apply()
+    }
 
     private fun launchActivity(data: ArrayList<ParkingLot>, updated: Boolean) {
 
@@ -59,6 +68,8 @@ class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOrigin {
         setContentView(R.layout.activity_splash_screen)
 
         this.viewModel = ViewModelProviders.of(this).get(SplashScreenViewModel::class.java)
+
+        initSessionPreferences()
 
         Handler().postDelayed({
 

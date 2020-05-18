@@ -1,7 +1,10 @@
 package com.example.projetocm_g11.ui.activities
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
+import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,10 +16,7 @@ import com.example.projetocm_g11.ui.utils.NavigationManager
 import com.example.projetocm_g11.ui.listeners.OnNavigateToFragment
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
-import com.example.projetocm_g11.ui.fragments.ContactsFragment
-import com.example.projetocm_g11.ui.fragments.ParkingLotsListFragment
-import com.example.projetocm_g11.ui.fragments.SettingsFragment
-import com.example.projetocm_g11.ui.fragments.VehiclesListFragment
+import com.example.projetocm_g11.ui.fragments.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -128,56 +128,115 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val morningDate = dateFormatter.parse("08:00")
         val afternoonDate = dateFormatter.parse("16:00")
 
-        /* Checks every 5 minutes */
-        val millisToSleep: Long = 1000 * 20 * 5
+        /* Checks every minute */
+        val millisToSleep: Long = 1000 * 60
+
+        val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
 
         CoroutineScope(Dispatchers.Default).launch {
 
+            /* Wait first time before entering loop */
+            delay(millisToSleep)
+
             while(true) {
 
-                /* Wait */
+                /* Check if switch themes automatically is ON */
+                val switchThemes = getPreferenceThemesStatus()
+
+                if(switchThemes) {
+
+                    Log.i(TAG, "Checking themes")
+
+                    /* Get last theme from shared preferences. If no ID was found, set ID to LightTheme*/
+                    val currentThemeID = getStoredThemeID()
+
+                    /* Check what time it is */
+                    val currentHour = dateFormatter.format(Date())
+                    Log.i(TAG, "Current time is: $currentHour")
+
+                    val notifyBatteryPercentage = getNotifyBatteryPercentage()
+                    val batteryPercentage = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+                    Log.i(TAG, "Current battery capacity is: $batteryPercentage")
+
+                    val currentDate = dateFormatter.parse(currentHour)
+
+                    if (currentThemeID == R.style.DarkTheme) {
+
+                        if (currentDate.after(morningDate) && currentDate.before(afternoonDate)) {
+
+                            /* App should be in LightTheme */
+
+                            Log.i(TAG, "Switching to LightTheme")
+
+                            queueTheme(R.style.LightTheme)
+
+                        } else { Log.i(TAG, "Staying in DarkTheme") }
+
+                    } else if (currentThemeID == R.style.LightTheme) {
+
+                        if(batteryPercentage <= 20 && notifyBatteryPercentage) {
+
+                            withContext(Dispatchers.Main) {
+
+                                AlertDialog.Builder(this@MainActivity)
+                                    .setTitle(R.string.battery_life_low)
+                                    .setMessage(R.string.switch_to_dark_mode)
+                                    .setPositiveButton(R.string.OK)
+                                    { _, _ -> /* App should be in DarkTheme */
+
+                                        Log.i(TAG, "Switching to DarkTheme")
+
+                                        queueTheme(R.style.DarkTheme)
+                                    }
+                                    .setNegativeButton(R.string.NO)
+                                    { _, _ ->
+
+                                        Log.i(TAG, "Staying in LightTheme and not notifying again in session")
+
+                                        setDoNotNotifyBatteryPercentageAgain()
+                                    }
+                                    .show()
+                            }
+                        }
+
+                        else if (currentDate.before(morningDate) || currentDate.after(afternoonDate)) {
+
+                            /* App should be in DarkTheme */
+
+                            Log.i(TAG, "Switching to DarkTheme")
+
+                            queueTheme(R.style.DarkTheme)
+
+                        } else { Log.i(TAG, "Staying in LightTheme") }
+                    }
+
+                } else { Log.i(TAG, "Not checking themes") }
+
+                /* Wait and repeat until activity is destroyed */
                 delay(millisToSleep)
-
-                /* Get last theme from shared preferences. If no ID was found, set ID to LightTheme*/
-                val currentThemeID = getStoredThemeID()
-
-                /* Check what time it is */
-                val currentHour = dateFormatter.format(Date())
-
-                Log.i(TAG, "Current time is: $currentHour")
-
-                val currentDate = dateFormatter.parse(currentHour)
-
-                if(currentThemeID == R.style.DarkTheme) {
-
-                    if (currentDate.after(morningDate) && currentDate.before(afternoonDate)) {
-
-                        /* App should be in LightTheme */
-
-                        Log.i(TAG, "Switching to LightTheme")
-
-                        queueTheme(R.style.LightTheme)
-                    }
-
-                    else { Log.i(TAG, "Staying in DarkTheme") }
-
-                }
-
-                else if(currentThemeID == R.style.LightTheme) {
-
-                    if (currentDate.before(morningDate) || currentDate.after(afternoonDate)) {
-
-                        /* App should be in DarkTheme */
-
-                        Log.i(TAG, "Switching to DarkTheme")
-
-                        queueTheme(R.style.DarkTheme)
-                    }
-
-                    else { Log.i(TAG, "Staying in LightTheme") }
-                }
             }
         }
+    }
+
+    private fun setDoNotNotifyBatteryPercentageAgain() {
+
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
+
+        sharedPreferences?.edit()?.putBoolean(PREFERENCE_SWITCH_THEMES_NOTIFY, false)?.apply()
+    }
+
+    private fun getNotifyBatteryPercentage(): Boolean {
+
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return true
+
+        return sharedPreferences.getBoolean(PREFERENCE_SWITCH_THEMES_NOTIFY, true)
+    }
+
+    private fun getPreferenceThemesStatus(): Boolean {
+
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return true
+
+        return sharedPreferences.getBoolean(PREFERENCE_THEMES, true)
     }
 
     private fun getStoredThemeID(): Int {
