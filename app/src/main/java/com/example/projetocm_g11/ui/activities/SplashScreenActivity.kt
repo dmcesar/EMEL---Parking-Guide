@@ -36,13 +36,6 @@ class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOrigin {
     private var data: ArrayList<ParkingLot>? = null
     private var updated: Boolean? = null
 
-    private fun initSessionPreferences() {
-
-        val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
-
-        sharedPreferences?.edit()?.putBoolean(PREFERENCE_SWITCH_THEMES_NOTIFY, true)?.apply()
-    }
-
     private fun launchActivity(data: ArrayList<ParkingLot>, updated: Boolean) {
 
         val intent = Intent(this, MainActivity::class.java)
@@ -68,8 +61,6 @@ class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOrigin {
         setContentView(R.layout.activity_splash_screen)
 
         this.viewModel = ViewModelProviders.of(this).get(SplashScreenViewModel::class.java)
-
-        initSessionPreferences()
 
         Handler().postDelayed({
 

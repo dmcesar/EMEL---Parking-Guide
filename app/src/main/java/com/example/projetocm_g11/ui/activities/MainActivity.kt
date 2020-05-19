@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val TAG = MainActivity::class.java.simpleName
 
     private var currentAppliedThemeID: Int = 0
-    private var currentBatteryCapacity: Int = 100
+    private var currentBatteryCapacity: Int? = null
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -129,11 +129,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val afternoonDate = dateFormatter.parse("16:00")
 
         /* Checks every minute */
-        val millisToSleep: Long = 1000 * 60
+        val millisToSleep: Long = 1000 * 15
 
         CoroutineScope(Dispatchers.Default).launch {
 
-            /* Wait first time before entering loop */
             delay(millisToSleep)
 
             while(true) {
@@ -149,30 +148,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val currentThemeID = getStoredThemeID()
 
                     /* Check what time it is */
-                    val currentHour = dateFormatter.format(Date())
+                    val currentHour = dateFormatter.parse(dateFormatter.format(Date()))
+
                     Log.i(TAG, "Current time is: $currentHour")
 
-                    Log.i(TAG, "Current battery current is: $currentBatteryCapacity")
+                    val notifyBatteryPercentage = getNotifyBatteryLow()
 
-                    val notifyBatteryPercentage = getNotifyBatteryPercentage()
+                    Log.i(TAG, "Current battery current is: $currentBatteryCapacity\n" +
+                            "Notify user: $notifyBatteryPercentage")
 
-                    val currentDate = dateFormatter.parse(currentHour)
+                    if(!notifyBatteryPercentage && currentBatteryCapacity != null && currentBatteryCapacity as Int > 20) {
 
-                    if (currentThemeID == R.style.DarkTheme) {
+                        toggleNotifyBatteryLow(true)
+                    }
 
-                        if (currentDate.after(morningDate) && currentDate.before(afternoonDate)) {
+                    if(currentThemeID == R.style.LightTheme) {
 
-                            /* App should be in LightTheme */
+                        if(notifyBatteryPercentage && currentBatteryCapacity != null && currentBatteryCapacity as Int <= 20) {
 
-                            Log.i(TAG, "Switching to LightTheme")
-
-                            queueTheme(R.style.LightTheme)
-
-                        } else { Log.i(TAG, "Staying in DarkTheme") }
-
-                    } else if (currentThemeID == R.style.LightTheme) {
-
-                        if(notifyBatteryPercentage && currentBatteryCapacity <= 20) {
+                            Log.i(TAG, "Battery low")
 
                             withContext(Dispatchers.Main) {
 
@@ -180,7 +174,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                     .setTitle(R.string.battery_life_low)
                                     .setMessage(R.string.switch_to_dark_mode)
                                     .setPositiveButton(R.string.OK)
-                                    { _, _ -> /* App should be in DarkTheme */
+                                    { _, _ ->
+
+                                        /* App should be in DarkTheme */
 
                                         Log.i(TAG, "Switching to DarkTheme")
 
@@ -189,15 +185,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                     .setNegativeButton(R.string.NO)
                                     { _, _ ->
 
-                                        Log.i(TAG, "Staying in LightTheme and not notifying again in session")
+                                        Log.i(TAG, "Staying in LightTheme")
 
-                                        setDoNotNotifyBatteryPercentageAgain()
-                                    }
-                                    .show()
+                                        toggleNotifyBatteryLow(false)
+
+                                    }.show()
                             }
                         }
 
-                        else if (currentDate.before(morningDate) || currentDate.after(afternoonDate)) {
+                        else if (currentHour.before(morningDate) || currentHour.after(afternoonDate)) {
 
                             /* App should be in DarkTheme */
 
@@ -205,7 +201,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                             queueTheme(R.style.DarkTheme)
 
-                        } else { Log.i(TAG, "Staying in LightTheme") }
+                        }
+
+                        else { Log.i(TAG, "Staying in LightTheme") }
+                    }
+
+                    else if (currentThemeID == R.style.DarkTheme &&
+                        (!notifyBatteryPercentage || currentBatteryCapacity != null && currentBatteryCapacity as Int >= 20 && notifyBatteryPercentage)) {
+
+                        if (currentHour.after(morningDate) && currentHour.before(afternoonDate)) {
+
+                            /* App should be in LightTheme */
+
+                            Log.i(TAG, "Switching to LightTheme")
+
+                            queueTheme(R.style.LightTheme)
+
+                        } else { Log.i(TAG, "Staying in DarkTheme") }
                     }
 
                 } else { Log.i(TAG, "Not checking themes") }
@@ -216,14 +228,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun setDoNotNotifyBatteryPercentageAgain() {
+    private fun toggleNotifyBatteryLow(value: Boolean) {
+
+        Log.i(TAG, "Toggled \"battery low\" notification: $value")
 
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
 
-        sharedPreferences?.edit()?.putBoolean(PREFERENCE_SWITCH_THEMES_NOTIFY, false)?.apply()
+        sharedPreferences.edit().putBoolean(PREFERENCE_SWITCH_THEMES_NOTIFY, value).apply()
     }
 
-    private fun getNotifyBatteryPercentage(): Boolean {
+    private fun getNotifyBatteryLow(): Boolean {
 
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return true
 
