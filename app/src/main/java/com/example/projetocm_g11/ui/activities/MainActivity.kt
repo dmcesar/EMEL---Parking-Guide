@@ -2,9 +2,6 @@ package com.example.projetocm_g11.ui.activities
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.content.SharedPreferences
-import android.os.BatteryManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +13,8 @@ import com.example.projetocm_g11.ui.utils.NavigationManager
 import com.example.projetocm_g11.ui.listeners.OnNavigateToFragment
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
+import com.example.projetocm_g11.data.sensors.battery.Battery
+import com.example.projetocm_g11.data.sensors.battery.OnBatteryCapacityListener
 import com.example.projetocm_g11.ui.fragments.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,11 +26,12 @@ import java.util.*
 const val EXTRA_THEME = "com.example.projetocm_g11.ui.activities.THEME"
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    OnNavigateToFragment {
+    OnNavigateToFragment, OnBatteryCapacityListener {
 
     private val TAG = MainActivity::class.java.simpleName
 
     private var currentAppliedThemeID: Int = 0
+    private var currentBatteryCapacity: Int = 100
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
@@ -131,8 +131,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         /* Checks every minute */
         val millisToSleep: Long = 1000 * 60
 
-        val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
-
         CoroutineScope(Dispatchers.Default).launch {
 
             /* Wait first time before entering loop */
@@ -154,9 +152,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     val currentHour = dateFormatter.format(Date())
                     Log.i(TAG, "Current time is: $currentHour")
 
+                    Log.i(TAG, "Current battery current is: $currentBatteryCapacity")
+
                     val notifyBatteryPercentage = getNotifyBatteryPercentage()
-                    val batteryPercentage = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
-                    Log.i(TAG, "Current battery capacity is: $batteryPercentage")
 
                     val currentDate = dateFormatter.parse(currentHour)
 
@@ -174,7 +172,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     } else if (currentThemeID == R.style.LightTheme) {
 
-                        if(batteryPercentage <= 20 && notifyBatteryPercentage) {
+                        if(notifyBatteryPercentage && currentBatteryCapacity <= 20) {
 
                             withContext(Dispatchers.Main) {
 
@@ -316,11 +314,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onStart() {
 
+        Battery.registerListener(this)
+
         /* Launches thread that checks time. When time is between 18:00-8:00, sets App theme to DarkTheme.
         * When time is between 8:00-18:00, sets App Theme to Light Theme */
         launchThemeThread()
 
         super.onStart()
+    }
+
+    override fun onStop() {
+
+        Battery.unregisterListener()
+
+        super.onStop()
     }
 
     override fun onNavigateToFragment(fragment: Fragment?) {
@@ -330,4 +337,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fragment?.let { NavigationManager.goToFragment(supportFragmentManager, it) }
     }
 
+    override fun onBatteryCapacityListener(current: Int) {
+
+        this.currentBatteryCapacity = current
+    }
 }
