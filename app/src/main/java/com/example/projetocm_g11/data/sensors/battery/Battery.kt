@@ -8,7 +8,7 @@ class Battery private constructor(private val context: Context) : Runnable {
 
     private val TAG = Battery::class.java.simpleName
 
-    private val TIME_BETWEEN_UPDATES = 2000L
+    private val TIME_BETWEEN_UPDATES = 5000L
 
     companion object {
 

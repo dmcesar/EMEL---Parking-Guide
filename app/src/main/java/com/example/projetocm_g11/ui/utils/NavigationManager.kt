@@ -6,7 +6,6 @@ import com.example.projetocm_g11.R
 
 class NavigationManager {
 
-    // Handles Fragment navigation
     companion object {
 
         private fun placeFragment(fm: FragmentManager, fragment: Fragment) {
