@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         /* Check what time it is */
         val currentHour = dateFormatter.parse(dateFormatter.format(Date()))
-        Log.i(TAG, "Current time is: $currentHour")
 
         /* If current theme is LightTheme*/
         if(currentTheme == R.style.LightTheme) {
@@ -134,14 +133,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 sharedPreferences.getBoolean(PREFERENCE_SWITCH_THEMES_NOTIFY, true)
 
             /* Check if battery has been recharged */
-            if (!notifyBatteryLow && capacity > 20) {
+            if (capacity > 20) {
 
-                Log.i(
-                    TAG,
-                    "Battery recharged. Notifying user again when battery is lower than 20%."
-                )
-
-                sharedPreferences.edit().putBoolean(PREFERENCE_SWITCH_THEMES_NOTIFY, true)
+                sharedPreferences.edit()
+                    .putBoolean(PREFERENCE_SWITCH_THEMES_NOTIFY, true)
                     .apply()
             }
 
