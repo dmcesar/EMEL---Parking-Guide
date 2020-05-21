@@ -14,7 +14,9 @@ import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.local.entities.Type
 import com.example.projetocm_g11.ui.listeners.OnNavigateToFragment
+import kotlinx.android.synthetic.main.fragment_parking_lot_info.*
 import kotlinx.android.synthetic.main.fragment_parking_lot_info.view.*
+import kotlinx.android.synthetic.main.fragment_parking_lot_info.view.map_frame
 import java.text.SimpleDateFormat
 
 const val EXTRA_PARK_COORDINATES = "com.example.projetocm-g11.view.ParkingPlaceInfoFragment.PARK_COORDINATES"
@@ -64,6 +66,11 @@ class ParkingLotInfoFragment : Fragment() {
         this.listener = null
     }
 
+    private fun screenRotated(savedInstanceState: Bundle?): Boolean {
+
+        return savedInstanceState != null
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_parking_lot_info, container, false)
@@ -109,7 +116,6 @@ class ParkingLotInfoFragment : Fragment() {
         view.park_name.text = this.parkingLot.name
         view.park_type.text = type
         view.park_availability.text = active
-        view.park_coordinates.text = coordinates
         view.last_updated_at.text = lastUpdatedAt
         view.park_occupancy?.text = occupancy
 
@@ -117,6 +123,26 @@ class ParkingLotInfoFragment : Fragment() {
             view.park_availability.setTextColor(ContextCompat.getColor(activity as Context, R.color.forest_green))
 
         } else view.park_availability.setTextColor(ContextCompat.getColor(activity as Context, R.color.amber))
+
+        if(!screenRotated(savedInstanceState)) {
+
+            /* Create map fragment */
+            val map = MapFragment()
+
+            /* Set parking lots as arguments */
+            val args = Bundle()
+            args.putParcelable(
+                EXTRA_PARKING_LOT,
+                this.parkingLot
+            )
+            map.arguments = args
+
+            /* Place fragment in FrameLayout */
+            val transition = this.childFragmentManager.beginTransaction()
+            transition.replace(R.id.map_frame, map)
+            transition.addToBackStack(null)
+            transition.commit()
+        }
 
         return view
     }

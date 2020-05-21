@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:weightSum="5"
+    android:weightSum="6"
     android:padding="20dp"
     android:background="?attr/backgroundColor" >
 
@@ -65,100 +65,100 @@
         android:layout_marginHorizontal="20dp"
         android:background="?attr/onBackgroundColor" />
 
-    <LinearLayout
-        android:layout_weight="4"
-        android:weightSum="6"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_weight="3"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="?attr/backgroundColor" >
+        android:paddingHorizontal="10dp"
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/park_name"
-            android:layout_weight="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             style="@style/HighlightTextStyle"
             android:textColor="?attr/onBackgroundColor" />
 
         <TextView
             android:id="@+id/park_availability"
-            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/park_name"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            style="@style/TextStyle"
-            android:textColor="?attr/onBackgroundColor" />
-
-        <TextView
-            android:id="@+id/park_coordinates"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             style="@style/TextStyle"
             android:textColor="?attr/onBackgroundColor" />
 
         <TextView
             android:id="@+id/park_type"
-            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@id/park_availability"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             style="@style/TextStyle"
             android:textColor="?attr/onBackgroundColor" />
 
-        <LinearLayout
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/park_occupancy_state"
+            app:layout_constraintTop_toBottomOf="@id/park_type"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextStyle"
+            android:textColor="?attr/onBackgroundColor" />
+
+        <TextView
+            android:id="@+id/last_updated_at"
+            app:layout_constraintTop_toBottomOf="@id/park_occupancy_state"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextStyle"
+            android:textColor="?attr/onBackgroundColor" />
+
+        <Button
+            android:id="@+id/button_go_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_height="wrap_content"
+            android:text="@string/go_info"
+            android:textColor="?attr/onAccentColor"
+            style="@style/SquareButtonStyle" />
 
-            <TextView
-                android:id="@+id/park_occupancy_state"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                style="@style/TextStyle"
-                android:textColor="?attr/onBackgroundColor" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/button_go_info"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="5dp"
-                android:text="@string/go_info"
-                android:textColor="?attr/onAccentColor"
-                style="@style/SquareButtonStyle" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" >
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="1"
+        <Button
+            android:id="@+id/button_go_map"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_height="wrap_content"
+            android:text="@string/go_map"
+            android:textColor="?attr/onAccentColor"
+            style="@style/SquareButtonStyle" />
 
-            <TextView
-                android:id="@+id/last_updated_at"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                style="@style/TextStyle"
-                android:textColor="?attr/onBackgroundColor" />
+        <FrameLayout
+            app:layout_constraintBottom_toTopOf="@+id/button_go_map"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/map_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/button_go_map"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="5dp"
-                android:text="@string/go_map"
-                android:textColor="?attr/onAccentColor"
-                style="@style/SquareButtonStyle" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

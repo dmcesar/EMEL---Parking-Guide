@@ -4,147 +4,149 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="?attr/backgroundColor" >
+    android:background="?attr/backgroundColor"
+    android:weightSum="4">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
+
+        <ProgressBar
+            android:id="@+id/park_capacity_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:indeterminate="false"
+            android:max="100"
+            android:progressDrawable="@drawable/circular"
+            android:secondaryProgress="100" />
+
+        <TextView
+            android:id="@+id/park_capacity_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/park_capacity_bar"
+            app:layout_constraintTop_toTopOf="@+id/park_capacity_bar"
+            app:layout_constraintLeft_toLeftOf="@+id/park_capacity_bar"
+            app:layout_constraintRight_toRightOf="@+id/park_capacity_bar"
+            style="@style/TextStyle"
+            android:textColor="?attr/onBackgroundColor" />
+
+        <FrameLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/park_capacity_bar"
+            android:paddingHorizontal="20dp"
+            android:id="@+id/map_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
+        android:layout_weight="3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="?attr/backgroundColor" >
+        android:layout_height="0dp"
+        android:orientation="vertical">
 
-        <!-- Circular progress bar indicating park capacity -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="1dp"
+            android:layout_margin="20dp"
+            android:background="?attr/onBackgroundColor" />
 
-            <ProgressBar
-                android:id="@+id/park_capacity_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:indeterminate="false"
-                android:max="100"
-                android:progressDrawable="@drawable/circular"
-                android:secondaryProgress="100" />
+        <LinearLayout
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp"
+            android:background="?attr/backgroundColor" >
 
             <TextView
-                android:id="@+id/park_capacity_text"
-                android:layout_width="wrap_content"
+                android:id="@+id/park_name"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                style="@style/TextStyle"
+                android:gravity="start"
+                style="@style/HighlightTextStyle"
                 android:textColor="?attr/onBackgroundColor" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/park_type"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                style="@style/TextStyle"
+                android:textColor="?attr/onBackgroundColor"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/park_occupancy_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            style="@style/TextStyle"
-            android:textColor="?attr/onBackgroundColor" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="20dp"
-        android:background="?attr/onBackgroundColor" />
-
-    <LinearLayout
-        android:weightSum="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="20dp"
-        android:background="?attr/backgroundColor" >
-
-        <TextView
-            android:id="@+id/park_name"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            style="@style/HighlightTextStyle"
-            android:textColor="?attr/onBackgroundColor" />
-
-        <TextView
-            android:id="@+id/park_type"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            style="@style/TextStyle"
-            android:textColor="?attr/onBackgroundColor"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/park_coordinates"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="20dp"
-        android:gravity="start"
-        style="@style/TextStyle"
-        android:textColor="?attr/onBackgroundColor" />
-
-    <LinearLayout
-        android:weightSum="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="20dp"
-        android:orientation="horizontal"
-        android:background="?attr/backgroundColor" >
-
-        <TextView
-            android:id="@+id/park_availability"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp"
             android:gravity="start"
             style="@style/TextStyle"
             android:textColor="?attr/onBackgroundColor" />
 
-        <TextView
-            android:id="@+id/last_updated_at"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:weightSum="2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            style="@style/TextStyle"
-            android:textColor="?attr/onBackgroundColor" />
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp"
+            android:orientation="horizontal"
+            android:background="?attr/backgroundColor" >
+
+            <TextView
+                android:id="@+id/park_availability"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                style="@style/TextStyle"
+                android:textColor="?attr/onBackgroundColor" />
+
+            <TextView
+                android:id="@+id/last_updated_at"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                style="@style/TextStyle"
+                android:textColor="?attr/onBackgroundColor" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_go_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="@string/go_map"
+            android:textColor="?attr/onAccentColor"
+            style="@style/SquareButtonStyle" />
+
+        <Button
+            android:id="@+id/button_go_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:text="@string/go_info"
+            android:textColor="?attr/onAccentColor"
+            style="@style/SquareButtonStyle" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_go_map"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:text="@string/go_map"
-        android:textColor="?attr/onAccentColor"
-        style="@style/SquareButtonStyle" />
-
-    <Button
-        android:id="@+id/button_go_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:text="@string/go_info"
-        android:textColor="?attr/onAccentColor"
-        style="@style/SquareButtonStyle" />
 
 </LinearLayout>
