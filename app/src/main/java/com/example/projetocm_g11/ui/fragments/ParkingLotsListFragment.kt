@@ -19,7 +19,6 @@ import com.example.projetocm_g11.ui.activities.EXTRA_DATA
 import com.example.projetocm_g11.ui.activities.EXTRA_DATA_FROM_REMOTE
 import com.example.projetocm_g11.ui.listeners.*
 import kotlinx.android.synthetic.main.fragment_parking_lots_list.*
-import kotlinx.android.synthetic.main.fragment_parking_lots_list.view.*
 import kotlin.collections.ArrayList
 
 const val EXTRA_PARKING_LOT = "com.example.projetocm_g11.ui.fragments.ParkingLotsListFragment.ParkingLot"
@@ -32,6 +31,7 @@ class ParkingLotsListFragment : Fragment(), OnTouchListener {
 
     private var data: ArrayList<ParkingLot>? = null
     private var dataIsFromRemote: Boolean? = null
+    private var dataFetchedBefore: Boolean? = null
 
     @OnClick(R.id.button_filter)
     fun onClickGoFiltersFragment() {
@@ -40,16 +40,22 @@ class ParkingLotsListFragment : Fragment(), OnTouchListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        arguments?.let {
+
+        this.arguments?.let {
+
             this.data = it.getParcelableArrayList(EXTRA_DATA)
-            val dataIsFromRemote: Boolean? = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
+            this.dataIsFromRemote = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
+            this.dataFetchedBefore = it.getBoolean(EXTRA_DATA_FETCHED_BEFORE)
+
+            Log.i(TAG, "${(this.dataIsFromRemote).toString()}  ${(this.dataFetchedBefore).toString()}")
         }
+
+        this.arguments = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        Log.i(TAG, "onCreateView")
 
         /* Inflate layout */
         val view = inflater.inflate(R.layout.fragment_parking_lots_list, container, false)
@@ -66,15 +72,21 @@ class ParkingLotsListFragment : Fragment(), OnTouchListener {
 
         this.data?.let { initAdapter(it) }
 
-        this.dataIsFromRemote?.let {
+        this.dataFetchedBefore?.let { fetchedBefore ->
 
-            if(!it) {
+            if(fetchedBefore) {
 
-                AlertDialog.Builder(activity as Context)
-                    .setTitle(R.string.outdatedDataTitle)
-                    .setMessage(R.string.outdatedDataMessage)
-                    .setNegativeButton(R.string.OK, null)
-                    .show()
+                this.dataIsFromRemote?.let { fromRemote ->
+
+                    if(!fromRemote) {
+
+                        AlertDialog.Builder(activity as Context)
+                            .setTitle(R.string.outdatedDataTitle)
+                            .setMessage(R.string.outdatedDataMessage)
+                            .setNegativeButton(R.string.OK, null)
+                            .show()
+                    }
+                }
             }
         }
 

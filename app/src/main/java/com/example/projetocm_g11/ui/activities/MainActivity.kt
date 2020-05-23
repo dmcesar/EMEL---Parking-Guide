@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @SuppressLint("SimpleDateFormat")
     private fun validateThemeTime() {
 
-        Log.i(TAG, "Validate by time")
-
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
 
         /* Check if switch themes automatically is ON (default value is ON) */

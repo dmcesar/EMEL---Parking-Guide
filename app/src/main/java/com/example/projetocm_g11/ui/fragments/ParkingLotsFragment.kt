@@ -25,6 +25,8 @@ import com.example.projetocm_g11.ui.viewmodels.ParkingLotsViewModel
 import kotlinx.android.synthetic.main.fragment_parking_lots.*
 import kotlinx.android.synthetic.main.fragment_parking_lots.view.*
 
+const val EXTRA_DATA_FETCHED_BEFORE = "com.example.projetocm_g11.ui.fragments.ParkingLotsListFragment.DATA_FETCHED_BEFORE"
+
 class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationListener {
 
     private val TAG = ParkingLotsFragment::class.java.simpleName
@@ -49,8 +51,6 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
 
         queuedFragment = 0
 
-        Log.i(TAG, "Go_List_View")
-
         /* Request data from viewModel */
         this.viewModel.getAll()
     }
@@ -64,8 +64,6 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
 
         queuedFragment = 1
 
-        Log.i(TAG, "Go_Map_View")
-
         /* Request data from viewModel */
         this.viewModel.getAll()
     }
@@ -78,6 +76,7 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
     override fun onSaveInstanceState(outState: Bundle) {
 
         outState.run { putInt(QUEUED_FRAGMENT_KEY, queuedFragment) }
+
         super.onSaveInstanceState(outState)
     }
 
@@ -114,6 +113,8 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
             /* If arguments where received */
             this.arguments?.let {
 
+                Log.i(TAG, "init with arg")
+
                 /* Received data from MainActivity */
                 val dataReceived: ArrayList<ParkingLot>? = it.getParcelableArrayList(EXTRA_DATA)
                 val dataFromRemote: Boolean = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
@@ -125,6 +126,7 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
                 val args = Bundle()
                 args.putParcelableArrayList(EXTRA_DATA, dataReceived)
                 args.putBoolean(EXTRA_DATA_FROM_REMOTE, dataFromRemote)
+                args.putBoolean(EXTRA_DATA_FETCHED_BEFORE, true)
 
                 ParkingLotsNavigationManager.goToListFragment(childFragmentManager, args)
             } ?:
@@ -162,11 +164,13 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
-        Log.i(TAG, "Queued is $queuedFragment")
+        Log.i(TAG, "init without arg")
 
         /* Create arguments */
         val args = Bundle()
         args.putParcelableArrayList(EXTRA_DATA, data as ArrayList<ParkingLot>)
+        args.putBoolean(EXTRA_DATA_FROM_REMOTE, false)
+        args.putBoolean(EXTRA_DATA_FETCHED_BEFORE, false)
 
         if(queuedFragment == 0) {
 
