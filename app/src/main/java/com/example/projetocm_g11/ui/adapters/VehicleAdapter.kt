@@ -8,10 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projetocm_g11.data.local.entities.Vehicle
-import com.example.projetocm_g11.ui.listeners.OnClickEvent
+import com.example.projetocm_g11.ui.listeners.OnClickListener
 import kotlinx.android.synthetic.main.vehicles_list_item.view.*
 
-class VehicleAdapter(private val listener: OnClickEvent, private val context: Context, private val layout: Int, private val items: MutableList<Vehicle>) :
+class VehicleAdapter(private val listener: OnClickListener, private val context: Context, private val layout: Int, private val items: MutableList<Vehicle>) :
     RecyclerView.Adapter<VehicleAdapter.VehiclesViewHolder>() {
 
     class VehiclesViewHolder(view: View) : RecyclerView.ViewHolder(view) {

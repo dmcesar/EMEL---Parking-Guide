@@ -2,7 +2,7 @@ package com.example.projetocm_g11.domain.filters
 
 import com.example.projetocm_g11.data.local.entities.Filter
 import com.example.projetocm_g11.data.local.list.Storage
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ class FiltersLogic {
     private val storage = Storage.getInstance()
 
     /* Observer is notified with an ArrayList<Filter> */
-    private var listener: OnDataReceived? = null
+    private var listener: OnDataReceivedListener? = null
 
     /* Reads list of filters from shared preferences and notifies observer */
     fun read() {
@@ -86,7 +86,7 @@ class FiltersLogic {
     }
 
     /* Registers observer as listener */
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListener(listener: OnDataReceivedListener) {
 
         this.listener = listener
     }

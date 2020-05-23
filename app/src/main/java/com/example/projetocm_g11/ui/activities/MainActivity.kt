@@ -3,16 +3,14 @@ package com.example.projetocm_g11.ui.activities
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import com.example.projetocm_g11.ui.utils.NavigationManager
-import com.example.projetocm_g11.ui.listeners.OnNavigateToFragment
+import com.example.projetocm_g11.ui.listeners.OnNavigationListener
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.sensors.battery.Battery
@@ -29,30 +27,23 @@ const val PREFERENCE_APPLIED_THEME = "com.example.projetocm_g11.ui.activities.AP
 const val PREFERENCE_QUEUED_THEME = "com.example.projetocm_g11.ui.activities.QUEUED_THEME"
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    OnNavigateToFragment, OnBatteryCapacityListener {
+    OnNavigationListener, OnBatteryCapacityListener {
 
     private val TAG = MainActivity::class.java.simpleName
 
-    private fun initListFragment() {
+    private fun initFragment() {
 
-        val data = intent?.getParcelableArrayListExtra<ParkingLot>(EXTRA_PARKING_LOTS)
-        val updated = intent?.getBooleanExtra(EXTRA_UPDATED, false)
+        /* Read arguments from SplashScreenActivity */
+        val data: ArrayList<ParkingLot>? = intent?.getParcelableArrayListExtra(EXTRA_DATA)
+        val updated = intent?.getBooleanExtra(EXTRA_DATA_FROM_REMOTE, false)
 
+        /* Create arguments */
         val args = Bundle()
-
-        args.putParcelableArrayList(EXTRA_PARKING_LOTS, data)
-
-        if (updated != null) {
-            args.putBoolean(EXTRA_UPDATED, updated)
-        }
-
-        val fragment = ParkingLotsListFragment()
-        fragment.arguments = args
+        args.putParcelableArrayList(EXTRA_DATA, data)
+        args.putBoolean(EXTRA_DATA_FROM_REMOTE, updated!!)
 
         // Navigate to list fragment
-        NavigationManager.goToFragment(supportFragmentManager,
-            fragment
-        )
+        NavigationManager.goToParkingLotsFragment(supportFragmentManager, args)
     }
 
     /* Called when navigation occurs.
@@ -202,14 +193,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
-        /* Navigate to selected fragment */
+        /* Navigate to selected fragment and checks if themes should change */
         when(item.itemId) {
 
             R.id.nav_parkings_lots -> {
 
-                NavigationManager.goToFragment(supportFragmentManager,
-                    ParkingLotsListFragment()
-                )
+                NavigationManager.goToParkingLotsFragment(supportFragmentManager, null)
 
                 validateThemeTime()
                 validateThemes()
@@ -217,9 +206,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_vehicles -> {
 
-                NavigationManager.goToFragment(supportFragmentManager,
-                    VehiclesListFragment()
-                )
+                NavigationManager.goToVehiclesListFragment(supportFragmentManager)
 
                 validateThemeTime()
                 validateThemes()
@@ -227,9 +214,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_contacts -> {
 
-                NavigationManager.goToFragment(supportFragmentManager,
-                    ContactsFragment()
-                )
+                NavigationManager.goToContactsFragment(supportFragmentManager)
 
                 validateThemeTime()
                 validateThemes()
@@ -237,9 +222,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_settings -> {
 
-                NavigationManager.goToFragment(supportFragmentManager,
-                    SettingsFragment()
-                )
+                NavigationManager.goToSettingsFragment(supportFragmentManager)
 
                 validateThemeTime()
                 validateThemes()
@@ -312,9 +295,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if(!screenRotated(savedInstanceState)) {
 
             /* Creates and starts ParkingLotsListFragment with previously fetched data */
-            initListFragment()
+            initFragment()
         }
-
     }
 
     override fun onStart() {
@@ -332,20 +314,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onStop()
     }
 
-    override fun onNavigateToFragment(fragment: Fragment?) {
+    override fun onBatteryCapacityListener(capacity: Int) {
+
+        validateThemeBattery(capacity)
+    }
+
+    override fun onNavigateToParkingLotDetails(args: Bundle) {
+
+        Log.i(TAG, "here")
 
         validateThemeTime()
         validateThemes()
 
-        /* Navigate to fragment and update theme according to current time */
-        fragment?.let {
-
-            NavigationManager.goToFragment(supportFragmentManager, it)
-        }
+        NavigationManager.goToParkingLotDetailsFragment(supportFragmentManager, args)
     }
 
-    override fun onBatteryCapacityListener(capacity: Int) {
+    override fun onNavigateToParkingLotNavigation(args: Bundle) {
 
-        validateThemeBattery(capacity)
+        Log.i(TAG, "here")
+
+        validateThemeTime()
+        validateThemes()
+
+        NavigationManager.goToParkingLotNavigationFragment(supportFragmentManager, args)
+    }
+
+    override fun onNavigateToVehicleForm(args: Bundle?) {
+
+        validateThemeTime()
+        validateThemes()
+
+        NavigationManager.goToVehicleFormFragment(supportFragmentManager, args)
     }
 }

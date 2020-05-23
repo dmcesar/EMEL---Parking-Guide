@@ -7,9 +7,9 @@ import com.example.projetocm_g11.data.local.room.LocalDatabase
 import com.example.projetocm_g11.data.remote.RetrofitBuilder
 import com.example.projetocm_g11.data.repositories.ParkingLotsRepository
 import com.example.projetocm_g11.domain.repository.RepositoryLogic
-import com.example.projetocm_g11.ui.listeners.OnDataReceivedWithOrigin
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedWithOriginListener
 
-class SplashScreenViewModel(application: Application) : AndroidViewModel(application), OnDataReceivedWithOrigin {
+class SplashScreenViewModel(application: Application) : AndroidViewModel(application), OnDataReceivedWithOriginListener {
 
     /* Retrieves local database instance */
     private val localDatabase = LocalDatabase.getInstance(application).parkingLotsDAO()
@@ -22,7 +22,7 @@ class SplashScreenViewModel(application: Application) : AndroidViewModel(applica
         )
     )
 
-    private var listener: OnDataReceivedWithOrigin? = null
+    private var listener: OnDataReceivedWithOriginListener? = null
 
     fun requestDataFromRemote() {
 
@@ -34,7 +34,7 @@ class SplashScreenViewModel(application: Application) : AndroidViewModel(applica
         this.logic.getFromLocal()
     }
 
-    fun registerListener(listener: OnDataReceivedWithOrigin) {
+    fun registerListener(listener: OnDataReceivedWithOriginListener) {
 
         this.listener = listener
         this.logic.registerListener(this)

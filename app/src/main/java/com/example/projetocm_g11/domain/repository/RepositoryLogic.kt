@@ -2,14 +2,14 @@ package com.example.projetocm_g11.domain.repository
 
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.repositories.ParkingLotsRepository
-import com.example.projetocm_g11.ui.listeners.OnDataReceivedWithOrigin
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedWithOriginListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RepositoryLogic(private val repository: ParkingLotsRepository) : OnDataReceivedWithOrigin {
+class RepositoryLogic(private val repository: ParkingLotsRepository) : OnDataReceivedWithOriginListener {
 
-    private var listener: OnDataReceivedWithOrigin? = null
+    private var listener: OnDataReceivedWithOriginListener? = null
 
     fun getFromRemote() {
 
@@ -27,7 +27,7 @@ class RepositoryLogic(private val repository: ParkingLotsRepository) : OnDataRec
         }
     }
 
-    fun registerListener(listener: OnDataReceivedWithOrigin) {
+    fun registerListener(listener: OnDataReceivedWithOriginListener) {
 
         this.listener = listener
         this.repository.registerListener(this)

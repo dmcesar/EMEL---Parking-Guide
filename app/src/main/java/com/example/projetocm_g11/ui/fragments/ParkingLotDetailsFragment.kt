@@ -13,35 +13,30 @@ import butterknife.OnClick
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.local.entities.Type
-import com.example.projetocm_g11.ui.listeners.OnNavigateToFragment
-import kotlinx.android.synthetic.main.fragment_parking_lot_info.*
+import com.example.projetocm_g11.ui.listeners.OnNavigationListener
 import kotlinx.android.synthetic.main.fragment_parking_lot_info.view.*
-import kotlinx.android.synthetic.main.fragment_parking_lot_info.view.map_frame
 import java.text.SimpleDateFormat
 
 const val EXTRA_PARK_COORDINATES = "com.example.projetocm-g11.view.ParkingPlaceInfoFragment.PARK_COORDINATES"
 
-class ParkingLotInfoFragment : Fragment() {
+class ParkingLotDetailsFragment : Fragment() {
 
-    private var listener: OnNavigateToFragment? = null
+    private var listener: OnNavigationListener? = null
     private lateinit var parkingLot: ParkingLot
 
     @OnClick(R.id.button_go_map)
     fun onClickSetCourse() {
 
         val args = Bundle()
-
         args.putParcelable(EXTRA_PARKING_LOT, this.parkingLot)
 
-        val navigationFragment =
-            NavigationFragment()
-        navigationFragment.arguments = args
-
-        this.listener?.onNavigateToFragment(navigationFragment)
+        this.listener?.onNavigateToParkingLotNavigation(args)
     }
 
     @OnClick(R.id.button_go_info)
     fun onClickGoInfo() {
+
+        /*
 
         val args = Bundle()
 
@@ -54,11 +49,13 @@ class ParkingLotInfoFragment : Fragment() {
         infoFragment.arguments = args
 
         this.listener?.onNavigateToFragment(infoFragment)
+
+         */
     }
 
     private fun registerListener() {
 
-        this.listener = activity as OnNavigateToFragment
+        this.listener = activity as OnNavigationListener
     }
 
     private fun unregisterListener() {
@@ -78,9 +75,6 @@ class ParkingLotInfoFragment : Fragment() {
         ButterKnife.bind(this, view)
 
         this.parkingLot = this.arguments?.getParcelable(EXTRA_PARKING_LOT) as ParkingLot
-
-        val coordinates = "${ (activity as Context).resources.getString(R.string.coordinates) }: " +
-                "(${this.parkingLot.latitude}, ${this.parkingLot.longitude})"
 
         val type = if(this.parkingLot.getTypeEnum() == Type.UNDERGROUND)
             (activity as Context).resources.getString(R.string.type_underground)

@@ -6,7 +6,7 @@ import com.example.projetocm_g11.data.local.list.Storage
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.local.entities.Type
 import com.example.projetocm_g11.data.local.room.dao.ParkingLotsDAO
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 import kotlinx.coroutines.*
 import kotlin.collections.ArrayList
 
@@ -17,7 +17,7 @@ class ParkingLotsLogic(private val database: ParkingLotsDAO) {
     private val storage = Storage.getInstance()
 
     /* Observer is notified with an ArrayList<ParkingLot> */
-    private var listener: OnDataReceived? = null
+    private var listener: OnDataReceivedListener? = null
 
     private fun applyFilters(unfilteredList: ArrayList<ParkingLot>, filters: ArrayList<Filter>): ArrayList<ParkingLot> {
 
@@ -90,7 +90,7 @@ class ParkingLotsLogic(private val database: ParkingLotsDAO) {
         }
     }
 
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListener(listener: OnDataReceivedListener) {
 
         this.listener = listener
     }

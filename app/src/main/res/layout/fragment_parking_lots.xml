@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:background="?attr/colorPrimary" >
+
+        <Button
+            android:id="@+id/button_go_list_view"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            style="@style/AppBarButtonStyle"
+            android:text="@string/list_view" />
+
+        <Button
+            android:id="@+id/button_go_map_view"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            style="@style/AppBarButtonStyle"
+            android:text="@string/map_view"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/parking_lots_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

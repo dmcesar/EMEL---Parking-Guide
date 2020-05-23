@@ -97,5 +97,10 @@
     <string name="setting_switch_themes_summary">Switch themes according to time of day and battery life</string>
     <string name="setting_sensor_delete_filters_title">Delete filters</string>
     <string name="setting_sensor_delete_filters_summary">Delete filters when device is shaken</string>
+    <string name="list_view">List view</string>
+    <string name="map_view">Map view</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

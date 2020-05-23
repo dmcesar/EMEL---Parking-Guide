@@ -88,6 +88,12 @@
         <item name="android:background">@drawable/card</item>
     </style>
 
+    <style name="AppBarButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:elevation">2dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">?attr/onPrimaryColor</item>
+    </style>
+
     <style name="SquareButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:elevation">2dp</item>
         <item name="android:textSize">15sp</item>

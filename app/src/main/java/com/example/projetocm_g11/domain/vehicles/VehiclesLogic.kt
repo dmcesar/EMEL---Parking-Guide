@@ -1,10 +1,9 @@
 package com.example.projetocm_g11.domain.vehicles
 
 import android.util.Log
-import com.example.projetocm_g11.data.local.list.Storage
 import com.example.projetocm_g11.data.local.entities.Vehicle
 import com.example.projetocm_g11.data.local.room.dao.VehiclesDAO
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +14,7 @@ class VehiclesLogic(private val storage: VehiclesDAO) {
     private val TAG = VehiclesLogic::class.java.simpleName
 
     /* Observer is notified with an ArrayList<Vehicle> */
-    private var listener: OnDataReceived? = null
+    private var listener: OnDataReceivedListener? = null
 
     /* Inserts a new vehicle in the local database and calls read() */
     fun create(vehicle: Vehicle) {
@@ -81,7 +80,7 @@ class VehiclesLogic(private val storage: VehiclesDAO) {
     }
 
     /* Registers observer as listener */
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListener(listener: OnDataReceivedListener) {
 
         Log.i(TAG, "registerListener() called")
 

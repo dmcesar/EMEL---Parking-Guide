@@ -96,5 +96,7 @@
     <string name="setting_switch_themes_title">Trocar tema automáticamente</string>
     <string name="setting_switch_themes_summary">Trocar tema de acordo com a hora e nível da bateria</string>
     <string name="themes_category">Temas</string>
+    <string name="list_view">Vista em lista</string>
+    <string name="map_view">Vista em mapa</string>
 
 </resources>

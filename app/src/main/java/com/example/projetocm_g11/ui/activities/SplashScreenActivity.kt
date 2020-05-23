@@ -6,24 +6,20 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
-import com.example.projetocm_g11.ui.listeners.OnDataReceivedWithOrigin
-import com.example.projetocm_g11.ui.viewmodels.ParkingLotsViewModel
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedWithOriginListener
 import com.example.projetocm_g11.ui.viewmodels.SplashScreenViewModel
-import kotlinx.android.synthetic.main.activity_splash_screen.*
 
-const val EXTRA_PARKING_LOTS = "com.example.projectocm_g11.ui.activities.SplashScreenActivity.PARKING_LOTS"
-const val EXTRA_UPDATED = "com.example.projectocm_g11.ui.activities.SplashScreenActivity.UPDATED"
+const val EXTRA_DATA = "com.example.projectocm_g11.ui.activities.SplashScreenActivity.DATA"
+const val EXTRA_DATA_FROM_REMOTE = "com.example.projectocm_g11.ui.activities.SplashScreenActivity.DATA_FROM_REMOTE"
 
 const val PREFERENCE_SWITCH_THEMES_NOTIFY = "com.example.projetocm_g11.ui.activities.SplashScreenActivity.NOTIFY"
 
-class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOrigin {
+class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOriginListener {
 
     private val TAG = SplashScreenActivity::class.java.simpleName
 
@@ -40,8 +36,8 @@ class SplashScreenActivity : AppCompatActivity(), OnDataReceivedWithOrigin {
 
         val intent = Intent(this, MainActivity::class.java)
 
-        intent.putParcelableArrayListExtra(EXTRA_PARKING_LOTS, data)
-        intent.putExtra(EXTRA_UPDATED, updated)
+        intent.putParcelableArrayListExtra(EXTRA_DATA, data)
+        intent.putExtra(EXTRA_DATA_FROM_REMOTE, updated)
 
         startActivity(intent)
         finish()

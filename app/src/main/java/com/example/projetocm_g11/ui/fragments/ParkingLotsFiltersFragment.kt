@@ -16,14 +16,14 @@ import butterknife.OnClick
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.ui.adapters.FiltersAdapter
 import com.example.projetocm_g11.data.local.entities.Filter
-import com.example.projetocm_g11.ui.listeners.OnClickEvent
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnClickListener
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 import com.example.projetocm_g11.ui.viewmodels.FiltersViewModel
 import com.example.projetocm_g11.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_parking_lots_filters.*
 import kotlinx.android.synthetic.main.fragment_parking_lots_filters.view.*
 
-class ParkingLotsFiltersFragment : Fragment(), OnDataReceived, OnClickEvent {
+class ParkingLotsFiltersFragment : Fragment(), OnDataReceivedListener, OnClickListener {
 
     private val TAG = ParkingLotsFiltersFragment::class.java.simpleName
 

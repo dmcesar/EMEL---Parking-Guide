@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.projetocm_g11.data.local.entities.Vehicle
 import com.example.projetocm_g11.data.local.room.LocalDatabase
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 import com.example.projetocm_g11.domain.vehicles.VehiclesLogic
 
-class VehiclesListViewModel(application: Application) : AndroidViewModel(application), OnDataReceived {
+class VehiclesListViewModel(application: Application) : AndroidViewModel(application), OnDataReceivedListener {
 
     /* Retrieves local database instance */
     private val localDatabase = LocalDatabase.getInstance(application).vehiclesDAO()
@@ -16,7 +16,7 @@ class VehiclesListViewModel(application: Application) : AndroidViewModel(applica
     private val logic = VehiclesLogic(localDatabase)
 
     /* Listener is notified with ArrayList<Vehicle> */
-    private var listener: OnDataReceived? = null
+    private var listener: OnDataReceivedListener? = null
 
     /* Fragment lifecycle variable */
     var vehicles = ArrayList<Vehicle>()
@@ -41,7 +41,7 @@ class VehiclesListViewModel(application: Application) : AndroidViewModel(applica
         logic.delete(id)
     }
 
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListener(listener: OnDataReceivedListener) {
 
         this.listener = listener
         this.logic.registerListener(this)

@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projetocm_g11.*
 import com.example.projetocm_g11.ui.adapters.VehicleAdapter
 import com.example.projetocm_g11.data.local.entities.Vehicle
-import com.example.projetocm_g11.ui.listeners.OnClickEvent
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
-import com.example.projetocm_g11.ui.listeners.OnNavigateToFragment
+import com.example.projetocm_g11.ui.listeners.OnClickListener
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
+import com.example.projetocm_g11.ui.listeners.OnNavigationListener
 import com.example.projetocm_g11.ui.viewmodels.VehiclesListViewModel
 
 import kotlinx.android.synthetic.main.fragment_vehicles_list.*
@@ -25,13 +25,13 @@ import kotlinx.android.synthetic.main.fragment_vehicles_list.view.vehicles
 
 const val EXTRA_VEHICLE = "com.example.projetocm_g11.ui.fragments.VehiclesListFragment.VEHICLE"
 
-class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
+class VehiclesListFragment : Fragment(), OnDataReceivedListener, OnClickListener {
 
     private val TAG = VehiclesListFragment::class.java.simpleName
 
     private lateinit var viewModel: VehiclesListViewModel
 
-    private var listener: OnNavigateToFragment? = null
+    private var listener: OnNavigationListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -49,12 +49,8 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
         /* Set FAB onClickListener */
         view.fab.setOnClickListener {
 
-            /* Create an empty vehicle form */
-            val emptyFormFragment =
-                VehicleFormFragment()
-
-            // Notify MainActivity to navigate to Fragment
-            this.listener?.onNavigateToFragment(emptyFormFragment)
+            /* Notify MainActivity to navigate to empty VehicleFormFragment */
+            this.listener?.onNavigateToVehicleForm(null)
         }
 
         /* Obtain ViewModel*/
@@ -70,7 +66,7 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
 
         this.viewModel.registerListener(this)
 
-        this.listener = activity as OnNavigateToFragment
+        this.listener = activity as OnNavigationListener
 
         this.viewModel.read()
 
@@ -116,11 +112,8 @@ class VehiclesListFragment : Fragment(), OnDataReceived, OnClickEvent {
                 val args = Bundle()
                 args.putParcelable(EXTRA_VEHICLE, it)
 
-                val editForm =
-                    VehicleFormFragment()
-                editForm.arguments = args
-
-                this.listener?.onNavigateToFragment(editForm)
+                /* Notify MainActivity to navigate to empty VehicleFormFragment */
+                this.listener?.onNavigateToVehicleForm(args)
 
             } else { viewModel.delete(it as String) }
         }

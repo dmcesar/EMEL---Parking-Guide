@@ -2,7 +2,7 @@ package com.example.projetocm_g11.ui.listeners
 
 import com.example.projetocm_g11.data.local.entities.Filter
 
-interface OnFiltersEvent {
+interface OnFiltersReceivedListener {
 
     suspend fun getAll(): List<Filter>
 

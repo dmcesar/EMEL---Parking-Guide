@@ -1,17 +1,17 @@
 package com.example.projetocm_g11.domain.parkingPlaces
 
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 
 class ParkingPlaceInformationLogic {
 
-    private var listener: OnDataReceived? = null
+    private var listener: OnDataReceivedListener? = null
 
     fun getInfo(latitude: Double, longitude: Double) {
 
         //TODO: Extra: Get data from API
     }
 
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListener(listener: OnDataReceivedListener) {
 
         this.listener = listener
     }

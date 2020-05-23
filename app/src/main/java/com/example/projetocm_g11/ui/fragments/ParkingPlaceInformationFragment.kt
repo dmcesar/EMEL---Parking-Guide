@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 
 import com.example.projetocm_g11.R
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 import com.example.projetocm_g11.ui.viewmodels.ParkingPlaceInformationViewModel
 
-class ParkingPlaceInformationFragment : Fragment(), OnDataReceived {
+class ParkingPlaceInformationFragment : Fragment(), OnDataReceivedListener {
 
     private lateinit var viewModel: ParkingPlaceInformationViewModel
 

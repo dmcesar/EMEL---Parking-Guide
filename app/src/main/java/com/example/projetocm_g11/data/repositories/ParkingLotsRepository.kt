@@ -3,13 +3,9 @@ package com.example.projetocm_g11.data.repositories
 import android.util.Log
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.local.room.dao.ParkingLotsDAO
-import com.example.projetocm_g11.data.remote.requests.ParkingLotsRequestHeader
 import com.example.projetocm_g11.data.remote.services.ParkingLotsService
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
-import com.example.projetocm_g11.ui.listeners.OnDataReceivedWithOrigin
-import kotlinx.coroutines.CoroutineScope
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedWithOriginListener
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 
@@ -20,7 +16,7 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
     private val TAG = ParkingLotsRepository::class.java.simpleName
 
     /* Notifies observer (ParkingLotsLogic) with ArrayList<ParkingLots> */
-    private var listener: OnDataReceivedWithOrigin? = null
+    private var listener: OnDataReceivedWithOriginListener? = null
 
     private suspend fun updateLocal(remoteData: ArrayList<ParkingLot>): ArrayList<ParkingLot> {
 
@@ -117,7 +113,7 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
         }
     }
 
-    fun registerListener(listener: OnDataReceivedWithOrigin) {
+    fun registerListener(listener: OnDataReceivedWithOriginListener) {
 
         this.listener = listener
     }

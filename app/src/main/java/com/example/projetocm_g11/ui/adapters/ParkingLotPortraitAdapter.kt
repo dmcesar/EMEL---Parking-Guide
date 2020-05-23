@@ -1,11 +1,9 @@
 package com.example.projetocm_g11.ui.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -13,10 +11,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
-import com.example.projetocm_g11.ui.listeners.OnTouchEvent
 import kotlinx.android.synthetic.main.parking_lots_portrait_list_item.view.*
 
-open class ParkingLotPortraitAdapter(private val listener: OnTouchEvent, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
+open class ParkingLotPortraitAdapter(private val listener: com.example.projetocm_g11.ui.listeners.OnTouchListener, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
     RecyclerView.Adapter<ParkingLotPortraitAdapter.ParkingLotsPortraitViewHolder>() {
 
     private val TAG = ParkingLotPortraitAdapter::class.java.simpleName
@@ -72,7 +69,7 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchEvent, private
 
         holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
 
-        holder.itemView.setOnTouchListener(object : OnTouchListener {
+        holder.itemView.setOnTouchListener(object : View.OnTouchListener {
 
             var onTouchX = 0f
 

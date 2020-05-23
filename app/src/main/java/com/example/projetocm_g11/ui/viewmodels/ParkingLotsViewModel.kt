@@ -3,27 +3,22 @@ package com.example.projetocm_g11.ui.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.projetocm_g11.data.local.entities.ParkingLot
-import com.example.projetocm_g11.data.local.list.Storage
 import com.example.projetocm_g11.data.local.room.LocalDatabase
-import com.example.projetocm_g11.data.remote.RetrofitBuilder
-import com.example.projetocm_g11.data.repositories.ParkingLotsRepository
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 import com.example.projetocm_g11.domain.parkingLots.ParkingLotsLogic
 
 const val ENDPOINT = "https://emel.city-platform.com/opendata/"
 
-class ParkingLotsViewModel(application: Application) : AndroidViewModel(application), OnDataReceived {
+class ParkingLotsViewModel(application: Application) : AndroidViewModel(application), OnDataReceivedListener {
 
     /* Retrieves local database instance */
     private val localDatabase = LocalDatabase.getInstance(application).parkingLotsDAO()
 
     private val logic = ParkingLotsLogic(localDatabase)
 
-    private var listener: OnDataReceived? = null
+    private var listener: OnDataReceivedListener? = null
 
-    /* Observable object */
-    var parkingLots = ArrayList<ParkingLot>()
-
+    /* Fetches data stored locally */
     fun getAll() {
 
         this.logic.getParkingLots()
@@ -34,7 +29,7 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
         this.logic.toggleFavorite(parkingLot)
     }
 
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListener(listener: OnDataReceivedListener) {
 
         this.listener = listener
         this.logic.registerListener(this)
@@ -46,16 +41,14 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
         this.logic.unregisterListener()
     }
 
-    private fun notifyDataChanged() {
+    private fun notifyDataChanged(list: ArrayList<ParkingLot>) {
 
-        this.listener?.onDataReceived(ArrayList(this.parkingLots))
+        this.listener?.onDataReceived(ArrayList(list))
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
-        data?.let { this.parkingLots = it as ArrayList<ParkingLot> }
-
-        notifyDataChanged()
+        data?.let { notifyDataChanged(data as ArrayList<ParkingLot>) }
     }
 }

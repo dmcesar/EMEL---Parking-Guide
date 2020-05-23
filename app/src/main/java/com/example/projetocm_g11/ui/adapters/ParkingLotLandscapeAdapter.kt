@@ -1,7 +1,6 @@
 package com.example.projetocm_g11.ui.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -10,11 +9,11 @@ import android.widget.TextView
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.local.entities.Type
-import com.example.projetocm_g11.ui.listeners.OnTouchEvent
+import com.example.projetocm_g11.ui.listeners.OnTouchListener
 import kotlinx.android.synthetic.main.parking_lots_landscape_list_item.view.*
 import java.text.SimpleDateFormat
 
-class ParkingLotLandscapeAdapter(private val listener: OnTouchEvent, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
+class ParkingLotLandscapeAdapter(private val listener: OnTouchListener, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
     ParkingLotPortraitAdapter(listener, context, layout, items) {
 
     private val TAG = ParkingLotLandscapeAdapter::class.java.simpleName

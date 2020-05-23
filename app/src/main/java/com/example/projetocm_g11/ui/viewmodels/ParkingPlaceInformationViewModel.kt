@@ -1,12 +1,12 @@
 package com.example.projetocm_g11.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.example.projetocm_g11.ui.listeners.OnDataReceived
+import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 import com.example.projetocm_g11.domain.parkingPlaces.ParkingPlaceInformationLogic
 
-class ParkingPlaceInformationViewModel : ViewModel(), OnDataReceived {
+class ParkingPlaceInformationViewModel : ViewModel(), OnDataReceivedListener {
 
-    private var listener: OnDataReceived? = null
+    private var listener: OnDataReceivedListener? = null
 
     private val logic =
         ParkingPlaceInformationLogic()
@@ -16,7 +16,7 @@ class ParkingPlaceInformationViewModel : ViewModel(), OnDataReceived {
         this.logic.getInfo(latitude, longitude)
     }
 
-    fun registerListener(listener: OnDataReceived) {
+    fun registerListener(listener: OnDataReceivedListener) {
 
         this.listener = listener
     }
