@@ -319,8 +319,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigateToParkingLotDetails(args: Bundle) {
 
-        Log.i(TAG, "here")
-
         validateThemeTime()
         validateThemes()
 
@@ -329,12 +327,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigateToParkingLotNavigation(args: Bundle) {
 
-        Log.i(TAG, "here")
-
         validateThemeTime()
         validateThemes()
 
         NavigationManager.goToParkingLotNavigationFragment(supportFragmentManager, args)
+    }
+
+    override fun onNavigateToFiltersFragment() {
+
+        validateThemeTime()
+        validateThemes()
+
+        NavigationManager.goToFiltersFragment(supportFragmentManager)
     }
 
     override fun onNavigateToVehicleForm(args: Bundle?) {

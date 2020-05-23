@@ -72,11 +72,11 @@ class ParkingLotLandscapeAdapter(private val listener: OnTouchListener, private 
                         when {
                             onTouchX + 10 < event.x -> {
 
-                                listener.onSwipeEvent(items[position], 1)
+                                listener.onSwipeRightEvent(items[position])
                             }
                             onTouchX - 10 > event.x -> {
 
-                                listener.onSwipeEvent(items[position], 0)
+                                listener.onSwipeLeftEvent(items[position])
                             }
                             else -> {
 

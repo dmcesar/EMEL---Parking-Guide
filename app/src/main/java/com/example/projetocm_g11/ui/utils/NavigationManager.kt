@@ -71,5 +71,12 @@ class NavigationManager {
 
             placeFragment(fm, fragment)
         }
+
+        fun goToFiltersFragment(fm: FragmentManager) {
+
+            val fragment = ParkingLotsFiltersFragment()
+
+            placeFragment(fm, fragment)
+        }
     }
 }

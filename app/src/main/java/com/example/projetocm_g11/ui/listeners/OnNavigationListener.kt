@@ -8,5 +8,7 @@ interface OnNavigationListener {
 
     fun onNavigateToParkingLotNavigation(args: Bundle)
 
+    fun onNavigateToFiltersFragment()
+
     fun onNavigateToVehicleForm(args: Bundle?)
 }

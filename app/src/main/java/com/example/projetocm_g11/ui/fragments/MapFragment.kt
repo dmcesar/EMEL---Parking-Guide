@@ -1,5 +1,6 @@
 package com.example.projetocm_g11.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,12 +10,15 @@ import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.sensors.location.FusedLocation
 import com.example.projetocm_g11.data.sensors.location.OnLocationChangedListener
+import com.example.projetocm_g11.ui.activities.EXTRA_DATA
+import com.example.projetocm_g11.ui.utils.Extensions
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.fragment_map.view.map_view
@@ -24,32 +28,63 @@ const val REQUEST_CODE = 100
 class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
     OnLocationChangedListener {
 
-    private val TAG = MapFragment::class.java.simpleName
-
     private var map: GoogleMap? = null
 
-    private fun setMapMarker() {
+    private var userMarker: Marker? = null
 
-        arguments?.let {
+    private fun handleArgs() {
 
-            val parkingLot = it.getParcelable<ParkingLot>(EXTRA_PARKING_LOT)
+        this.arguments?.let { args ->
 
-            parkingLot?.let {
+            val parkingLots = args.getParcelableArrayList<ParkingLot>(EXTRA_DATA)
 
-                /* Create marker with park coordinates and name */
-                val marker = MarkerOptions()
-                    .title(parkingLot.name)
-                    .position(LatLng(parkingLot.latitude.toDouble(), parkingLot.longitude.toDouble()))
-                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker))
+            parkingLots?.let { list ->
 
-                /* Add marker to map */
-                this.map?.addMarker(marker)
-
-                /* Move map camera to park */
-                this.map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(parkingLot.latitude.toDouble(), parkingLot.longitude.toDouble()), 10.0f))
+                list.forEach { p -> pinParkingLot(p) }
 
             }
         }
+    }
+
+    private fun pinUser(coordinates: LatLng) {
+
+        val userPin = MarkerOptions()
+            .position(coordinates)
+            .icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_user_marker))
+
+        var userMoved = true
+
+        /* If there was a previous pin, check if user moved. If user moved, remove pin and add new one */
+        this.userMarker?.let {
+
+            if(it.position == coordinates) {
+
+                userMoved = false
+
+            } else {
+
+                this.userMarker?.remove()
+            }
+        }
+
+        /* If user moved, update marker and camera */
+        if(userMoved) {
+
+            this.userMarker = this.map?.addMarker(userPin)
+            this.map?.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 12.0f))
+        }
+    }
+
+    private fun pinParkingLot(parkingLot: ParkingLot) {
+
+        /* Create marker with park coordinates and name */
+        val marker = MarkerOptions()
+            .title(parkingLot.name)
+            .position(LatLng(parkingLot.latitude.toDouble(), parkingLot.longitude.toDouble()))
+            .icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker))
+
+        /* Add marker to map */
+        this.map?.addMarker(marker)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -75,20 +110,22 @@ class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
     }
 
     override fun onRequestPermissionsFailure() {
-        Log.i(TAG, "request failed")
+
+        (activity)?.onBackPressed()
     }
 
     override fun onMapReady(map: GoogleMap?) {
 
-        Log.i(TAG, "Map received!")
-
         this.map = map
 
-        /* After receiving map, pin parking lot */
-        setMapMarker()
+        /* After receiving map, pin parking lots */
+        handleArgs()
     }
 
     override fun onLocationChangedListener(locationResult: LocationResult) {
+
         val location = locationResult.lastLocation
+
+        pinUser(Extensions.toLatLng(location))
     }
 }

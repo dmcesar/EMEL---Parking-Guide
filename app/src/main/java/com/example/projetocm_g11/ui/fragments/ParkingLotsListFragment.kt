@@ -8,8 +8,6 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import butterknife.ButterKnife
-import butterknife.OnClick
 
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.ui.adapters.ParkingLotLandscapeAdapter
@@ -21,23 +19,15 @@ import com.example.projetocm_g11.ui.listeners.*
 import kotlinx.android.synthetic.main.fragment_parking_lots_list.*
 import kotlin.collections.ArrayList
 
-const val EXTRA_PARKING_LOT = "com.example.projetocm_g11.ui.fragments.ParkingLotsListFragment.ParkingLot"
-
-class ParkingLotsListFragment : Fragment(), OnTouchListener {
+class ParkingLotsListFragment : Fragment(), OnTouchListener, OnDataReceivedListener {
 
     private val TAG = ParkingLotsListFragment::class.java.simpleName
 
-    private var navigationListener: OnNavigationListener? = null
+    private var listener: OnTouchListener? = null
 
     private var data: ArrayList<ParkingLot>? = null
     private var dataIsFromRemote: Boolean? = null
     private var dataFetchedBefore: Boolean? = null
-
-    @OnClick(R.id.button_filter)
-    fun onClickGoFiltersFragment() {
-
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -57,18 +47,12 @@ class ParkingLotsListFragment : Fragment(), OnTouchListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        /* Inflate layout */
-        val view = inflater.inflate(R.layout.fragment_parking_lots_list, container, false)
-
-        /* Bind fragment to view */
-        ButterKnife.bind(this, view)
-
-        return view
+        return inflater.inflate(R.layout.fragment_parking_lots_list, container, false)
     }
 
     override fun onStart() {
 
-        this.navigationListener = parentFragment as OnNavigationListener
+        this.listener = parentFragment as OnTouchListener
 
         this.data?.let { initAdapter(it) }
 
@@ -95,7 +79,7 @@ class ParkingLotsListFragment : Fragment(), OnTouchListener {
 
     override fun onStop() {
 
-        this.navigationListener = null
+        this.listener = null
 
         super.onStop()
     }
@@ -125,39 +109,25 @@ class ParkingLotsListFragment : Fragment(), OnTouchListener {
         }
     }
 
-    override fun onSwipeEvent(data: Any?, direction: Int) {
+    override fun onSwipeLeftEvent(data: Any?) {
 
-        /* Swiped right: Show map */
-        if(direction == 1) {
+        this.listener?.onSwipeLeftEvent(data)
+    }
 
-            Log.i(TAG, "Item swiped right")
+    override fun onSwipeRightEvent(data: Any?) {
 
-            /* Create arguments with parking lot */
-            val args = Bundle()
-            args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
-
-            /* Notify observer to navigate to ParkingLotNavigationFragment with created args */
-            this.navigationListener?.onNavigateToParkingLotNavigation(args)
-        }
-
-        /* Swiped left: Tag/Untag as favorite */
-        else {
-
-            Log.i(TAG, "Item swiped left")
-
-        }
+        this.listener?.onSwipeRightEvent(data)
     }
 
     /* Action triggered when RecycleView item is clicked */
     override fun onClickEvent(data: Any?) {
 
-        Log.i(TAG, "Item clicked")
+        this.listener?.onClickEvent(data)
+    }
 
-        /* Create arguments with parking lot */
-        val args = Bundle()
-        args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
+    @Suppress("UNCHECKED_CAST")
+    override fun onDataReceived(data: ArrayList<*>?) {
 
-        /* Notify observer to navigate to ParkingLotDetailsFragment with created args */
-        this.navigationListener?.onNavigateToParkingLotDetails(args)
+        data?.let { initAdapter(it as ArrayList<ParkingLot>) }
     }
 }

@@ -13,6 +13,7 @@ import butterknife.OnClick
 import com.example.projetocm_g11.R
 import com.example.projetocm_g11.data.local.entities.ParkingLot
 import com.example.projetocm_g11.data.local.entities.Type
+import com.example.projetocm_g11.ui.activities.EXTRA_DATA
 import com.example.projetocm_g11.ui.listeners.OnNavigationListener
 import kotlinx.android.synthetic.main.fragment_parking_lot_info.view.*
 import java.text.SimpleDateFormat
@@ -123,11 +124,11 @@ class ParkingLotDetailsFragment : Fragment() {
             /* Create map fragment */
             val map = MapFragment()
 
-            /* Set parking lots as arguments */
+            /* Set list with parking lot as argument */
             val args = Bundle()
-            args.putParcelable(
-                EXTRA_PARKING_LOT,
-                this.parkingLot
+            args.putParcelableArrayList(
+                EXTRA_DATA,
+                arrayListOf(this.parkingLot)
             )
             map.arguments = args
 

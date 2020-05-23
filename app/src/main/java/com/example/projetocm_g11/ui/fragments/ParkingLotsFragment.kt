@@ -19,6 +19,7 @@ import com.example.projetocm_g11.ui.activities.EXTRA_DATA_FROM_REMOTE
 import com.example.projetocm_g11.ui.activities.MainActivity
 import com.example.projetocm_g11.ui.listeners.OnDataReceivedListener
 import com.example.projetocm_g11.ui.listeners.OnNavigationListener
+import com.example.projetocm_g11.ui.listeners.OnTouchListener
 import com.example.projetocm_g11.ui.utils.NavigationManager
 import com.example.projetocm_g11.ui.utils.ParkingLotsNavigationManager
 import com.example.projetocm_g11.ui.viewmodels.ParkingLotsViewModel
@@ -26,10 +27,9 @@ import kotlinx.android.synthetic.main.fragment_parking_lots.*
 import kotlinx.android.synthetic.main.fragment_parking_lots.view.*
 
 const val EXTRA_DATA_FETCHED_BEFORE = "com.example.projetocm_g11.ui.fragments.ParkingLotsListFragment.DATA_FETCHED_BEFORE"
+const val EXTRA_PARKING_LOT = "com.example.projetocm_g11.ui.fragments.ParkingLotsListFragment.ParkingLot"
 
-class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationListener {
-
-    private val TAG = ParkingLotsFragment::class.java.simpleName
+class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnTouchListener {
 
     private val QUEUED_FRAGMENT_KEY = "queued_fragment"
 
@@ -66,6 +66,12 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
 
         /* Request data from viewModel */
         this.viewModel.getAll()
+    }
+
+    @OnClick(R.id.button_filter)
+    fun onClickGoFiltersFragment() {
+
+        this.listener?.onNavigateToFiltersFragment()
     }
 
     private fun screenRotated(savedInstanceState: Bundle?): Boolean {
@@ -113,8 +119,6 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
             /* If arguments where received */
             this.arguments?.let {
 
-                Log.i(TAG, "init with arg")
-
                 /* Received data from MainActivity */
                 val dataReceived: ArrayList<ParkingLot>? = it.getParcelableArrayList(EXTRA_DATA)
                 val dataFromRemote: Boolean = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
@@ -134,9 +138,13 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
             /* If no arguments where received */
             kotlin.run {
 
-                /* Request data from ViewModel */
                 this.viewModel.getAll()
             }
+
+        } else {
+
+            /* Request data from ViewModel */
+            this.viewModel.getAll()
         }
 
         return view
@@ -164,8 +172,6 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
-        Log.i(TAG, "init without arg")
-
         /* Create arguments */
         val args = Bundle()
         args.putParcelableArrayList(EXTRA_DATA, data as ArrayList<ParkingLot>)
@@ -180,15 +186,28 @@ class ParkingLotsFragment : Fragment(), OnDataReceivedListener, OnNavigationList
         else { ParkingLotsNavigationManager.goToMapFragment(childFragmentManager, args) }
     }
 
-    override fun onNavigateToParkingLotDetails(args: Bundle) {
+    override fun onSwipeLeftEvent(data: Any?) {
 
-        this.listener?.onNavigateToParkingLotDetails(args)
+        this.viewModel.toggleFavorite(data as ParkingLot)
     }
 
-    override fun onNavigateToParkingLotNavigation(args: Bundle) {
+    override fun onSwipeRightEvent(data: Any?) {
 
+        /* Create arguments with parking lot */
+        val args = Bundle()
+        args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
+
+        /* Notify observer to navigate to ParkingLotNavigationFragment with created args */
         this.listener?.onNavigateToParkingLotNavigation(args)
     }
 
-    override fun onNavigateToVehicleForm(args: Bundle?) { }
+    override fun onClickEvent(data: Any?) {
+
+        /* Create arguments with parking lot */
+        val args = Bundle()
+        args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
+
+        /* Notify observer to navigate to ParkingLotDetailsFragment with created args */
+        this.listener?.onNavigateToParkingLotDetails(args)
+    }
 }
