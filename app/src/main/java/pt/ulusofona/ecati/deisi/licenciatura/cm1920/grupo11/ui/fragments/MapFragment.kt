@@ -2,6 +2,7 @@ package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -118,6 +119,7 @@ class MapFragment : PermissionsFragment(
 
     override fun onRequestPermissionsFailure() {
 
+        Log.i(TAG, "failed to request permissions")
     }
 
     override fun onMapReady(map: GoogleMap?) {

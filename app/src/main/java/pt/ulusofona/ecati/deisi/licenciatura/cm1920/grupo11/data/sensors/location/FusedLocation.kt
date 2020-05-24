@@ -2,6 +2,7 @@ package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.locati
 
 import android.content.Context
 import android.os.Looper
+import android.util.Log
 import com.google.android.gms.location.*
 
 class FusedLocation private constructor(context: Context) : LocationCallback() {
@@ -9,7 +10,7 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
     private val TAG = FusedLocation::class.java.simpleName
 
     // Intervalos de tempo em que a localização é verificada, 10 segundos
-    private val TIME_BETWEEN_UPDATES = 10 * 1000L
+    private val TIME_BETWEEN_UPDATES = 20 * 1000L
 
     // Este atributo é utilizado para configurar os pedidos de localização
     private var locationRequest: LocationRequest? = null
@@ -40,7 +41,7 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
 
         fun registerListener(listener: OnLocationChangedListener) {
 
-            Companion.listener = listener
+            this.listener = listener
         }
 
         fun unregisterListener() {
@@ -70,6 +71,8 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
     }
 
     override fun onLocationResult(locationResult: LocationResult?) {
+
+        Log.i(TAG, locationResult?.lastLocation.toString())
 
         locationResult?.let {
             notifyListeners(
