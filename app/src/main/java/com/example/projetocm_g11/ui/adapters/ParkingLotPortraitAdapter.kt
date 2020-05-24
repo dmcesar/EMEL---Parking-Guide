@@ -1,10 +1,13 @@
 package com.example.projetocm_g11.ui.adapters
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -93,6 +96,14 @@ open class ParkingLotPortraitAdapter(private val listener: com.example.projetocm
                             onTouchX - 10 > event.x -> {
 
                                 listener.onSwipeLeftEvent(items[position])
+
+                                /*val set: AnimatorSet = AnimatorInflater.loadAnimator(context, R.animator.animation_from_right)
+                                    .apply {
+                                        setTarget(items[position])
+                                        start()
+                                    } as AnimatorSet
+
+                                 */
                             }
                             else -> {
 

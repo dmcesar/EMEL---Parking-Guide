@@ -4,6 +4,6 @@
     android:id="@+id/parking_lots"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="10dp"
-    android:layout_marginBottom="10dp"
+    android:paddingHorizontal="10dp"
+    android:paddingBottom="10dp"
     android:background="?attr/backgroundColor" />

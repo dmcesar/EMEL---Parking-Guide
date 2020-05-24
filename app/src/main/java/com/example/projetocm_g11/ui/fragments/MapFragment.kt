@@ -28,6 +28,8 @@ const val REQUEST_CODE = 100
 class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
     OnLocationChangedListener {
 
+    private val TAG = MapFragment::class.java.simpleName
+
     private var map: GoogleMap? = null
 
     private var userMarker: Marker? = null
@@ -48,31 +50,34 @@ class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
 
     private fun pinUser(coordinates: LatLng) {
 
-        val userPin = MarkerOptions()
-            .position(coordinates)
-            .icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_user_marker))
+        this.context?.let {
 
-        var userMoved = true
+            val userPin = MarkerOptions()
+                .position(coordinates)
+                .icon(Extensions.bitmapDescriptorFromVector(it, R.drawable.ic_user_marker))
 
-        /* If there was a previous pin, check if user moved. If user moved, remove pin and add new one */
-        this.userMarker?.let {
+            var userMoved = true
 
-            if(it.position == coordinates) {
+            /* If there was a previous pin, check if user moved. If user moved, remove pin and add new one */
+            this.userMarker?.let {
 
-                userMoved = false
+                if(it.position == coordinates) {
 
-            } else {
+                    userMoved = false
 
-                this.userMarker?.remove()
+                } else {
+
+                    this.userMarker?.remove()
+                }
             }
-        }
 
-        /* If user moved, update marker and camera */
-        if(userMoved) {
+            /* If user moved, update marker and camera */
+            if(userMoved) {
 
-            this.userMarker = this.map?.addMarker(userPin)
-            this.map?.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 12.0f))
-        }
+                this.userMarker = this.map?.addMarker(userPin)
+                this.map?.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 12.0f))
+            }
+        } 
     }
 
     private fun pinParkingLot(parkingLot: ParkingLot) {

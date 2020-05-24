@@ -38,8 +38,6 @@ class ParkingLotsListFragment : Fragment(), OnTouchListener, OnDataReceivedListe
             this.data = it.getParcelableArrayList(EXTRA_DATA)
             this.dataIsFromRemote = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
             this.dataFetchedBefore = it.getBoolean(EXTRA_DATA_FETCHED_BEFORE)
-
-            Log.i(TAG, "${(this.dataIsFromRemote).toString()}  ${(this.dataFetchedBefore).toString()}")
         }
 
         this.arguments = null

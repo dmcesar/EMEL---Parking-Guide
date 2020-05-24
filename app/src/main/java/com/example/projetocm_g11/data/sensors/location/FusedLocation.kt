@@ -9,8 +9,8 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
 
     private val TAG = FusedLocation::class.java.simpleName
 
-    // Intervalos de tempo em que a localização é verificada, 20 segundos
-    private val TIME_BETWEEN_UPDATES = 20 * 1000L
+    // Intervalos de tempo em que a localização é verificada, 10 segundos
+    private val TIME_BETWEEN_UPDATES = 10 * 1000L
 
     // Este atributo é utilizado para configurar os pedidos de localização
     private var locationRequest: LocationRequest? = null
@@ -65,8 +65,6 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
     }
 
     override fun onLocationResult(locationResult: LocationResult?) {
-
-        Log.i(TAG, locationResult?.lastLocation.toString())
 
         locationResult?.let { notifyListeners(it) }
 
