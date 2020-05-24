@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.ParkingPlaceInformationFragment"
+    tools:context="pt.ulusofona.ecati.deisi.projetocm_g11.ui.fragments.ParkingPlaceInformationFragment"
     android:orientation="vertical"
     android:padding="20dp"
     android:gravity="start">
