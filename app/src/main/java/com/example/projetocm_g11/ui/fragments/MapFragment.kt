@@ -50,24 +50,24 @@ class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
 
     private fun pinUser(coordinates: LatLng) {
 
-        this.context?.let {
+        this.context?.let { context ->
 
             val userPin = MarkerOptions()
                 .position(coordinates)
-                .icon(Extensions.bitmapDescriptorFromVector(it, R.drawable.ic_user_marker))
+                .icon(Extensions.bitmapDescriptorFromVector(context, R.drawable.ic_user_marker))
 
             var userMoved = true
 
             /* If there was a previous pin, check if user moved. If user moved, remove pin and add new one */
-            this.userMarker?.let {
+            this.userMarker?.let { userMarker ->
 
-                if(it.position == coordinates) {
+                if(userMarker.position == coordinates) {
 
                     userMoved = false
 
                 } else {
 
-                    this.userMarker?.remove()
+                    userMarker.remove()
                 }
             }
 
@@ -77,7 +77,7 @@ class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
                 this.userMarker = this.map?.addMarker(userPin)
                 this.map?.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 12.0f))
             }
-        } 
+        }
     }
 
     private fun pinParkingLot(parkingLot: ParkingLot) {
