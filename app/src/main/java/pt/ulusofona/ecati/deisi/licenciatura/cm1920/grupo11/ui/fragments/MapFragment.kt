@@ -6,24 +6,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_map.*
-import kotlinx.android.synthetic.main.fragment_map.view.map_view
+import kotlinx.android.synthetic.main.fragment_map.view.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Type
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.FusedLocation
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.LOCATION_REQUEST_CODE
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.Extensions
-import java.lang.Exception
 
 class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallback,
     OnLocationChangedListener {
@@ -41,6 +41,12 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
             val parkingLots = args.getParcelableArrayList<ParkingLot>(EXTRA_DATA)
 
             parkingLots?.let { list ->
+
+                /* If list size is 1 (parking lot details), hide legend button */
+                if(list.size == 1) {
+
+                    fab_toggle_legend.visibility = View.GONE
+                }
 
                 list.forEach { p -> pinParkingLot(p) }
 
@@ -86,7 +92,82 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
         val marker = MarkerOptions()
             .title(parkingLot.name)
             .position(LatLng(parkingLot.latitude.toDouble(), parkingLot.longitude.toDouble()))
-            .icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker))
+
+        if(parkingLot.getCapacityPercent() < 90) {
+
+            if(parkingLot.getTypeEnum() == Type.UNDERGROUND) {
+
+                if(parkingLot.active == 1) {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_free_underground))
+
+                } else {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_free_underground_closed))
+                }
+
+            } else {
+
+                if(parkingLot.active == 1) {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_free))
+
+                } else {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_free_closed))
+                }
+            }
+
+        } else if(parkingLot.getCapacityPercent() in 90..99) {
+
+            if(parkingLot.getTypeEnum() == Type.UNDERGROUND) {
+
+                if(parkingLot.active == 1) {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_potentially_full_underground))
+
+                } else {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_potentially_full_underground_closed))
+                }
+
+            } else {
+
+                if(parkingLot.active == 1) {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_potentially_full))
+
+                } else {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_potentially_full_closed))
+                }
+            }
+
+        } else {
+
+            if(parkingLot.getTypeEnum() == Type.UNDERGROUND) {
+
+                if(parkingLot.active == 1) {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_full_underground))
+
+                } else {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_full_underground_closed))
+                }
+
+            } else {
+
+                if(parkingLot.active == 1) {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_full))
+
+                } else {
+
+                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_full_closed))
+                }
+            }
+        }
 
         /* Add marker to map */
         this.map?.addMarker(marker)
@@ -96,6 +177,24 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
 
         val view = inflater.inflate(R.layout.fragment_map, container, false)
         view.map_view.onCreate(savedInstanceState)
+
+        view.fab_toggle_legend.setOnClickListener {
+
+            if(view.map_legend.visibility == View.GONE) {
+
+                view.map_legend.visibility = View.VISIBLE
+
+                view.fab_toggle_legend.setImageDrawable(ContextCompat.getDrawable(activity as Context, R.drawable.ic_close))
+
+
+            } else {
+
+                view.map_legend.visibility = View.GONE
+
+                view.fab_toggle_legend.setImageDrawable(ContextCompat.getDrawable(activity as Context, R.drawable.ic_map))
+
+            }
+        }
 
         return view
     }

@@ -98,5 +98,7 @@
     <string name="themes_category">Temas</string>
     <string name="list_view">Vista em lista</string>
     <string name="map_view">Vista em mapa</string>
+    <string name="map_legend">Legenda</string>
+    <string name="you">Voçê</string>
 
 </resources>

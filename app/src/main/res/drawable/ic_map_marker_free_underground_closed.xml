@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@drawable/ic_covered"
+        android:bottom="12dp"
+        android:gravity="top"/>
+
+    <item
+        android:drawable="@drawable/ic_map_marker_free"
+        android:gravity="bottom"/>
+
+    <item
+        android:drawable="@drawable/ic_closed"
+        android:gravity="bottom"/>
+
+</layer-list>
