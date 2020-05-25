@@ -39,4 +39,9 @@ class Storage {
 
         storage.remove(filter)
     }
+
+    fun clear() {
+
+        storage.clear()
+    }
 }

@@ -33,6 +33,11 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
         this.logic.toggleFavorite(parkingLot)
     }
 
+    fun removeFilters() {
+
+        this.logic.removeFilters()
+    }
+
     fun registerListener(listener: OnDataReceivedListener) {
 
         this.listener = listener

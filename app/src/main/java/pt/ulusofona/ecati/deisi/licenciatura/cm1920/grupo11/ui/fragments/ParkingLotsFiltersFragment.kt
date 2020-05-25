@@ -21,11 +21,14 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.MainAc
 import kotlinx.android.synthetic.main.fragment_parking_lots_filters.*
 import kotlinx.android.synthetic.main.fragment_parking_lots_filters.view.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.Accelerometer
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.OnAccelerometerEventListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 
 class ParkingLotsFiltersFragment : Fragment(),
     OnDataReceivedListener,
-    OnClickListener {
+    OnClickListener,
+    OnAccelerometerEventListener{
 
     private val TAG = ParkingLotsFiltersFragment::class.java.simpleName
 
@@ -177,6 +180,8 @@ class ParkingLotsFiltersFragment : Fragment(),
 
             if(isChecked) {
 
+                Log.i(TAG, "Inserted AVAILABLE")
+
                 this.viewModel.insert(filter)
 
             } else this.viewModel.delete(filter)
@@ -217,10 +222,14 @@ class ParkingLotsFiltersFragment : Fragment(),
 
         this.viewModel.read()
 
+        Accelerometer.registerFiltersListener(this)
+
         super.onStart()
     }
 
     override fun onStop() {
+
+        Accelerometer.unregisterFiltersListener()
 
         this.viewModel.unregisterListener()
 
@@ -236,5 +245,10 @@ class ParkingLotsFiltersFragment : Fragment(),
     override fun onClickEvent(data: Any?) {
 
         data?.let { this.viewModel.delete(it as Filter) }
+    }
+
+    override fun onAccelerometerEventListener() {
+
+        this.viewModel.deleteAll()
     }
 }

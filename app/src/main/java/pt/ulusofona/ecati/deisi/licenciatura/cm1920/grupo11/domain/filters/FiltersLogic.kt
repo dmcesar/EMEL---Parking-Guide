@@ -82,6 +82,16 @@ class FiltersLogic {
         }
     }
 
+    fun deleteAll() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            storage.clear()
+
+            read()
+        }
+    }
+
     /* Notifies observer with UI Thread context */
     private suspend fun notifyDataChanged(list: ArrayList<Filter>) {
 

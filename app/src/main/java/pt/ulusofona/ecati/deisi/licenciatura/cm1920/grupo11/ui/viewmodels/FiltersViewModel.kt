@@ -34,6 +34,11 @@ class FiltersViewModel(application: Application) : AndroidViewModel(application)
         this.logic.delete(filter)
     }
 
+    fun deleteAll() {
+
+        this.logic.deleteAll()
+    }
+
     fun registerListener(listener: OnDataReceivedListener) {
 
         this.listener = listener

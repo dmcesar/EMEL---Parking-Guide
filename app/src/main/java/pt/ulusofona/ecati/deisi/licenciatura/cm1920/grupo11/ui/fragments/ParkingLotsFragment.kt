@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,8 @@ import kotlinx.android.synthetic.main.fragment_parking_lots.*
 import kotlinx.android.synthetic.main.fragment_parking_lots.view.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.Accelerometer
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.OnAccelerometerEventListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnTouchListener
@@ -30,7 +33,10 @@ const val EXTRA_PARKING_LOT = "pt.ulusofona.ecati.ParkingLotsListFragment.Parkin
 
 class ParkingLotsFragment : Fragment(),
     OnDataReceivedListener,
-    OnTouchListener {
+    OnTouchListener,
+    OnAccelerometerEventListener {
+
+    private val TAG = ParkingLotsFragment::class.java.simpleName
 
     private val QUEUED_FRAGMENT_KEY = "queued_fragment"
 
@@ -159,6 +165,8 @@ class ParkingLotsFragment : Fragment(),
         this.listener = (this.activity as OnNavigationListener)
         this.viewModel.registerListener(this)
 
+        Accelerometer.registerParkingLotsListener(this)
+
         super.onStart()
     }
 
@@ -168,12 +176,16 @@ class ParkingLotsFragment : Fragment(),
         this.listener = null
         this.viewModel.unregisterListener()
 
+        Accelerometer.unregisterParkingLotsListener()
+
         super.onStop()
     }
 
     /* Receives parking lots list stored locally and navigates do queued fragment */
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
+
+        Log.i(TAG, "ParkingLots received ${data?.size}")
 
         /* Create arguments */
         val args = Bundle()
@@ -219,5 +231,10 @@ class ParkingLotsFragment : Fragment(),
 
         /* Notify observer to navigate to ParkingLotDetailsFragment with created args */
         this.listener?.onNavigateToParkingLotDetails(args)
+    }
+
+    override fun onAccelerometerEventListener() {
+
+        this.viewModel.removeFilters()
     }
 }

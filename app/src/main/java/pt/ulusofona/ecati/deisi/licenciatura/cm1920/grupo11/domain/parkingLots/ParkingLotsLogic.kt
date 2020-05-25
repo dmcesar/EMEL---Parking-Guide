@@ -29,21 +29,19 @@ class ParkingLotsLogic(private val database: ParkingLotsDAO) {
 
             for (f in filters) {
 
-                when (f.value) {
+                filteredList = when (f.value) {
 
-                    "SURFACE" -> filteredList = filteredList.filter { p -> p.getTypeEnum() == Type.SURFACE }
+                    "SURFACE" -> filteredList.filter { p -> p.getTypeEnum() == Type.SURFACE }
 
-                    "UNDERGROUND" -> filteredList = filteredList.filter { p -> p.getTypeEnum() == Type.UNDERGROUND }
+                    "UNDERGROUND" -> filteredList.filter { p -> p.getTypeEnum() == Type.UNDERGROUND }
 
-                    "AVAILABLE" -> filteredList = filteredList.filter { p -> p.active == 1 }
+                    "AVAILABLE" -> filteredList.filter { p -> p.active == 1 }
 
-                    "UNAVAILABLE" -> filteredList = filteredList.filter { p -> p.active == 0 }
+                    "UNAVAILABLE" -> filteredList.filter { p -> p.active == 0 }
 
-                    "FAVORITE" -> filteredList = filteredList.filter { p -> p.isFavourite }
+                    "FAVORITE" -> filteredList.filter { p -> p.isFavourite }
 
-                    "ALPHABETICAL" -> filteredList = filteredList.sortedBy { p -> p.name }
-
-                    else -> filteredList = filteredList.filter { p -> p.name.contains(f.value) }
+                    else -> filteredList.filter { p -> p.name.contains(f.value) }
                 }
             }
 
@@ -76,6 +74,16 @@ class ParkingLotsLogic(private val database: ParkingLotsDAO) {
         CoroutineScope(Dispatchers.IO).launch {
 
             database.updateFavoriteStatus(parkingLot.id, !parkingLot.isFavourite)
+
+            getParkingLots()
+        }
+    }
+
+    fun removeFilters() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            storage.clear()
 
             getParkingLots()
         }
