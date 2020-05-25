@@ -174,8 +174,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         /* If a different theme has been queued (either by time or battery) */
         if(appliedTheme != queuedTheme) {
 
-            Log.i(TAG, "Recreating activity")
-
             /* Recreate activity to view changes */
             recreate()
         }
@@ -321,9 +319,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigateToParkingLotDetails(args: Bundle) {
-
-        validateThemeTime()
-        validateThemes()
 
         NavigationManager.goToParkingLotDetailsFragment(supportFragmentManager, args)
     }

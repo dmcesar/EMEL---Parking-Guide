@@ -4,5 +4,5 @@ import com.google.android.gms.location.LocationResult
 
 interface OnLocationChangedListener {
 
-    fun onLocationChangedListener(locationResult: LocationResult)
+    fun onLocationChanged(locationResult: LocationResult)
 }

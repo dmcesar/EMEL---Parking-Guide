@@ -51,10 +51,11 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
 
         fun notifyListeners(locationResult: LocationResult) {
 
-            listener?.onLocationChangedListener(locationResult)
+            listener?.onLocationChanged(locationResult)
         }
 
         fun start(context: Context) {
+
             instance = if(instance == null) {
                 FusedLocation(
                     context
@@ -67,6 +68,7 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
     }
 
     private fun startLocationUpdates() {
+
         client.requestLocationUpdates(locationRequest, this, Looper.myLooper())
     }
 

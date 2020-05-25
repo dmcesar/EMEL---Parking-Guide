@@ -6,27 +6,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.FusedLocation
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.Extensions
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_map.*
-import kotlinx.android.synthetic.main.fragment_map.view.*
+import kotlinx.android.synthetic.main.fragment_map.view.map_view
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.FusedLocation
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.Extensions
+import java.lang.Exception
 
 const val REQUEST_CODE = 100
 
-class MapFragment : PermissionsFragment(
-    REQUEST_CODE
-), OnMapReadyCallback,
+class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
     OnLocationChangedListener {
 
     private val TAG = MapFragment::class.java.simpleName
@@ -39,9 +39,7 @@ class MapFragment : PermissionsFragment(
 
         this.arguments?.let { args ->
 
-            val parkingLots = args.getParcelableArrayList<ParkingLot>(
-                EXTRA_DATA
-            )
+            val parkingLots = args.getParcelableArrayList<ParkingLot>(EXTRA_DATA)
 
             parkingLots?.let { list ->
 
@@ -105,12 +103,14 @@ class MapFragment : PermissionsFragment(
 
     override fun onStart() {
 
-        super.onRequestPermissions(activity?.baseContext!!, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION))
+        super.onRequestPermissions(activity?.baseContext!!, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION))
 
         super.onStart()
     }
 
     override fun onRequestPermissionsSuccess() {
+
+        Log.i(TAG, "OnRequestPermissionsSuccess")
 
         FusedLocation.registerListener(this)
         map_view.getMapAsync(this)
@@ -119,7 +119,7 @@ class MapFragment : PermissionsFragment(
 
     override fun onRequestPermissionsFailure() {
 
-        Log.i(TAG, "failed to request permissions")
+        Log.i(TAG, "OnRequestPermissionsFailure")
     }
 
     override fun onMapReady(map: GoogleMap?) {
@@ -130,7 +130,7 @@ class MapFragment : PermissionsFragment(
         handleArgs()
     }
 
-    override fun onLocationChangedListener(locationResult: LocationResult) {
+    override fun onLocationChanged(locationResult: LocationResult) {
 
         val location = locationResult.lastLocation
 
