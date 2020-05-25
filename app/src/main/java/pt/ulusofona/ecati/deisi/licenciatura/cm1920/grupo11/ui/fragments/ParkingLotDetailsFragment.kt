@@ -1,6 +1,8 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,10 +30,12 @@ class ParkingLotDetailsFragment : Fragment() {
     @OnClick(R.id.button_go_map)
     fun onClickSetCourse() {
 
-        val args = Bundle()
-        args.putParcelable(EXTRA_PARKING_LOT, this.parkingLot)
+        val latitude = this.parkingLot.latitude
+        val longitude = this.parkingLot.longitude
 
-        this.listener?.onNavigateToParkingLotNavigation(args)
+        val intent = Intent(Intent.ACTION_VIEW,
+        Uri.parse("http://maps.google.com/maps?daddr=$latitude,$longitude"))
+        startActivity(intent)
     }
 
     @OnClick(R.id.button_go_info)

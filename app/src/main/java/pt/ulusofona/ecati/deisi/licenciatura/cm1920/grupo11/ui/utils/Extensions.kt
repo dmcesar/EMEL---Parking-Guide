@@ -29,5 +29,19 @@ class Extensions {
             }
         }
 
+        fun toLocation(latitude: Double, longitude: Double): Location {
+
+            val location = Location("")
+
+            location.latitude = latitude
+            location.longitude = longitude
+
+            return location
+        }
+
+        fun calculateDistanceBetween(a: Location, b: Location): Float {
+
+            return a.distanceTo(b)
+        }
     }
 }

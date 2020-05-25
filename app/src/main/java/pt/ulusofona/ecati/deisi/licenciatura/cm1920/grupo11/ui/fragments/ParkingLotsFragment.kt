@@ -1,6 +1,8 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -194,12 +196,19 @@ class ParkingLotsFragment : Fragment(),
 
     override fun onSwipeRightEvent(data: Any?) {
 
-        /* Create arguments with parking lot */
-        val args = Bundle()
-        args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
+        data?.let {
 
-        /* Notify observer to navigate to ParkingLotNavigationFragment with created args */
-        this.listener?.onNavigateToParkingLotNavigation(args)
+            it as ParkingLot
+
+            val latitude = it.latitude
+            val longitude = it.longitude
+
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?daddr=$latitude,$longitude"))
+
+            startActivity(intent)
+        }
     }
 
     override fun onClickEvent(data: Any?) {

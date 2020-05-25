@@ -7,9 +7,8 @@ import com.google.android.gms.location.*
 
 class FusedLocation private constructor(context: Context) : LocationCallback() {
 
-    private val TAG = FusedLocation::class.java.simpleName
 
-    // Intervalos de tempo em que a localização é verificada, 10 segundos
+    // Intervalos de tempo em que a localização é verificada, 20 segundos
     private val TIME_BETWEEN_UPDATES = 20 * 1000L
 
     // Este atributo é utilizado para configurar os pedidos de localização
@@ -35,40 +34,48 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
     }
 
     companion object {
+        private val TAG = FusedLocation::class.java.simpleName
 
-        private var listener: OnLocationChangedListener? = null
+
+        private var googleMapListener: OnLocationChangedListener? = null
+        private var distanceListener: OnLocationChangedListener? = null
         private var instance: FusedLocation? = null
 
-        fun registerListener(listener: OnLocationChangedListener) {
+        fun registerGoogleMapListener(listener: OnLocationChangedListener) {
 
-            this.listener = listener
+            googleMapListener = listener
         }
 
-        fun unregisterListener() {
+        fun unregisterGoogleMapListener() {
 
-            listener = null
+            googleMapListener = null
+        }
+
+        fun registerDistanceListener(listener: OnLocationChangedListener) {
+
+            distanceListener = listener
+        }
+
+        fun unregisterDistanceListener() {
+
+            distanceListener = null
         }
 
         fun notifyListeners(locationResult: LocationResult) {
 
-            listener?.onLocationChanged(locationResult)
+            Log.i(TAG, "notified observers")
+
+            googleMapListener?.onLocationChanged(locationResult)
+            distanceListener?.onLocationChanged(locationResult)
         }
 
         fun start(context: Context) {
-
-            instance = if(instance == null) {
-                FusedLocation(
-                    context
-                )
-            } else {
-                instance
-            }
+            instance = if(instance == null) { FusedLocation(context) } else { instance }
             instance?.startLocationUpdates()
         }
     }
 
     private fun startLocationUpdates() {
-
         client.requestLocationUpdates(locationRequest, this, Looper.myLooper())
     }
 
@@ -76,11 +83,7 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
 
         Log.i(TAG, locationResult?.lastLocation.toString())
 
-        locationResult?.let {
-            notifyListeners(
-                it
-            )
-        }
+        locationResult?.let { notifyListeners(it) }
 
         super.onLocationResult(locationResult)
     }

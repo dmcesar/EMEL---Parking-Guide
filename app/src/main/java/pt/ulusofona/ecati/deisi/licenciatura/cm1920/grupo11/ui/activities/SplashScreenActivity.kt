@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.SplashScreenViewModel
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.SplashViewModel
 
 const val EXTRA_DATA = "com.example.projectocm_g11.ui.activities.SplashScreenActivity.DATA"
 const val EXTRA_DATA_FROM_REMOTE = "com.example.projectocm_g11.ui.activities.SplashScreenActivity.DATA_FROM_REMOTE"
@@ -24,7 +24,7 @@ class SplashScreenActivity : AppCompatActivity(),
 
     private val TAG = SplashScreenActivity::class.java.simpleName
 
-    private lateinit var viewModel: SplashScreenViewModel
+    private lateinit var viewModel: SplashViewModel
 
     private val splashTimeOut: Long = 3000
 
@@ -57,7 +57,7 @@ class SplashScreenActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        this.viewModel = ViewModelProviders.of(this).get(SplashScreenViewModel::class.java)
+        this.viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
 
         Handler().postDelayed({
 

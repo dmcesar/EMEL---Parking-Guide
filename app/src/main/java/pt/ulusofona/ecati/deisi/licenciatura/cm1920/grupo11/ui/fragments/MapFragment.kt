@@ -21,12 +21,11 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.FusedLocation
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.LOCATION_REQUEST_CODE
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.Extensions
 import java.lang.Exception
 
-const val REQUEST_CODE = 100
-
-class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
+class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallback,
     OnLocationChangedListener {
 
     private val TAG = MapFragment::class.java.simpleName
@@ -108,11 +107,18 @@ class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
         super.onStart()
     }
 
+    override fun onStop() {
+
+        FusedLocation.unregisterGoogleMapListener()
+
+        super.onStop()
+    }
+
     override fun onRequestPermissionsSuccess() {
 
         Log.i(TAG, "OnRequestPermissionsSuccess")
 
-        FusedLocation.registerListener(this)
+        FusedLocation.registerGoogleMapListener(this)
         map_view.getMapAsync(this)
         map_view.onResume()
     }
@@ -131,6 +137,8 @@ class MapFragment : PermissionsFragment(REQUEST_CODE), OnMapReadyCallback,
     }
 
     override fun onLocationChanged(locationResult: LocationResult) {
+
+        Log.i(TAG, "user location changed")
 
         val location = locationResult.lastLocation
 

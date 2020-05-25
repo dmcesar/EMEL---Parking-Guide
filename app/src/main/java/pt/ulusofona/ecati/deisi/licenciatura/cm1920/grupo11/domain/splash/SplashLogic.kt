@@ -1,4 +1,4 @@
-package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.repository
+package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.splash
 
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.repositories.ParkingLotsRepository
 import kotlinx.coroutines.CoroutineScope
@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
 
-class RepositoryLogic(private val repository: ParkingLotsRepository) :
+class SplashLogic(private val repository: ParkingLotsRepository) :
     OnDataReceivedWithOriginListener {
 
     private var listener: OnDataReceivedWithOriginListener? = null

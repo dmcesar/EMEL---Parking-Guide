@@ -27,7 +27,6 @@ abstract class PermissionsFragment(private val requestCode: Int) : Fragment() {
     }
 
     abstract fun onRequestPermissionsSuccess()
-
     abstract fun onRequestPermissionsFailure()
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

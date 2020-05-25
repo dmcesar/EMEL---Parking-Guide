@@ -6,10 +6,10 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.room.LocalDatabase
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.remote.RetrofitBuilder
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.repositories.ParkingLotsRepository
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.repository.RepositoryLogic
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.splash.SplashLogic
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
 
-class SplashScreenViewModel(application: Application) : AndroidViewModel(application),
+class SplashViewModel(application: Application) : AndroidViewModel(application),
     OnDataReceivedWithOriginListener {
 
     /* Retrieves local database instance */
@@ -17,7 +17,7 @@ class SplashScreenViewModel(application: Application) : AndroidViewModel(applica
 
     /* Domain component */
     private val logic =
-        RepositoryLogic(
+        SplashLogic(
             ParkingLotsRepository(
                 localDatabase,
                 RetrofitBuilder.getInstance(

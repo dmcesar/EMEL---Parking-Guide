@@ -3,12 +3,22 @@ package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import butterknife.ButterKnife
+import butterknife.OnClick
+import com.google.android.gms.location.LocationResult
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.NavigationManager
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.battery.Battery
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.battery.OnBatteryCapacityListener
@@ -18,19 +28,52 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.FusedLocation
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments.PREFERENCE_THEMES
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.MainViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 const val PREFERENCE_APPLIED_THEME = "com.example.projetocm_g11.ui.activities.APPLIED_THEME"
 const val PREFERENCE_QUEUED_THEME = "com.example.projetocm_g11.ui.activities.QUEUED_THEME"
 
+const val LOCATION_REQUEST_CODE = 100
+
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     OnNavigationListener,
-    OnBatteryCapacityListener {
+    OnDataReceivedListener,
+    OnBatteryCapacityListener,
+    OnLocationChangedListener {
 
     private val TAG = MainActivity::class.java.simpleName
+
+    private lateinit var viewModel: MainViewModel
+
+    private var userLocation: Location? = null
+    private var requestedClosestParkingLot = false
+
+    @OnClick(R.id.button_park_me_now)
+    fun navigateToClosestParkingLot() {
+
+        onRequestPermissions(this.baseContext, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION))
+
+        this.userLocation?.let {
+
+            Log.i(TAG, "requested park coordinates with user coordinates")
+
+            this.viewModel.getClosestParkingLotCoordinates(it)
+
+        } ?: kotlin.run {
+
+            Log.i(TAG, "requested park coordinates without user coordinates")
+
+            this.requestedClosestParkingLot = true
+        }
+    }
 
     private fun initFragment() {
 
@@ -283,6 +326,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         setContentView(R.layout.activity_main)
 
+        ButterKnife.bind(this)
+
+        this.viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
         // Provides drawer access within toolbar
         setSupportActionBar(toolbar)
 
@@ -303,12 +350,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         /* Notify activity as Battery capacity listener */
         Battery.registerListener(this)
 
+        this.viewModel.registerListener(this)
+
+
         super.onStart()
     }
 
     override fun onStop() {
 
         Battery.unregisterListener()
+        FusedLocation.unregisterDistanceListener()
+
+        this.viewModel.unregisterListener()
 
         super.onStop()
     }
@@ -321,14 +374,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigateToParkingLotDetails(args: Bundle) {
 
         NavigationManager.goToParkingLotDetailsFragment(supportFragmentManager, args)
-    }
-
-    override fun onNavigateToParkingLotNavigation(args: Bundle) {
-
-        validateThemeTime()
-        validateThemes()
-
-        NavigationManager.goToParkingLotNavigationFragment(supportFragmentManager, args)
     }
 
     override fun onNavigateToFiltersFragment() {
@@ -345,5 +390,81 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         validateThemes()
 
         NavigationManager.goToVehicleFormFragment(supportFragmentManager, args)
+    }
+
+    override fun onDataReceived(data: ArrayList<*>?) {
+
+        data?.let {
+
+            val latitude = it[0] as String
+            val longitude = it[1] as String
+
+            Log.i(TAG, "Received parking lot coordinates")
+
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?daddr=$latitude,$longitude"))
+            startActivity(intent)
+        }
+    }
+
+    override fun onLocationChanged(locationResult: LocationResult) {
+
+        Log.i(TAG, "user location changed")
+
+        this.userLocation = locationResult.lastLocation
+
+        if(requestedClosestParkingLot) {
+
+            Log.i(TAG, "requested park coordinates with user coordinates")
+
+            requestedClosestParkingLot = false
+
+            this.viewModel.getClosestParkingLotCoordinates(locationResult.lastLocation)
+        }
+    }
+
+    private fun onRequestPermissions(context: Context, permissions: Array<String>) {
+
+        var permissionsGiven = 0
+
+        permissions.forEach {
+
+            if(ContextCompat.checkSelfPermission(context, it) !=  PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(permissions, LOCATION_REQUEST_CODE)
+
+            } else { permissionsGiven++ }
+        }
+
+        if(permissionsGiven == permissions.size) {
+
+            onRequestPermissionsSuccess()
+        }
+    }
+
+    private fun onRequestPermissionsSuccess() {
+
+        FusedLocation.registerDistanceListener(this)
+    }
+
+    private fun onRequestPermissionsFailure() {
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+        if(LOCATION_REQUEST_CODE == requestCode) {
+
+            grantResults.forEach { g -> Log.i(TAG, g.toString()) }
+
+            if((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                onRequestPermissionsSuccess()
+
+            } else { onRequestPermissionsFailure() }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

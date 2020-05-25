@@ -75,18 +75,6 @@ class NavigationManager {
                 fragment
             )
         }
-        
-        fun goToParkingLotNavigationFragment(fm: FragmentManager, args: Bundle) {
-            
-            val fragment =
-                NavigationFragment()
-            fragment.arguments = args
-
-            placeFragment(
-                fm,
-                fragment
-            )
-        }
 
         fun goToVehicleFormFragment(fm: FragmentManager, args: Bundle?) {
 
