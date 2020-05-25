@@ -23,16 +23,21 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.locatio
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.LOCATION_REQUEST_CODE
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.Extensions
 
 class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallback,
-    OnLocationChangedListener {
+    OnLocationChangedListener, GoogleMap.OnMarkerClickListener {
 
     private val TAG = MapFragment::class.java.simpleName
 
     private var map: GoogleMap? = null
 
     private var userMarker: Marker? = null
+
+    private val markersParkingLots = HashMap<LatLng, ParkingLot>()
+
+    private var listener: OnNavigationListener? = null
 
     private fun handleArgs() {
 
@@ -171,6 +176,8 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
 
         /* Add marker to map */
         this.map?.addMarker(marker)
+
+        this.markersParkingLots[marker.position] = parkingLot
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -201,12 +208,19 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
 
     override fun onStart() {
 
+        if(parentFragment is OnNavigationListener) {
+
+            this.listener = parentFragment as OnNavigationListener
+        }
+
         super.onRequestPermissions(activity?.baseContext!!, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION))
 
         super.onStart()
     }
 
     override fun onStop() {
+
+        this.listener = null
 
         FusedLocation.unregisterGoogleMapListener()
 
@@ -231,6 +245,8 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
 
         this.map = map
 
+        this.map?.setOnMarkerClickListener(this)
+
         /* After receiving map, pin parking lots */
         handleArgs()
     }
@@ -242,5 +258,22 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
         val location = locationResult.lastLocation
 
         pinUser(Extensions.toLatLng(location))
+    }
+
+    override fun onMarkerClick(marker: Marker?): Boolean {
+
+        Log.i(TAG, "on marker click called")
+
+        val parkingLot = this.markersParkingLots[marker?.position]
+
+        val args = Bundle()
+        args.putParcelable(EXTRA_PARKING_LOT, parkingLot)
+
+        this.listener?.let {
+
+            it.onNavigateToParkingLotDetails(args)
+        }
+
+        return false
     }
 }

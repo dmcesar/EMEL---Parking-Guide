@@ -34,7 +34,8 @@ const val EXTRA_PARKING_LOT = "pt.ulusofona.ecati.ParkingLotsListFragment.Parkin
 class ParkingLotsFragment : Fragment(),
     OnDataReceivedListener,
     OnTouchListener,
-    OnAccelerometerEventListener {
+    OnAccelerometerEventListener,
+    OnNavigationListener {
 
     private val TAG = ParkingLotsFragment::class.java.simpleName
 
@@ -237,4 +238,13 @@ class ParkingLotsFragment : Fragment(),
 
         this.viewModel.removeFilters()
     }
+
+    override fun onNavigateToParkingLotDetails(args: Bundle) {
+
+        this.listener?.onNavigateToParkingLotDetails(args)
+    }
+
+    override fun onNavigateToFiltersFragment() {}
+
+    override fun onNavigateToVehicleForm(args: Bundle?) {}
 }

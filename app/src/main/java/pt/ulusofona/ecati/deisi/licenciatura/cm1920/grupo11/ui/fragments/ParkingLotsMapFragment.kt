@@ -1,6 +1,7 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,16 @@ import android.view.ViewGroup
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
 
-class ParkingLotsMapFragment : Fragment() {
+class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
+
+
+    private val TAG = ParkingLotsMapFragment::class.java.simpleName
 
     private var data: ArrayList<ParkingLot>? = null
+
+    private var listener: OnNavigationListener? = null
 
     private fun screenRotated(savedInstanceState: Bundle?): Boolean {
 
@@ -57,4 +64,30 @@ class ParkingLotsMapFragment : Fragment() {
 
         return view
     }
+
+    override fun onStart() {
+
+        if(parentFragment is OnNavigationListener) {
+
+            this.listener = parentFragment as OnNavigationListener
+        }
+
+        super.onStart()
+    }
+
+    override fun onStop() {
+
+        this.listener = null
+
+        super.onStop()
+    }
+
+    override fun onNavigateToParkingLotDetails(args: Bundle) {
+
+        this.listener?.onNavigateToParkingLotDetails(args)
+    }
+
+    override fun onNavigateToFiltersFragment() {}
+
+    override fun onNavigateToVehicleForm(args: Bundle?) {}
 }
