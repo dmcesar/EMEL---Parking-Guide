@@ -1,5 +1,6 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.repository
 
+import android.util.Log
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.repositories.ParkingLotsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +12,8 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataR
 
 abstract class RepositoryLogic(private val repository: ParkingLotsRepository) :
     OnDataReceivedWithOriginListener, OnConnectivityStatusListener {
+
+    private val TAG = RepositoryLogic::class.java.simpleName
 
     private var notified: Boolean? = null
     private var requestedData = false
@@ -31,6 +34,8 @@ abstract class RepositoryLogic(private val repository: ParkingLotsRepository) :
 
         CoroutineScope(Dispatchers.IO).launch {
 
+            requestedData = false
+
             repository.getFromLocal()
         }
     }
@@ -38,6 +43,8 @@ abstract class RepositoryLogic(private val repository: ParkingLotsRepository) :
     private fun getFromRemote() {
 
         CoroutineScope(Dispatchers.IO).launch {
+
+            requestedData = false
 
             repository.getFromRemote()
         }
@@ -51,19 +58,17 @@ abstract class RepositoryLogic(private val repository: ParkingLotsRepository) :
 
                 if (connected) {
 
-                    requestedData = false
-
                     getFromRemote()
                 }
 
                 else {
 
-                    requestedData = false
-
                     getFromLocal()
                 }
 
             } ?: kotlin.run {
+
+                Log.i(TAG, "Requested data without connection info")
 
                 requestedData = true
             }
