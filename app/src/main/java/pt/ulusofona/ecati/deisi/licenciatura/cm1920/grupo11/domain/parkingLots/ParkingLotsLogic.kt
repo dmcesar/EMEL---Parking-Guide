@@ -7,75 +7,60 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.room.dao.
 import kotlinx.coroutines.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Type
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.repositories.ParkingLotsRepository
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.repository.RepositoryLogic
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import kotlin.collections.ArrayList
 
-class ParkingLotsLogic(private val database: ParkingLotsDAO) {
+class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repository) {
 
     private val TAG = ParkingLotsLogic::class.java.simpleName
 
     private val storage = Storage.getInstance()
 
-    /* Observer is notified with an ArrayList<ParkingLot> */
     private var listener: OnDataReceivedListener? = null
 
-    private fun applyFilters(unfilteredList: ArrayList<ParkingLot>, filters: ArrayList<Filter>): ArrayList<ParkingLot> {
-
-        if (filters.size > 0) {
-
-            var filteredList = unfilteredList.asSequence()
-
-            Log.i(TAG, "Before filters applied -> ${filteredList.toList().size}")
-
-            for (f in filters) {
-
-                filteredList = when (f.value) {
-
-                    "SURFACE" -> filteredList.filter { p -> p.getTypeEnum() == Type.SURFACE }
-
-                    "UNDERGROUND" -> filteredList.filter { p -> p.getTypeEnum() == Type.UNDERGROUND }
-
-                    "AVAILABLE" -> filteredList.filter { p -> p.active == 1 }
-
-                    "UNAVAILABLE" -> filteredList.filter { p -> p.active == 0 }
-
-                    "FAVORITE" -> filteredList.filter { p -> p.isFavourite }
-
-                    else -> filteredList.filter { p -> p.name.contains(f.value) }
-                }
-            }
-
-            Log.i(TAG, "After filters applied -> ${filteredList.toList().size}")
-
-            return ArrayList(filteredList.toList())
-
-        } else {
-
-            return unfilteredList
-        }
-    }
-
-    /* Read locally stored data and notify observer */
-    fun getParkingLots() {
+    private fun applyFilters(unfilteredList: ArrayList<ParkingLot>) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val list = ArrayList(database.getAll())
             val filters = storage.getAll()
 
-            val filteredList = applyFilters(list, filters)
+            withContext(Dispatchers.Default) {
 
-            notifyDataChanged(filteredList)
-        }
-    }
+                if (filters.size > 0) {
 
-    fun toggleFavorite(parkingLot: ParkingLot) {
+                    var filteredList = unfilteredList.asSequence()
 
-        CoroutineScope(Dispatchers.IO).launch {
+                    Log.i(TAG, "Before filters applied -> ${filteredList.toList().size}")
 
-            database.updateFavoriteStatus(parkingLot.id, !parkingLot.isFavourite)
+                    for (f in filters) {
 
-            getParkingLots()
+                        filteredList = when (f.value) {
+
+                            "SURFACE" -> filteredList.filter { p -> p.getTypeEnum() == Type.SURFACE }
+
+                            "UNDERGROUND" -> filteredList.filter { p -> p.getTypeEnum() == Type.UNDERGROUND }
+
+                            "AVAILABLE" -> filteredList.filter { p -> p.active == 1 }
+
+                            "UNAVAILABLE" -> filteredList.filter { p -> p.active == 0 }
+
+                            "FAVORITE" -> filteredList.filter { p -> p.isFavourite }
+
+                            else -> filteredList.filter { p -> p.name.contains(f.value) }
+                        }
+                    }
+
+                    Log.i(TAG, "After filters applied -> ${filteredList.toList().size}")
+
+                    notifyDataChanged(ArrayList(filteredList.toList()))
+
+                } else {
+
+                    notifyDataChanged(unfilteredList)
+                }
+            }
         }
     }
 
@@ -85,7 +70,7 @@ class ParkingLotsLogic(private val database: ParkingLotsDAO) {
 
             storage.clear()
 
-            getParkingLots()
+            super.requestData()
         }
     }
 
@@ -101,10 +86,17 @@ class ParkingLotsLogic(private val database: ParkingLotsDAO) {
     fun registerListener(listener: OnDataReceivedListener) {
 
         this.listener = listener
+        super.registerListener()
     }
 
-    fun unregisterListener() {
+    override fun unregisterListener() {
 
         this.listener = null
+        super.unregisterListener()
+    }
+
+    override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
+
+        applyFilters(data)
     }
 }

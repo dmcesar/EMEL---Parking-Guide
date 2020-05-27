@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.room.LocalDatabase
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.remote.RetrofitBuilder
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.repositories.ParkingLotsRepository
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.parkingLots.ParkingLotsLogic
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 
@@ -17,7 +19,12 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
 
     private val logic =
         ParkingLotsLogic(
-            localDatabase
+            ParkingLotsRepository(
+                localDatabase,
+                RetrofitBuilder.getInstance(
+                    ENDPOINT
+                )
+            )
         )
 
     private var listener: OnDataReceivedListener? = null
@@ -25,7 +32,7 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
     /* Fetches data stored locally */
     fun getAll() {
 
-        this.logic.getParkingLots()
+        this.logic.requestData()
     }
 
     fun toggleFavorite(parkingLot: ParkingLot) {

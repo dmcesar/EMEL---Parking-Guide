@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -23,13 +24,18 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.locatio
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.LOCATION_REQUEST_CODE
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnMapMarkersReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.Extensions
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.MapViewModel
 
 class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallback,
-    OnLocationChangedListener, GoogleMap.OnMarkerClickListener {
+    OnLocationChangedListener, GoogleMap.OnMarkerClickListener, OnMapMarkersReceivedListener {
 
     private val TAG = MapFragment::class.java.simpleName
+
+    private lateinit var viewModel: MapViewModel
 
     private var map: GoogleMap? = null
 
@@ -53,8 +59,7 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
                     fab_toggle_legend.visibility = View.GONE
                 }
 
-                list.forEach { p -> pinParkingLot(p) }
-
+                this.viewModel.getParkingLotPins(list)
             }
         }
     }
@@ -91,99 +96,20 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
         }
     }
 
-    private fun pinParkingLot(parkingLot: ParkingLot) {
-
-        /* Create marker with park coordinates and name */
-        val marker = MarkerOptions()
-            .title(parkingLot.name)
-            .position(LatLng(parkingLot.latitude.toDouble(), parkingLot.longitude.toDouble()))
-
-        if(parkingLot.getCapacityPercent() < 90) {
-
-            if(parkingLot.getTypeEnum() == Type.UNDERGROUND) {
-
-                if(parkingLot.active == 1) {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_free_underground))
-
-                } else {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_free_underground_closed))
-                }
-
-            } else {
-
-                if(parkingLot.active == 1) {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_free))
-
-                } else {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_free_closed))
-                }
-            }
-
-        } else if(parkingLot.getCapacityPercent() in 90..99) {
-
-            if(parkingLot.getTypeEnum() == Type.UNDERGROUND) {
-
-                if(parkingLot.active == 1) {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_potentially_full_underground))
-
-                } else {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_potentially_full_underground_closed))
-                }
-
-            } else {
-
-                if(parkingLot.active == 1) {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_potentially_full))
-
-                } else {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_potentially_full_closed))
-                }
-            }
-
-        } else {
-
-            if(parkingLot.getTypeEnum() == Type.UNDERGROUND) {
-
-                if(parkingLot.active == 1) {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_full_underground))
-
-                } else {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_full_underground_closed))
-                }
-
-            } else {
-
-                if(parkingLot.active == 1) {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_full))
-
-                } else {
-
-                    marker.icon(Extensions.bitmapDescriptorFromVector(activity as Context, R.drawable.ic_map_marker_full_closed))
-                }
-            }
-        }
+    private fun pinParkingLot(parkingLot: ParkingLot, markerOptions: MarkerOptions) {
 
         /* Add marker to map */
-        this.map?.addMarker(marker)
+        this.map?.addMarker(markerOptions)
 
-        this.markersParkingLots[marker.position] = parkingLot
+        this.markersParkingLots[markerOptions.position] = parkingLot
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_map, container, false)
         view.map_view.onCreate(savedInstanceState)
+
+        this.viewModel = ViewModelProviders.of(this).get(MapViewModel::class.java)
 
         view.fab_toggle_legend.setOnClickListener {
 
@@ -213,6 +139,8 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
             this.listener = parentFragment as OnNavigationListener
         }
 
+        this.viewModel.registerListener(this)
+
         super.onRequestPermissions(activity?.baseContext!!, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION))
 
         super.onStart()
@@ -221,6 +149,7 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
     override fun onStop() {
 
         this.listener = null
+        this.viewModel.unregisterListener()
 
         FusedLocation.unregisterGoogleMapListener()
 
@@ -275,5 +204,13 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
         }
 
         return false
+    }
+
+    override fun onMapMarkersReceived(markers: HashMap<ParkingLot, MarkerOptions>) {
+
+        for((parkingLot, marker) in markers) {
+
+            pinParkingLot(parkingLot, marker)
+        }
     }
 }

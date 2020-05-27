@@ -42,6 +42,11 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
         return locallyUpdatedList
     }
 
+    suspend fun toggleFavorite(id: String, status: Boolean) {
+
+        local.updateFavoriteStatus(id, status)
+    }
+
     suspend fun getFromRemote() {
 
         Log.i(TAG, "getFromRemote()")
@@ -51,14 +56,10 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
         /* Create endpoint service */
         val service = remote.create(ParkingLotsService::class.java)
 
-        Log.i(TAG, "waiting response")
-
         /* Send request with authentication token receive response */
         val response = service.getAll(token = API_TOKEN)
 
         if(response.isSuccessful) {
-
-            Log.i(TAG, "Response successful!")
 
             response.body()?.let {
 
@@ -106,12 +107,9 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
         notifyObserver(list, false)
     }
 
-    private suspend fun notifyObserver(list: ArrayList<ParkingLot>, updated: Boolean) {
+    private fun notifyObserver(list: ArrayList<ParkingLot>, updated: Boolean) {
 
-        withContext(Dispatchers.Main) {
-
-            listener?.onDataReceivedWithOrigin(list, updated)
-        }
+        listener?.onDataReceivedWithOrigin(list, updated)
     }
 
     fun registerListener(listener: OnDataReceivedWithOriginListener) {
