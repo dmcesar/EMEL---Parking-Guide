@@ -2,6 +2,7 @@ package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,10 +30,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val sharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity as Context)
 
         /* Init themesSwitch with ON state */
-        val themesSwitchState = sharedPreferences?.getBoolean(PREFERENCE_THEMES, true) ?: true
+        val themesSwitchState = sharedPreferences.getBoolean(PREFERENCE_THEMES, true)
 
         this.themesSwitch = preferenceManager.findPreference("themes_automatically")
 
@@ -47,7 +48,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 Log.i(TAG, "Toggled preference: Switch themes automatically to $newValue")
 
                 /* Update shared preferences */
-                sharedPreferences?.edit()?.putBoolean(PREFERENCE_THEMES, newValue)?.apply()
+                sharedPreferences.edit().putBoolean(PREFERENCE_THEMES, newValue).apply()
 
                 /* Toggle switch to new value */
                 this.themesSwitch?.isChecked = newValue
@@ -57,7 +58,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
 
         /* Init filtersSwitch with OFF state */
-        val filtersSwitchState = sharedPreferences?.getBoolean(PREFERENCE_FILTERS, false) ?: false
+        val filtersSwitchState = sharedPreferences.getBoolean(PREFERENCE_FILTERS, false)
 
         this.filtersSwitch = preferenceManager.findPreference("filters")
 
@@ -72,7 +73,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 Log.i(TAG, "Toggled preference: Delete filters when device is shaken to $newValue")
 
                 /* Update shared preferences */
-                sharedPreferences?.edit()?.putBoolean(PREFERENCE_FILTERS, newValue)?.apply()
+                sharedPreferences.edit().putBoolean(PREFERENCE_FILTERS, newValue).apply()
 
                 /* Toggle switch to new value */
                 this.filtersSwitch?.isChecked = newValue

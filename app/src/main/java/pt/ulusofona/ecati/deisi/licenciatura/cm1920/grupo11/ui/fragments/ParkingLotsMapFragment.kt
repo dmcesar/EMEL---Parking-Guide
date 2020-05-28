@@ -95,7 +95,7 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
                         .putBoolean(EXTRA_DATA_FROM_REMOTE, true)
                         .apply()
 
-                    Snackbar.make(parking_lots_frame, R.string.data_updated_after_connection_was_lost, Snackbar.LENGTH_LONG)
+                    Snackbar.make(parking_lots_frame, (parentFragment?.activity as Context).resources.getString(R.string.data_updated_after_connection_was_lost), Snackbar.LENGTH_LONG)
                         .show()
 
                 } else {

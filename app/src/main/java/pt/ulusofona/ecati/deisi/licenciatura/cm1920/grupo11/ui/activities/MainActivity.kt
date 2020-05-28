@@ -269,8 +269,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 validateThemeTime()
                 validateThemes()
             }
-
-            R.id.nav_quit -> finish()
         }
 
         /* Close drawer */
@@ -352,7 +350,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         this.viewModel.registerListener(this)
 
-
         super.onStart()
     }
 
@@ -399,8 +396,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val latitude = it[0] as String
             val longitude = it[1] as String
 
-            Log.i(TAG, "Received parking lot coordinates")
-
             val intent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse("http://maps.google.com/maps?daddr=$latitude,$longitude"))
@@ -410,13 +405,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onLocationChanged(locationResult: LocationResult) {
 
-        Log.i(TAG, "user location changed")
-
         this.userLocation = locationResult.lastLocation
 
         if(requestedClosestParkingLot) {
-
-            Log.i(TAG, "requested park coordinates with user coordinates")
 
             requestedClosestParkingLot = false
 

@@ -22,9 +22,4 @@
         android:title="@string/settings"
         />
 
-    <item
-        android:id="@+id/nav_quit"
-        android:icon="@drawable/ic_exit"
-        android:title="@string/exit" />
-
 </menu>

@@ -62,8 +62,6 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
 
         fun notifyListeners(locationResult: LocationResult) {
 
-            Log.i(TAG, "notified observers")
-
             googleMapListener?.onLocationChanged(locationResult)
             distanceListener?.onLocationChanged(locationResult)
         }
