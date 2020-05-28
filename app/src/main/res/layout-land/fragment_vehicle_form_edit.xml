@@ -107,7 +107,7 @@
             android:text="@string/update"
             android:padding="10dp"
             style="@style/SquareButtonStyle"
-            android:textColor="?attr/onAccentColor" />
+            android:textColor="?attr/onCardColor" />
 
     </LinearLayout>
 

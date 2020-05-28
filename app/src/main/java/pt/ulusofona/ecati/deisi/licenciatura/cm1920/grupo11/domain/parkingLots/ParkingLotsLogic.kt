@@ -20,6 +20,7 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
     private val storage = Storage.getInstance()
 
     private var listener: OnDataReceivedWithOriginListener? = null
+    private var filtersListener: OnDataReceivedListener? = null
 
     private fun applyFilters(unfilteredList: ArrayList<ParkingLot>, updated: Boolean) {
 
@@ -55,12 +56,20 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
 
                     Log.i(TAG, "After filters applied -> ${filteredList.toList().size}")
 
+                    /* Send parking lots to view */
                     notifyDataChanged(ArrayList(filteredList.toList()), updated)
 
                 } else {
 
+                    /* Send parking lots to view */
                     notifyDataChanged(unfilteredList, updated)
                 }
+            }
+
+            withContext(Dispatchers.Main) {
+
+                /* Send filters to view */
+                filtersListener?.onDataReceived(filters)
             }
         }
     }
@@ -89,6 +98,7 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
         Log.i(TAG, "registered as listener")
 
         this.listener = listener
+        this.filtersListener = listener as OnDataReceivedListener
         super.registerListener()
     }
 
@@ -97,6 +107,7 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
         Log.i(TAG, "unregistered as listener")
 
         this.listener = null
+        this.filtersListener = null
         super.unregisterListener()
     }
 

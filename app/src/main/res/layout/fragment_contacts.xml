@@ -26,12 +26,12 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:orientation="vertical"
-            android:background="?attr/colorAccent" >
+            android:background="?attr/cardColor" >
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/onAccentColor" />
+                android:background="?attr/onCardColor" />
 
             <Button
                 android:id="@+id/button_service_stations"
@@ -40,7 +40,7 @@
                 android:paddingHorizontal="15dp"
                 android:drawableStart="@drawable/ic_more"
                 android:text="@string/toggle_service_stations"
-                android:textColor="?attr/onAccentColor"
+                android:textColor="?attr/onCardColor"
                 style="@style/SquareButtonStyle" />
 
             <LinearLayout
@@ -50,47 +50,47 @@
                 android:layout_margin="20dp"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:background="?attr/colorAccent" >
+                android:background="?attr/cardColor" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/service_station_A"
                     style="@style/TextStyle"
-                    android:textColor="?attr/onAccentColor" />
+                    android:textColor="?attr/onCardColor" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="10dp"
-                    android:background="?attr/onAccentColor" />
+                    android:background="?attr/onCardColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/service_station_B"
                     style="@style/TextStyle"
-                    android:textColor="?attr/onAccentColor" />
+                    android:textColor="?attr/onCardColor" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="10dp"
-                    android:background="?attr/onAccentColor" />
+                    android:background="?attr/onCardColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/service_station_C"
                     style="@style/TextStyle"
-                    android:textColor="?attr/onAccentColor" />
+                    android:textColor="?attr/onCardColor" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/onAccentColor" />
+                android:background="?attr/onCardColor" />
 
         </LinearLayout>
 
@@ -99,12 +99,12 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:orientation="vertical"
-            android:background="?attr/colorAccent" >
+            android:background="?attr/cardColor" >
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/onAccentColor" />
+                android:background="?attr/onCardColor" />
 
             <Button
                 android:id="@+id/button_general_information"
@@ -113,7 +113,7 @@
                 android:drawableStart="@drawable/ic_more"
                 android:paddingHorizontal="15dp"
                 android:text="@string/toggle_general_information"
-                android:textColor="?attr/onAccentColor"
+                android:textColor="?attr/onCardColor"
                 style="@style/SquareButtonStyle" />
 
             <LinearLayout
@@ -123,7 +123,7 @@
                 android:layout_margin="20dp"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:background="?attr/colorAccent" >
+                android:background="?attr/cardColor" >
 
                 <Button
                     android:id="@+id/button_phone_general_information"
@@ -132,28 +132,28 @@
                     android:text="@string/phone_general_information"
                     android:gravity="start|center_vertical"
                     android:drawableEnd="@drawable/ic_phone"
-                    android:textColor="?attr/onAccentColor"
+                    android:textColor="?attr/onCardColor"
                     style="@style/SquareButtonStyle" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="10dp"
-                    android:background="?attr/onAccentColor" />
+                    android:background="?attr/onCardColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/general_information"
                     style="@style/TextStyle"
-                    android:textColor="?attr/onAccentColor" />
+                    android:textColor="?attr/onCardColor" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/onAccentColor" />
+                android:background="?attr/onCardColor" />
 
         </LinearLayout>
 
@@ -162,12 +162,12 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:orientation="vertical"
-            android:background="?attr/colorAccent">
+            android:background="?attr/cardColor">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/onAccentColor" />
+                android:background="?attr/onCardColor" />
 
             <Button
                 android:id="@+id/button_removed_vehicles_park"
@@ -176,7 +176,7 @@
                 android:drawableStart="@drawable/ic_more"
                 android:paddingHorizontal="15dp"
                 android:text="@string/toggle_removed_vehicles_park"
-                android:textColor="?attr/onAccentColor"
+                android:textColor="?attr/onCardColor"
                 style="@style/SquareButtonStyle" />
 
             <LinearLayout
@@ -186,47 +186,47 @@
                 android:layout_margin="20dp"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:background="?attr/colorAccent" >
+                android:background="?attr/cardColor" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/removed_vehicles_park_A"
                     style="@style/TextStyle"
-                    android:textColor="?attr/onAccentColor" />
+                    android:textColor="?attr/onCardColor" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="10dp"
-                    android:background="?attr/onAccentColor" />
+                    android:background="?attr/onCardColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/removed_vehicles_park_B"
                     style="@style/TextStyle"
-                    android:textColor="?attr/onAccentColor" />
+                    android:textColor="?attr/onCardColor" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="10dp"
-                    android:background="?attr/onAccentColor" />
+                    android:background="?attr/onCardColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/removed_vehicles_park_C"
                     style="@style/TextStyle"
-                    android:textColor="?attr/onAccentColor" />
+                    android:textColor="?attr/onCardColor" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/onAccentColor" />
+                android:background="?attr/onCardColor" />
 
         </LinearLayout>
 
@@ -235,12 +235,12 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:orientation="vertical"
-            android:background="?attr/colorAccent" >
+            android:background="?attr/cardColor" >
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/onAccentColor" />
+                android:background="?attr/onCardColor" />
 
             <Button
                 android:id="@+id/button_removed_vehicles"
@@ -249,7 +249,7 @@
                 android:paddingHorizontal="15dp"
                 android:drawableStart="@drawable/ic_more"
                 android:text="@string/toggle_removed_vehicles"
-                android:textColor="?attr/onAccentColor"
+                android:textColor="?attr/onCardColor"
                 style="@style/SquareButtonStyle" />
 
             <LinearLayout
@@ -259,7 +259,7 @@
                 android:layout_margin="20dp"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:background="?attr/colorAccent" >
+                android:background="?attr/cardColor" >
 
                 <Button
                     android:id="@+id/button_phone_removed_vehicles"
@@ -268,20 +268,20 @@
                     android:text="@string/phone_removed_vehicles"
                     android:gravity="start|center_vertical"
                     android:drawableEnd="@drawable/ic_phone"
-                    android:textColor="?attr/onAccentColor"
+                    android:textColor="?attr/onCardColor"
                     style="@style/SquareButtonStyle" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="10dp"
-                    android:background="?attr/onAccentColor" />
+                    android:background="?attr/onCardColor" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/general_information"
-                    android:textColor="?attr/onAccentColor"
+                    android:textColor="?attr/onCardColor"
                     style="@style/TextStyle"/>
 
             </LinearLayout>
@@ -289,7 +289,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/onAccentColor" />
+                android:background="?attr/onCardColor" />
 
         </LinearLayout>
 

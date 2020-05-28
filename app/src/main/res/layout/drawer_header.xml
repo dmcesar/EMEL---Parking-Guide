@@ -34,6 +34,13 @@
             style="@style/DrawerHeaderTextStyle"
             android:textColor="?attr/onPrimaryColor" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/guide"
+            style="@style/DrawerHeaderTextStyle"
+            android:textColor="?attr/onPrimaryColor" />
+
     </LinearLayout>
 
 </LinearLayout>

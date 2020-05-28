@@ -129,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/go_info"
-            android:textColor="?attr/onAccentColor"
+            android:textColor="?attr/onButtonColor"
             style="@style/SquareButtonStyle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -147,7 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/go_map"
-            android:textColor="?attr/onAccentColor"
+            android:textColor="?attr/onButtonColor"
             style="@style/SquareButtonStyle" />
 
         <FrameLayout

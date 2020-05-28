@@ -2,6 +2,7 @@ package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.preference.Preference
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.snackbar.Snackbar
@@ -24,9 +26,11 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.Parkin
 import kotlinx.android.synthetic.main.fragment_parking_lots.*
 import kotlinx.android.synthetic.main.fragment_parking_lots.view.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Filter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.Accelerometer
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.OnAccelerometerEventListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters.FiltersAdapter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
@@ -37,6 +41,7 @@ const val EXTRA_PARKING_LOT = "pt.ulusofona.ecati.ParkingLotsListFragment.Parkin
 
 class ParkingLotsFragment : Fragment(),
     OnDataReceivedWithOriginListener,
+    OnDataReceivedListener,
     OnTouchListener,
     OnAccelerometerEventListener,
     OnNavigationListener {
@@ -110,6 +115,9 @@ class ParkingLotsFragment : Fragment(),
         val view = inflater.inflate(R.layout.fragment_parking_lots, container, false)
 
         ButterKnife.bind(this, view)
+
+        view.parking_lots_filters.layoutManager =
+            LinearLayoutManager(activity as Context, LinearLayoutManager.HORIZONTAL, false)
 
         this.viewModel = ViewModelProviders.of(this).get(ParkingLotsViewModel::class.java)
 
@@ -265,5 +273,26 @@ class ParkingLotsFragment : Fragment(),
         }
 
         else { ParkingLotsNavigationManager.goToMapFragment(childFragmentManager, args) }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun onDataReceived(data: ArrayList<*>?) {
+
+        if(data?.size == 0) {
+
+            parking_lots_filters.visibility = View.GONE
+
+        } else {
+
+            parking_lots_filters.visibility = View.VISIBLE
+
+            parking_lots_filters.adapter =
+                FiltersAdapter(
+                    this,
+                    activity as Context,
+                    R.layout.filters_list_item_portrait,
+                    data as ArrayList<Filter>
+                )
+        }
     }
 }

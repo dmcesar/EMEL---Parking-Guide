@@ -13,7 +13,7 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataR
 const val ENDPOINT = "https://emel.city-platform.com/opendata/"
 
 class ParkingLotsViewModel(application: Application) : AndroidViewModel(application),
-    OnDataReceivedWithOriginListener {
+    OnDataReceivedWithOriginListener, OnDataReceivedListener {
 
     /* Retrieves local database instance */
     private val localDatabase = LocalDatabase.getInstance(application).parkingLotsDAO()
@@ -29,6 +29,7 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
         )
 
     private var listener: OnDataReceivedWithOriginListener? = null
+    private var filtersListener: OnDataReceivedListener? = null
 
     /* Fetches data stored locally */
     fun getAll() {
@@ -49,12 +50,14 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
     fun registerListener(listener: OnDataReceivedWithOriginListener) {
 
         this.listener = listener
+        this.filtersListener = listener as OnDataReceivedListener
         this.logic.registerListener(this)
     }
 
     fun unregisterListener() {
 
         this.listener = null
+        this.filtersListener = null
         this.logic.unregisterListener()
     }
 
@@ -66,5 +69,10 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
     override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
 
         notifyDataChanged(data, updated)
+    }
+
+    override fun onDataReceived(data: ArrayList<*>?) {
+
+        this.filtersListener?.onDataReceived(data)
     }
 }

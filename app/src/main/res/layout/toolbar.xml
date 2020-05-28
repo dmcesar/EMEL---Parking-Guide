@@ -22,7 +22,6 @@
             android:layout_height="match_parent"
             android:text="@string/park_me_now"
             android:paddingHorizontal="12dp"
-            android:textColor="?attr/onAccentColor"
             style="@style/RoundButtonStyle" />
 
     </LinearLayout>

@@ -182,16 +182,12 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
 
     override fun onLocationChanged(locationResult: LocationResult) {
 
-        Log.i(TAG, "user location changed")
-
         val location = locationResult.lastLocation
 
         pinUser(Extensions.toLatLng(location))
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
-
-        Log.i(TAG, "on marker click called")
 
         val parkingLot = this.markersParkingLots[marker?.position]
 

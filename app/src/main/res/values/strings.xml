@@ -1,8 +1,9 @@
 <resources>
 
-    <string name="app_name">EMEL Parking</string>
+    <string name="app_name">EMEL - Parking Guide</string>
     <string name="emel">EMEL</string>
     <string name="parking">Parking</string>
+    <string name="guide">Guide</string>
 
     <!-- Drawer nav items -->
     <string name="parking_lots">Parking Lots</string>

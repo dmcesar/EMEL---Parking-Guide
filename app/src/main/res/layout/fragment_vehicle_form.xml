@@ -73,7 +73,7 @@
         android:layout_margin="30dp"
         android:paddingHorizontal="5dp"
         android:text="@string/register"
-        android:textColor="?attr/onAccentColor"
+        android:textColor="?attr/onCardColor"
         style="@style/SquareButtonStyle"/>
 
 </LinearLayout>

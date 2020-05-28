@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:text="@string/go_map"
-            android:textColor="?attr/onAccentColor"
+            android:textColor="?attr/onCardColor"
             style="@style/SquareButtonStyle" />
 
         <Button
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:text="@string/go_info"
-            android:textColor="?attr/onAccentColor"
+            android:textColor="?attr/onCardColor"
             style="@style/SquareButtonStyle" />
 
     </LinearLayout>

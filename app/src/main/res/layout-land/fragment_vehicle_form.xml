@@ -85,6 +85,6 @@
         android:text="@string/register"
         android:layout_gravity="end"
         style="@style/SquareButtonStyle"
-        android:textColor="?attr/onAccentColor" />
+        android:textColor="?attr/onCardColor" />
 
 </LinearLayout>

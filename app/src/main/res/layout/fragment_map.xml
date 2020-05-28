@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="?attr/backgroundColor"
+        android:background="@color/white"
         android:orientation="vertical"
         android:paddingHorizontal="10dp" >
 
@@ -44,7 +44,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             style="@style/TextStyle"
-            android:textColor="?attr/onBackgroundColor"
+            android:textColor="@color/black"
             android:text="@string/map_legend" />
 
         <LinearLayout
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextStyle"
-                android:textColor="?attr/onBackgroundColor"
+                android:textColor="@color/black"
                 android:text="@string/state_free"/>
 
         </LinearLayout>
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextStyle"
-                android:textColor="?attr/onBackgroundColor"
+                android:textColor="@color/black"
                 android:text="@string/state_potentially_full"/>
 
         </LinearLayout>
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextStyle"
-                android:textColor="?attr/onBackgroundColor"
+                android:textColor="@color/black"
                 android:text="@string/state_full"/>
 
         </LinearLayout>
@@ -122,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextStyle"
-                android:textColor="?attr/onBackgroundColor"
+                android:textColor="@color/black"
                 android:text="@string/underground"/>
 
         </LinearLayout>
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextStyle"
-                android:textColor="?attr/onBackgroundColor"
+                android:textColor="@color/black"
                 android:text="@string/unavailable"/>
 
         </LinearLayout>
@@ -162,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextStyle"
-                android:textColor="?attr/onBackgroundColor"
+                android:textColor="@color/black"
                 android:text="@string/you"/>
 
         </LinearLayout>

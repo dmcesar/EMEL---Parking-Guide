@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/parking_lots_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/parking_lots_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal"
@@ -19,7 +19,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             style="@style/AppBarButtonStyle"
-            android:text="@string/list_view" />
+            android:text="@string/list_view"
+            android:drawableEnd="@drawable/ic_list"
+            android:paddingHorizontal="10dp" />
 
         <Button
             android:id="@+id/button_go_map_view"
@@ -27,11 +29,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             style="@style/AppBarButtonStyle"
-            android:text="@string/map_view"/>
+            android:text="@string/map_view"
+            android:drawableEnd="@drawable/ic_map"
+            android:paddingHorizontal="10dp" />
 
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/parking_lots_page_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
@@ -53,6 +58,17 @@
             android:background="@drawable/ic_filter" />
 
     </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/parking_lots_filters"
+        android:paddingBottom="20dp"
+        android:paddingHorizontal="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor" />
+
+
 
     <FrameLayout
         android:id="@+id/parking_lots_frame"

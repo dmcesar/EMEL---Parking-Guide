@@ -45,12 +45,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:orientation="vertical"
-                android:background="?attr/colorAccent" >
+                android:background="?attr/cardColor" >
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="?attr/onAccentColor" />
+                    android:background="?attr/onCardColor" />
 
                 <Button
                     android:id="@+id/button_toggle_park_type_filter_list"
@@ -59,7 +59,7 @@
                     android:paddingHorizontal="15dp"
                     android:text="@string/toggle_park_type_filter_list"
                     android:drawableStart="@drawable/ic_more"
-                    android:textColor="?attr/onAccentColor"
+                    android:textColor="?attr/onCardColor"
                     style="@style/SquareButtonStyle" />
 
                 <LinearLayout
@@ -69,7 +69,7 @@
                     android:layout_margin="20dp"
                     android:orientation="vertical"
                     android:visibility="gone"
-                    android:background="?attr/colorAccent" >
+                    android:background="?attr/cardColor" >
 
                     <Switch
                         android:id="@+id/filter_park_type_surface"
@@ -79,13 +79,13 @@
                         android:text="@string/type_surface"
                         android:textOff="@string/off"
                         android:textOn="@string/on"
-                        android:textColor="?attr/onAccentColor" />
+                        android:textColor="?attr/onCardColor" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="10dp"
-                        android:background="?attr/onAccentColor" />
+                        android:background="?attr/onCardColor" />
 
                     <Switch
                         android:id="@+id/filter_park_type_underground"
@@ -95,14 +95,14 @@
                         android:text="@string/type_underground"
                         android:textOff="@string/off"
                         android:textOn="@string/on"
-                        android:textColor="?attr/onAccentColor" />
+                        android:textColor="?attr/onCardColor" />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="?attr/onAccentColor" />
+                    android:background="?attr/onCardColor" />
 
             </LinearLayout>
 
@@ -116,7 +116,7 @@
                 android:text="@string/park_open"
                 android:textOff="@string/off"
                 android:textOn="@string/on"
-                android:textColor="?attr/onAccentColor" />
+                android:textColor="?attr/onCardColor" />
 
             <Switch
                 android:id="@+id/filter_park_closest"
@@ -128,7 +128,7 @@
                 android:text="@string/closest"
                 android:textOff="@string/off"
                 android:textOn="@string/on"
-                android:textColor="?attr/onAccentColor" />
+                android:textColor="?attr/onCardColor" />
 
             <Switch
                 android:id="@+id/filter_parks_favorites"
@@ -140,7 +140,7 @@
                 android:text="@string/filter_favorites"
                 android:textOff="@string/off"
                 android:textOn="@string/on"
-                android:textColor="?attr/onAccentColor" />
+                android:textColor="?attr/onCardColor" />
 
             <EditText
                 android:id="@+id/filter_park_name"
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/apply"
-                android:textColor="?attr/onAccentColor"
+                android:textColor="?attr/onCardColor"
                 style="@style/SquareButtonStyle" />
 
         </LinearLayout>
