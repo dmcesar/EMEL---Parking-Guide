@@ -19,7 +19,7 @@ class SplashLogic(repository: ParkingLotsRepository) : RepositoryLogic(repositor
     override fun unregisterListener() {
 
         this.listener = null
-        super.unregisterListener()
+        //super.unregisterListener()
     }
 
     override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {

@@ -8,11 +8,12 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.remote.Retrofit
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.repositories.ParkingLotsRepository
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.parkingLots.ParkingLotsLogic
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
 
 const val ENDPOINT = "https://emel.city-platform.com/opendata/"
 
 class ParkingLotsViewModel(application: Application) : AndroidViewModel(application),
-    OnDataReceivedListener {
+    OnDataReceivedWithOriginListener {
 
     /* Retrieves local database instance */
     private val localDatabase = LocalDatabase.getInstance(application).parkingLotsDAO()
@@ -27,7 +28,7 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
             )
         )
 
-    private var listener: OnDataReceivedListener? = null
+    private var listener: OnDataReceivedWithOriginListener? = null
 
     /* Fetches data stored locally */
     fun getAll() {
@@ -45,7 +46,7 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
         this.logic.removeFilters()
     }
 
-    fun registerListener(listener: OnDataReceivedListener) {
+    fun registerListener(listener: OnDataReceivedWithOriginListener) {
 
         this.listener = listener
         this.logic.registerListener(this)
@@ -57,14 +58,13 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
         this.logic.unregisterListener()
     }
 
-    private fun notifyDataChanged(list: ArrayList<ParkingLot>) {
+    private fun notifyDataChanged(list: ArrayList<ParkingLot>, updated: Boolean) {
 
-        this.listener?.onDataReceived(ArrayList(list))
+        this.listener?.onDataReceivedWithOrigin(ArrayList(list), updated)
     }
 
-    @Suppress("UNCHECKED_CAST")
-    override fun onDataReceived(data: ArrayList<*>?) {
+    override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
 
-        data?.let { notifyDataChanged(data as ArrayList<ParkingLot>) }
+        notifyDataChanged(data, updated)
     }
 }

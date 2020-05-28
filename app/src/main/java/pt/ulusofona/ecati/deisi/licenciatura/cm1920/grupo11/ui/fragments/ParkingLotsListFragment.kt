@@ -4,9 +4,13 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_parking_lots.*
 
 import pt.ulusofona.ecati.deisi.ui.adapters.ParkingLotLandscapeAdapter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters.ParkingLotPortraitAdapter
@@ -29,7 +33,7 @@ class ParkingLotsListFragment : Fragment(),
 
     private var data: ArrayList<ParkingLot>? = null
     private var dataIsFromRemote: Boolean? = null
-    private var dataFetchedBefore: Boolean? = null
+    private var dataFetchedDuringSplash: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -39,7 +43,7 @@ class ParkingLotsListFragment : Fragment(),
 
             this.data = it.getParcelableArrayList(EXTRA_DATA)
             this.dataIsFromRemote = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
-            this.dataFetchedBefore = it.getBoolean(EXTRA_DATA_FETCHED_BEFORE)
+            this.dataFetchedDuringSplash = it.getBoolean(EXTRA_DATA_FETCHED_DURING_SPLASH)
         }
 
         this.arguments = null
@@ -56,20 +60,58 @@ class ParkingLotsListFragment : Fragment(),
 
         this.data?.let { initAdapter(it) }
 
-        this.dataFetchedBefore?.let { fetchedBefore ->
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity as Context)
 
-            if(fetchedBefore) {
+        this.dataIsFromRemote?.let { fromRemote ->
 
-                this.dataIsFromRemote?.let { fromRemote ->
+            /* If data is not from remote API */
+            if(!fromRemote) {
 
-                    if(!fromRemote) {
+                this.dataFetchedDuringSplash?.let { fromSplash ->
 
+                    /* If data was read during splash screen */
+                    if(fromSplash) {
+
+                        /* Alert that data is potentially outdated */
                         AlertDialog.Builder(activity as Context)
                             .setTitle(R.string.outdatedDataTitle)
                             .setMessage(R.string.outdatedDataMessage)
                             .setNegativeButton(R.string.OK, null)
                             .show()
                     }
+
+                    /* If data was read after splash screen */
+                    else {
+
+                        /* Save that in shared preferences */
+                        sharedPreferences
+                            .edit()
+                            .putBoolean(EXTRA_DATA_FROM_REMOTE, false)
+                            .apply()
+                    }
+                }
+            }
+
+            /* If data is from remove API */
+            else {
+
+                /* If previously batch of data was outdated (from local) */
+                val previousBatchOfDataWasUpdated = sharedPreferences
+                    .getBoolean(EXTRA_DATA_FROM_REMOTE, false)
+
+                if(!previousBatchOfDataWasUpdated) {
+
+                    sharedPreferences
+                        .edit()
+                        .putBoolean(EXTRA_DATA_FROM_REMOTE, true)
+                        .apply()
+
+                    Snackbar.make(parking_lots, R.string.data_updated_after_connection_was_lost, Snackbar.LENGTH_LONG)
+                        .show()
+
+                } else {
+
+                    Log.i(TAG, "Data is updated and connection has not been lost!")
                 }
             }
         }

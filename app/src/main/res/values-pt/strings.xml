@@ -100,5 +100,6 @@
     <string name="map_view">Vista em mapa</string>
     <string name="map_legend">Legenda</string>
     <string name="you">Voçê</string>
+    <string name="data_updated_after_connection_was_lost">Conecção reestabelecida e dados atualizados.</string>
 
 </resources>

@@ -1,23 +1,28 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_parking_lots.*
 
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA_FROM_REMOTE
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
 
 class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
 
-
     private val TAG = ParkingLotsMapFragment::class.java.simpleName
 
     private var data: ArrayList<ParkingLot>? = null
+    private var dataIsFromRemote: Boolean? = null
 
     private var listener: OnNavigationListener? = null
 
@@ -33,6 +38,7 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
         this.arguments?.let {
 
             this.data = it.getParcelableArrayList(EXTRA_DATA)
+            this.dataIsFromRemote = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
         }
 
         this.arguments = null
@@ -70,6 +76,33 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
         if(parentFragment is OnNavigationListener) {
 
             this.listener = parentFragment as OnNavigationListener
+        }
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity as Context)
+
+        this.dataIsFromRemote?.let { fromRemote ->
+
+            /* If data is from remove API */
+            if(fromRemote) {
+                /* If previously batch of data was outdated (from local) */
+                val previousBatchOfDataWasUpdated = sharedPreferences
+                    .getBoolean(EXTRA_DATA_FROM_REMOTE, false)
+
+                if(!previousBatchOfDataWasUpdated) {
+
+                    sharedPreferences
+                        .edit()
+                        .putBoolean(EXTRA_DATA_FROM_REMOTE, true)
+                        .apply()
+
+                    Snackbar.make(parking_lots_frame, R.string.data_updated_after_connection_was_lost, Snackbar.LENGTH_LONG)
+                        .show()
+
+                } else {
+
+                    Log.i(TAG, "Data is updated and connection has not been lost!")
+                }
+            }
         }
 
         super.onStart()

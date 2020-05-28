@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.preference.Preference
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,14 +27,15 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.Accelerometer
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.OnAccelerometerEventListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnTouchListener
 
-const val EXTRA_DATA_FETCHED_BEFORE = "pt.ulusofona.ecati.ParkingLotsListFragment.DATA_FETCHED_BEFORE"
+const val EXTRA_DATA_FETCHED_DURING_SPLASH = "pt.ulusofona.ecati.ParkingLotsListFragment.DATA_FETCHED_DURING_SPLASH"
 const val EXTRA_PARKING_LOT = "pt.ulusofona.ecati.ParkingLotsListFragment.ParkingLot"
 
 class ParkingLotsFragment : Fragment(),
-    OnDataReceivedListener,
+    OnDataReceivedWithOriginListener,
     OnTouchListener,
     OnAccelerometerEventListener,
     OnNavigationListener {
@@ -140,7 +143,13 @@ class ParkingLotsFragment : Fragment(),
                 val args = Bundle()
                 args.putParcelableArrayList(EXTRA_DATA, dataReceived)
                 args.putBoolean(EXTRA_DATA_FROM_REMOTE, dataFromRemote)
-                args.putBoolean(EXTRA_DATA_FETCHED_BEFORE, true)
+                args.putBoolean(EXTRA_DATA_FETCHED_DURING_SPLASH, true)
+
+                /* Save in shared preferences if data that came from splash screen was updated */
+                PreferenceManager.getDefaultSharedPreferences(activity as Context)
+                    .edit()
+                    .putBoolean(EXTRA_DATA_FROM_REMOTE, dataFromRemote)
+                    .apply()
 
                 ParkingLotsNavigationManager.goToListFragment(childFragmentManager, args)
             } ?:
@@ -180,26 +189,6 @@ class ParkingLotsFragment : Fragment(),
         Accelerometer.unregisterParkingLotsListener()
 
         super.onStop()
-    }
-
-    /* Receives parking lots list stored locally and navigates do queued fragment */
-    @Suppress("UNCHECKED_CAST")
-    override fun onDataReceived(data: ArrayList<*>?) {
-
-        Log.i(TAG, "ParkingLots received ${data?.size}")
-
-        /* Create arguments */
-        val args = Bundle()
-        args.putParcelableArrayList(EXTRA_DATA, data as ArrayList<ParkingLot>)
-        args.putBoolean(EXTRA_DATA_FROM_REMOTE, false)
-        args.putBoolean(EXTRA_DATA_FETCHED_BEFORE, false)
-
-        if(queuedFragment == 0) {
-
-            ParkingLotsNavigationManager.goToListFragment(childFragmentManager, args)
-        }
-
-        else { ParkingLotsNavigationManager.goToMapFragment(childFragmentManager, args) }
     }
 
     override fun onSwipeLeftEvent(data: Any?) {
@@ -247,4 +236,21 @@ class ParkingLotsFragment : Fragment(),
     override fun onNavigateToFiltersFragment() {}
 
     override fun onNavigateToVehicleForm(args: Bundle?) {}
+    override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
+
+        Log.i(TAG, "ParkingLots received ${data.size}")
+
+        /* Create arguments */
+        val args = Bundle()
+        args.putParcelableArrayList(EXTRA_DATA, data)
+        args.putBoolean(EXTRA_DATA_FETCHED_DURING_SPLASH, false)
+        args.putBoolean(EXTRA_DATA_FROM_REMOTE, updated)
+
+        if(queuedFragment == 0) {
+
+            ParkingLotsNavigationManager.goToListFragment(childFragmentManager, args)
+        }
+
+        else { ParkingLotsNavigationManager.goToMapFragment(childFragmentManager, args) }
+    }
 }

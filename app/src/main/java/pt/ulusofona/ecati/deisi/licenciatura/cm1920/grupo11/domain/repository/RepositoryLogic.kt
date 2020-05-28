@@ -15,7 +15,7 @@ abstract class RepositoryLogic(private val repository: ParkingLotsRepository) :
 
     private val TAG = RepositoryLogic::class.java.simpleName
 
-    private var notified: Boolean? = null
+    private var hasConnectivity: Boolean? = null
     private var requestedData = false
 
     fun registerListener() {
@@ -54,7 +54,7 @@ abstract class RepositoryLogic(private val repository: ParkingLotsRepository) :
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            notified?.let { connected ->
+            hasConnectivity?.let { connected ->
 
                 if (connected) {
 
@@ -102,7 +102,7 @@ abstract class RepositoryLogic(private val repository: ParkingLotsRepository) :
 
         else {
 
-            notified = true
+            hasConnectivity = connected
         }
     }
 }

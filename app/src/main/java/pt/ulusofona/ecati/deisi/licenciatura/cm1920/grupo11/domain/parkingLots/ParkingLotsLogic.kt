@@ -10,6 +10,7 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.repositories.ParkingLotsRepository
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.repository.RepositoryLogic
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
 import kotlin.collections.ArrayList
 
 class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repository) {
@@ -18,9 +19,9 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
 
     private val storage = Storage.getInstance()
 
-    private var listener: OnDataReceivedListener? = null
+    private var listener: OnDataReceivedWithOriginListener? = null
 
-    private fun applyFilters(unfilteredList: ArrayList<ParkingLot>) {
+    private fun applyFilters(unfilteredList: ArrayList<ParkingLot>, updated: Boolean) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -54,11 +55,11 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
 
                     Log.i(TAG, "After filters applied -> ${filteredList.toList().size}")
 
-                    notifyDataChanged(ArrayList(filteredList.toList()))
+                    notifyDataChanged(ArrayList(filteredList.toList()), updated)
 
                 } else {
 
-                    notifyDataChanged(unfilteredList)
+                    notifyDataChanged(unfilteredList, updated)
                 }
             }
         }
@@ -75,15 +76,17 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
     }
 
     /* Notifies ViewModel */
-    private suspend fun notifyDataChanged(list: ArrayList<ParkingLot>) {
+    private suspend fun notifyDataChanged(list: ArrayList<ParkingLot>, updated: Boolean) {
 
         withContext(Dispatchers.Main) {
 
-            listener?.onDataReceived(ArrayList(list))
+            listener?.onDataReceivedWithOrigin(ArrayList(list), updated)
         }
     }
 
-    fun registerListener(listener: OnDataReceivedListener) {
+    fun registerListener(listener: OnDataReceivedWithOriginListener) {
+
+        Log.i(TAG, "registered as listener")
 
         this.listener = listener
         super.registerListener()
@@ -91,12 +94,14 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
 
     override fun unregisterListener() {
 
+        Log.i(TAG, "unregistered as listener")
+
         this.listener = null
         super.unregisterListener()
     }
 
     override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
 
-        applyFilters(data)
+        applyFilters(data, updated)
     }
 }
