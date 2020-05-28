@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.material.snackbar.Snackbar
 
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA_FROM_REMOTE
@@ -225,7 +226,18 @@ class ParkingLotsFragment : Fragment(),
 
     override fun onAccelerometerEventListener() {
 
-        this.viewModel.removeFilters()
+        val deleteFiltersIsOn = PreferenceManager.getDefaultSharedPreferences(activity as Context)
+            .getBoolean(PREFERENCE_FILTERS, false)
+
+        if(deleteFiltersIsOn) {
+
+            /* Notify user with snackbar */
+            Snackbar.make(parking_lots_layout, R.string.filters_removed, Snackbar.LENGTH_LONG)
+                .show()
+
+            /* Clear filters*/
+            this.viewModel.removeFilters()
+        }
     }
 
     override fun onNavigateToParkingLotDetails(args: Bundle) {
@@ -236,6 +248,7 @@ class ParkingLotsFragment : Fragment(),
     override fun onNavigateToFiltersFragment() {}
 
     override fun onNavigateToVehicleForm(args: Bundle?) {}
+
     override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
 
         Log.i(TAG, "ParkingLots received ${data.size}")

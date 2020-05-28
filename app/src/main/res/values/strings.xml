@@ -102,5 +102,6 @@
     <string name="map_legend">Legend</string>
     <string name="you">You</string>
     <string name="data_updated_after_connection_was_lost">Connection reestablished and data updated.</string>
+    <string name="filters_removed">Filters removed</string>
 
 </resources>

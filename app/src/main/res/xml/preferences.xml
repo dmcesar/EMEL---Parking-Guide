@@ -12,13 +12,14 @@
         android:textOn="@string/on"
         app:allowDividerBelow="true" />
 
-    <SwitchPreferenceCompat
+    <SwitchPreference
         android:key="filters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:title="@string/setting_sensor_delete_filters_title"
         android:summary="@string/setting_sensor_delete_filters_summary"
         android:textOff="@string/off"
-        android:textOn="@string/on" />
+        android:textOn="@string/on"
+        app:allowDividerAbove="true" />
 
 </PreferenceScreen>
