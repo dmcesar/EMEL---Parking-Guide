@@ -1,7 +1,9 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,14 +23,13 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Vehicle
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnTouchListener
 
 const val EXTRA_VEHICLE = "pt.ulusofona.ecati.VehiclesListFragment.VEHICLE"
 
 class VehiclesListFragment : Fragment(),
     OnDataReceivedListener,
-    OnClickListener {
-
-    private val TAG = VehiclesListFragment::class.java.simpleName
+    OnTouchListener {
 
     private lateinit var viewModel: VehiclesListViewModel
 
@@ -103,26 +104,32 @@ class VehiclesListFragment : Fragment(),
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
-        Log.i(TAG, "onDataReceived() called")
-
         data?.let { onDataChanged(it as ArrayList<Vehicle>) }
+    }
+
+    override fun onSwipeLeftEvent(data: Any?) {
+
+        data as Vehicle
+        val uri = Uri.parse("smsto:3838")
+        val intent = Intent(Intent.ACTION_SENDTO, uri)
+        intent.putExtra("sms_body", "Reboque " + data.plate)
+        startActivity(intent)
+    }
+
+    override fun onSwipeRightEvent(data: Any?) {
+
+        this.viewModel.delete(data as String)
     }
 
     override fun onClickEvent(data: Any?) {
 
-        Log.i(TAG, "onClickEvent() called")
-
         data?.let {
 
-            if(it is Vehicle) {
+            val args = Bundle()
+            args.putParcelable(EXTRA_VEHICLE, data as Vehicle)
 
-                val args = Bundle()
-                args.putParcelable(EXTRA_VEHICLE, it)
-
-                /* Notify MainActivity to navigate to empty VehicleFormFragment */
-                this.listener?.onNavigateToVehicleForm(args)
-
-            } else { viewModel.delete(it as String) }
+            /* Notify MainActivity to navigate to empty VehicleFormFragment */
+            this.listener?.onNavigateToVehicleForm(args)
         }
     }
 }

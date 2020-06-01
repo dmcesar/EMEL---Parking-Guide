@@ -94,14 +94,6 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchListener, priv
                             onTouchX - 10 > event.x -> {
 
                                 listener.onSwipeLeftEvent(items[position])
-
-                                /*val set: AnimatorSet = AnimatorInflater.loadAnimator(context, R.animator.animation_from_right)
-                                    .apply {
-                                        setTarget(items[position])
-                                        start()
-                                    } as AnimatorSet
-
-                                 */
                             }
                             else -> {
 

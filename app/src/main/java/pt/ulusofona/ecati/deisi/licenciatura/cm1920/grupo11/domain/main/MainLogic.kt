@@ -29,13 +29,15 @@ class MainLogic(private val local: ParkingLotsDAO) {
 
             val list = local.getAll()
 
-            val listOrderedByProximity = list.asSequence().sortedBy { p ->
+            val listOrderedByProximity = list.asSequence()
+                .sortedBy { p ->
                 Extensions.calculateDistanceBetween(
                     Extensions.toLocation(
                         p.latitude.toDouble(),
                         p.longitude.toDouble()
                     ), userLocation
                 )
+            }.filter { p -> p.getCapacityPercent() < 100 && p.active != 0
             }.toList()
 
             val closestParkingLot = listOrderedByProximity[0]
