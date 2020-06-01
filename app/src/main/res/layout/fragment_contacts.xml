@@ -284,6 +284,36 @@
                     android:textColor="?attr/onCardColor"
                     style="@style/TextStyle"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="?attr/onCardColor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="?attr/onCardColor"
+                    style="@style/TextStyle"
+                    android:text="@string/check_vehicle_removed"/>
+
+                <Spinner
+                    android:id="@+id/vehicles_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:background="?attr/cardColor" />
+
+                <Button
+                    android:id="@+id/button_send_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/SquareButtonStyle"
+                    android:gravity="start|center_vertical"
+                    android:drawableEnd="@drawable/ic_sms"
+                    android:textColor="?attr/onCardColor"
+                    android:text="@string/send_text" />
+
             </LinearLayout>
 
             <View

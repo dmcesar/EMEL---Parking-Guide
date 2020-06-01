@@ -201,15 +201,6 @@ class VehicleFormFragment : Fragment() {
 
             updateFormData()
 
-            button_delete.setOnClickListener {
-
-                this.vehicle?.let { this.viewModel.delete(it.uuid) }
-
-                Toast.makeText(activity as Context, "Vehicle deleted.", Toast.LENGTH_LONG).show()
-
-                activity?.onBackPressed()
-            }
-
             val res = resources
 
             val pageTitle = res.getString(R.string.update_vehicle)

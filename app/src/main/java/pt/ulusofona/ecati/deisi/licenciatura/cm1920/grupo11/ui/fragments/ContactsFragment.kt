@@ -1,5 +1,6 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,13 +8,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.lifecycle.ViewModelProviders
 import butterknife.ButterKnife
 import butterknife.OnClick
 
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.ContactsViewModel
 
-class ContactsFragment : Fragment() {
+class ContactsFragment : Fragment(), OnDataReceivedListener, AdapterView.OnItemSelectedListener {
+
+    private var selectedPlate = ""
+
+    private lateinit var viewModel: ContactsViewModel
 
     @OnClick(R.id.button_service_stations)
     fun onToggleServiceStations() {
@@ -99,12 +109,66 @@ class ContactsFragment : Fragment() {
         startActivity(intent)
     }
 
+    @OnClick(R.id.button_send_message)
+    fun onClickSendMessage() {
+        
+        if(this.selectedPlate.isNotEmpty()) {
+
+            val uri = Uri.parse("smsto:3838")
+            val intent = Intent(Intent.ACTION_SENDTO, uri)
+            intent.putExtra("sms_body", "Reboque " + this.selectedPlate)
+            startActivity(intent)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_contacts, container, false)
 
         ButterKnife.bind(this, view)
 
+        this.viewModel = ViewModelProviders.of(this).get(ContactsViewModel::class.java)
+
         return view
+    }
+
+    override fun onStart() {
+
+        this.viewModel.registerListener(this)
+        this.viewModel.getAll()
+
+        super.onStart()
+    }
+
+    override fun onStop() {
+
+        this.viewModel.unregisterListener()
+
+        super.onStop()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun onDataReceived(data: ArrayList<*>?) {
+
+        data as ArrayList<String>
+
+        val spinnerAdapter = ArrayAdapter(
+            activity as Context,
+            R.layout.spinner_text,
+            data
+        )
+
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+
+        vehicles_spinner.adapter = spinnerAdapter
+
+        this.selectedPlate = vehicles_spinner.selectedItem.toString()
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) { }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+        this.selectedPlate = parent?.getItemAtPosition(position).toString()
     }
 }

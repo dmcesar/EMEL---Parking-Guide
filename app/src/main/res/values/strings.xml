@@ -104,5 +104,7 @@
     <string name="you">You</string>
     <string name="data_updated_after_connection_was_lost">Connection reestablished and data updated.</string>
     <string name="filters_removed">Filters removed</string>
+    <string name="check_vehicle_removed">Send text to 3838 to check if vehicle is blocked.</string>
+    <string name="send_text">Send text</string>
 
 </resources>

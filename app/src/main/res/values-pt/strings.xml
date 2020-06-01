@@ -103,5 +103,7 @@
     <string name="you">Voçê</string>
     <string name="data_updated_after_connection_was_lost">Conecção reestabelecida e dados atualizados.</string>
     <string name="filters_removed">Filtros removidos</string>
+    <string name="check_vehicle_removed">Enviar mensagem para 3838 de modo a verificar se o veículo selecionado se encontra bloqueado.</string>
+    <string name="send_text">Enviar mensagem</string>
 
 </resources>
