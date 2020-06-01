@@ -158,7 +158,7 @@ class ParkingLotsListFragment : Fragment(),
 
     private fun initFilters(filters: ArrayList<Filter>) {
 
-        filters_list.layoutManager = LinearLayoutManager(activity as Context)
+        filters_list.layoutManager = LinearLayoutManager(activity as Context, LinearLayoutManager.HORIZONTAL, false)
         filters_list.adapter = FiltersAdapter(this, activity as Context, R.layout.filters_list_item_portrait, filters)
     }
 

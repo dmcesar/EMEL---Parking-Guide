@@ -69,6 +69,7 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
         this.context?.let { context ->
 
             val userPin = MarkerOptions()
+                .title("User")
                 .position(coordinates)
                 .icon(Extensions.bitmapDescriptorFromVector(context, R.drawable.ic_user_marker))
 
@@ -158,17 +159,12 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
 
     override fun onRequestPermissionsSuccess() {
 
-        Log.i(TAG, "OnRequestPermissionsSuccess")
-
         FusedLocation.registerGoogleMapListener(this)
         map_view.getMapAsync(this)
         map_view.onResume()
     }
 
-    override fun onRequestPermissionsFailure() {
-
-        Log.i(TAG, "OnRequestPermissionsFailure")
-    }
+    override fun onRequestPermissionsFailure() { }
 
     override fun onMapReady(map: GoogleMap?) {
 
@@ -189,14 +185,17 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
 
     override fun onMarkerClick(marker: Marker?): Boolean {
 
-        val parkingLot = this.markersParkingLots[marker?.position]
+        marker?.let {
 
-        val args = Bundle()
-        args.putParcelable(EXTRA_PARKING_LOT, parkingLot)
+            if (it.title.isNotEmpty() && it.title != "User") {
 
-        this.listener?.let {
+                val parkingLot = this.markersParkingLots[it.position]
 
-            it.onNavigateToParkingLotDetails(args)
+                val args = Bundle()
+                args.putParcelable(EXTRA_PARKING_LOT, parkingLot)
+
+                this.listener?.onNavigateToParkingLotDetails(args)
+            }
         }
 
         return false

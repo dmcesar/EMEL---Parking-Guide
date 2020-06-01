@@ -111,7 +111,7 @@ class ContactsFragment : Fragment(), OnDataReceivedListener, AdapterView.OnItemS
 
     @OnClick(R.id.button_send_message)
     fun onClickSendMessage() {
-        
+
         if(this.selectedPlate.isNotEmpty()) {
 
             val uri = Uri.parse("smsto:3838")
