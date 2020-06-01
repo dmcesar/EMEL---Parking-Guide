@@ -2,6 +2,7 @@ package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Filter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.room.LocalDatabase
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.remote.RetrofitBuilder
@@ -45,6 +46,11 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
     fun removeFilters() {
 
         this.logic.removeFilters()
+    }
+
+    fun removeFilter(filter: Filter) {
+
+        this.logic.removeFilter(filter)
     }
 
     fun registerListener(listener: OnDataReceivedWithOriginListener) {

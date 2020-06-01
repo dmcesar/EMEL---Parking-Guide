@@ -18,20 +18,22 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA_FROM_REMOTE
 import kotlinx.android.synthetic.main.fragment_parking_lots_list.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Filter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters.FiltersAdapter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnTouchListener
 import kotlin.collections.ArrayList
 
 class ParkingLotsListFragment : Fragment(),
-    OnTouchListener,
-    OnDataReceivedListener {
+    OnTouchListener {
 
     private val TAG = ParkingLotsListFragment::class.java.simpleName
 
     private var listener: OnTouchListener? = null
 
-    private var data: ArrayList<ParkingLot>? = null
+    private var parkingLots: ArrayList<ParkingLot>? = null
+    private var filters: ArrayList<Filter>? = null
     private var dataIsFromRemote: Boolean? = null
     private var dataFetchedDuringSplash: Boolean? = null
 
@@ -41,7 +43,8 @@ class ParkingLotsListFragment : Fragment(),
 
         this.arguments?.let {
 
-            this.data = it.getParcelableArrayList(EXTRA_DATA)
+            this.parkingLots = it.getParcelableArrayList(EXTRA_DATA)
+            this.filters = it.getParcelableArrayList(EXTRA_FILTERS)
             this.dataIsFromRemote = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
             this.dataFetchedDuringSplash = it.getBoolean(EXTRA_DATA_FETCHED_DURING_SPLASH)
         }
@@ -57,8 +60,8 @@ class ParkingLotsListFragment : Fragment(),
     override fun onStart() {
 
         this.listener = parentFragment as OnTouchListener
-
-        this.data?.let { initAdapter(it) }
+        this.parkingLots?.let { initParkingLots(it) }
+        this.filters?.let { initFilters(it) }
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity as Context)
 
@@ -106,7 +109,7 @@ class ParkingLotsListFragment : Fragment(),
                         .putBoolean(EXTRA_DATA_FROM_REMOTE, true)
                         .apply()
 
-                    Snackbar.make(parking_lots, R.string.data_updated_after_connection_was_lost, Snackbar.LENGTH_LONG)
+                    Snackbar.make(parking_lots_list, R.string.data_updated_after_connection_was_lost, Snackbar.LENGTH_LONG)
                         .show()
 
                 } else {
@@ -127,30 +130,36 @@ class ParkingLotsListFragment : Fragment(),
     }
 
     /* Updates RecycleView based on received data and screen orientation */
-    private fun initAdapter(data: ArrayList<ParkingLot>) {
+    private fun initParkingLots(parkingLots: ArrayList<ParkingLot>) {
 
-        parking_lots.layoutManager = LinearLayoutManager(activity as Context)
+        parking_lots_list.layoutManager = LinearLayoutManager(activity as Context)
 
         if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
 
-            parking_lots.adapter =
+            parking_lots_list.adapter =
                 ParkingLotPortraitAdapter(
                     this,
                     activity as Context,
                     R.layout.parking_lots_portrait_list_item,
-                    data
+                    parkingLots
                 )
 
         } else {
 
-            parking_lots.adapter =
+            parking_lots_list.adapter =
                 ParkingLotLandscapeAdapter(
                     this,
                     activity as Context,
                     R.layout.parking_lots_landscape_list_item,
-                    data
+                    parkingLots
                 )
         }
+    }
+
+    private fun initFilters(filters: ArrayList<Filter>) {
+
+        filters_list.layoutManager = LinearLayoutManager(activity as Context)
+        filters_list.adapter = FiltersAdapter(this, activity as Context, R.layout.filters_list_item_portrait, filters)
     }
 
     override fun onSwipeLeftEvent(data: Any?) {
@@ -167,11 +176,5 @@ class ParkingLotsListFragment : Fragment(),
     override fun onClickEvent(data: Any?) {
 
         this.listener?.onClickEvent(data)
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    override fun onDataReceived(data: ArrayList<*>?) {
-
-        data?.let { initAdapter(it as ArrayList<ParkingLot>) }
     }
 }

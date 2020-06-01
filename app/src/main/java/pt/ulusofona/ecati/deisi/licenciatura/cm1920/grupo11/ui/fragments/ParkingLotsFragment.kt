@@ -38,6 +38,7 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnTouch
 
 const val EXTRA_DATA_FETCHED_DURING_SPLASH = "pt.ulusofona.ecati.ParkingLotsListFragment.DATA_FETCHED_DURING_SPLASH"
 const val EXTRA_PARKING_LOT = "pt.ulusofona.ecati.ParkingLotsListFragment.ParkingLot"
+const val EXTRA_FILTERS = "pt.ulusofona.ecati.ParkingLotsListFragment.FILTERS"
 
 class ParkingLotsFragment : Fragment(),
     OnDataReceivedWithOriginListener,
@@ -53,6 +54,10 @@ class ParkingLotsFragment : Fragment(),
     private lateinit var viewModel: ParkingLotsViewModel
 
     private var listener: OnNavigationListener? = null
+
+    private lateinit var parkingLots: ArrayList<ParkingLot>
+    private lateinit var filters: ArrayList<Filter>
+    private var updated: Boolean = true
 
     /* Used when onDataReceived() is called by observable.
     * If value is 0, navigate to ListView fragment.
@@ -98,13 +103,23 @@ class ParkingLotsFragment : Fragment(),
 
     override fun onSaveInstanceState(outState: Bundle) {
 
-        outState.run { putInt(QUEUED_FRAGMENT_KEY, queuedFragment) }
+        outState.run {
+
+            putInt(QUEUED_FRAGMENT_KEY, queuedFragment)
+            putParcelableArrayList(EXTRA_DATA, parkingLots)
+            putParcelableArrayList(EXTRA_FILTERS, filters)
+            putBoolean(EXTRA_DATA_FROM_REMOTE, updated)
+
+        }
 
         super.onSaveInstanceState(outState)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        this.parkingLots = savedInstanceState?.getParcelableArrayList(EXTRA_DATA) ?: ArrayList()
+        this.filters = savedInstanceState?.getParcelableArrayList(EXTRA_FILTERS) ?: ArrayList()
+        this.updated = savedInstanceState?.getBoolean(EXTRA_DATA_FROM_REMOTE) ?: true
         this.queuedFragment = savedInstanceState?.getInt(QUEUED_FRAGMENT_KEY) ?: 0
 
         super.onCreate(savedInstanceState)
@@ -115,9 +130,6 @@ class ParkingLotsFragment : Fragment(),
         val view = inflater.inflate(R.layout.fragment_parking_lots, container, false)
 
         ButterKnife.bind(this, view)
-
-        view.parking_lots_filters.layoutManager =
-            LinearLayoutManager(activity as Context, LinearLayoutManager.HORIZONTAL, false)
 
         this.viewModel = ViewModelProviders.of(this).get(ParkingLotsViewModel::class.java)
 
@@ -143,7 +155,7 @@ class ParkingLotsFragment : Fragment(),
                 val dataReceived: ArrayList<ParkingLot>? = it.getParcelableArrayList(
                     EXTRA_DATA
                 )
-                val dataFromRemote: Boolean = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
+                this.updated = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
 
                 /* Clear arguments so no data is overwritten */
                 this.arguments = null
@@ -151,13 +163,13 @@ class ParkingLotsFragment : Fragment(),
                 /* Navigate to ListView Fragment with received arguments */
                 val args = Bundle()
                 args.putParcelableArrayList(EXTRA_DATA, dataReceived)
-                args.putBoolean(EXTRA_DATA_FROM_REMOTE, dataFromRemote)
+                args.putBoolean(EXTRA_DATA_FROM_REMOTE, this.updated!!)
                 args.putBoolean(EXTRA_DATA_FETCHED_DURING_SPLASH, true)
 
                 /* Save in shared preferences if data that came from splash screen was updated */
                 PreferenceManager.getDefaultSharedPreferences(activity as Context)
                     .edit()
-                    .putBoolean(EXTRA_DATA_FROM_REMOTE, dataFromRemote)
+                    .putBoolean(EXTRA_DATA_FROM_REMOTE, this.updated!!)
                     .apply()
 
                 ParkingLotsNavigationManager.goToListFragment(childFragmentManager, args)
@@ -224,12 +236,19 @@ class ParkingLotsFragment : Fragment(),
 
     override fun onClickEvent(data: Any?) {
 
-        /* Create arguments with parking lot */
-        val args = Bundle()
-        args.putParcelable(EXTRA_PARKING_LOT, data as ParkingLot)
+        if(data is ParkingLot) {
 
-        /* Notify observer to navigate to ParkingLotDetailsFragment with created args */
-        this.listener?.onNavigateToParkingLotDetails(args)
+            /* Create arguments with parking lot */
+            val args = Bundle()
+            args.putParcelable(EXTRA_PARKING_LOT, data)
+
+            /* Notify observer to navigate to ParkingLotDetailsFragment with created args */
+            this.listener?.onNavigateToParkingLotDetails(args)
+
+        } else {
+
+            this.viewModel.removeFilter(data as Filter)
+        }
     }
 
     override fun onAccelerometerEventListener() {
@@ -259,13 +278,15 @@ class ParkingLotsFragment : Fragment(),
 
     override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
 
-        Log.i(TAG, "ParkingLots received ${data.size}")
+        this.parkingLots = data
+        this.updated = updated
 
         /* Create arguments */
         val args = Bundle()
         args.putParcelableArrayList(EXTRA_DATA, data)
         args.putBoolean(EXTRA_DATA_FETCHED_DURING_SPLASH, false)
-        args.putBoolean(EXTRA_DATA_FROM_REMOTE, updated)
+        args.putBoolean(EXTRA_DATA_FROM_REMOTE, this.updated)
+        args.putParcelableArrayList(EXTRA_FILTERS, this.filters)
 
         if(queuedFragment == 0) {
 
@@ -275,24 +296,26 @@ class ParkingLotsFragment : Fragment(),
         else { ParkingLotsNavigationManager.goToMapFragment(childFragmentManager, args) }
     }
 
+    /* Receives filters list */
     @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
-        if(data?.size == 0) {
+        this.filters = data as ArrayList<Filter>
 
-            parking_lots_filters.visibility = View.GONE
+        Log.i(TAG, "Received filters list size" + data.size.toString())
 
-        } else {
+        /* Create arguments */
+        val args = Bundle()
+        args.putParcelableArrayList(EXTRA_DATA, this.parkingLots)
+        args.putBoolean(EXTRA_DATA_FETCHED_DURING_SPLASH, false)
+        args.putBoolean(EXTRA_DATA_FROM_REMOTE, this.updated)
+        args.putParcelableArrayList(EXTRA_FILTERS, this.filters)
 
-            parking_lots_filters.visibility = View.VISIBLE
+        if(queuedFragment == 0) {
 
-            parking_lots_filters.adapter =
-                FiltersAdapter(
-                    this,
-                    activity as Context,
-                    R.layout.filters_list_item_portrait,
-                    data as ArrayList<Filter>
-                )
+            ParkingLotsNavigationManager.goToListFragment(childFragmentManager, args)
         }
+
+        else { ParkingLotsNavigationManager.goToMapFragment(childFragmentManager, args) }
     }
 }

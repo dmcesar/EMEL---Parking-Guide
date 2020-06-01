@@ -59,17 +59,6 @@
 
     </FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
-        android:id="@+id/parking_lots_filters"
-        android:paddingBottom="20dp"
-        android:paddingHorizontal="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/backgroundColor" />
-
-
-
     <FrameLayout
         android:id="@+id/parking_lots_frame"
         android:layout_width="match_parent"

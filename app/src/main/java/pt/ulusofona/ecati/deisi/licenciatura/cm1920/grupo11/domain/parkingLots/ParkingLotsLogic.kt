@@ -84,6 +84,16 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
         }
     }
 
+    fun removeFilter(filter: Filter) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            storage.delete(filter)
+
+            super.requestData()
+        }
+    }
+
     /* Notifies ViewModel */
     private suspend fun notifyDataChanged(list: ArrayList<ParkingLot>, updated: Boolean) {
 

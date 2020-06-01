@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="4">
+
+    <FrameLayout
+        android:layout_weight="3"
+        android:id="@+id/navigation_map_frame"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_weight="1"
+        android:id="@+id/filters_list"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="10dp"
+        android:background="?attr/backgroundColor" />
+    
+</LinearLayout>

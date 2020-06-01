@@ -1,6 +1,7 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -8,23 +9,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_parking_lots.*
+import kotlinx.android.synthetic.main.fragment_parking_lots_map.*
+import kotlinx.android.synthetic.main.fragment_parking_lots_map.view.*
 
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Filter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA_FROM_REMOTE
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters.FiltersAdapter
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnClickListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
 
-class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
+class ParkingLotsMapFragment : Fragment(), OnNavigationListener, OnClickListener {
 
     private val TAG = ParkingLotsMapFragment::class.java.simpleName
 
-    private var data: ArrayList<ParkingLot>? = null
+    private var parkingLots: ArrayList<ParkingLot>? = null
+    private var filters: ArrayList<Filter>? = null
     private var dataIsFromRemote: Boolean? = null
 
     private var listener: OnNavigationListener? = null
+    private var onClickListener: OnClickListener? = null
 
     private fun screenRotated(savedInstanceState: Bundle?): Boolean {
 
@@ -37,7 +46,8 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
 
         this.arguments?.let {
 
-            this.data = it.getParcelableArrayList(EXTRA_DATA)
+            this.parkingLots = it.getParcelableArrayList(EXTRA_DATA)
+            this.filters = it.getParcelableArrayList(EXTRA_FILTERS)
             this.dataIsFromRemote = it.getBoolean(EXTRA_DATA_FROM_REMOTE)
         }
 
@@ -48,6 +58,13 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
 
         val view = inflater.inflate(R.layout.fragment_parking_lots_map, container, false)
 
+        if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            view.filters_list.layoutManager =
+                LinearLayoutManager(activity as Context, LinearLayoutManager.HORIZONTAL, false)
+
+        } else view.filters_list.layoutManager = LinearLayoutManager(activity as Context)
+
         if(!screenRotated(savedInstanceState)) {
 
             /* Create map fragment */
@@ -57,7 +74,7 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
             val args = Bundle()
             args.putParcelableArrayList(
                 EXTRA_DATA,
-                data
+                parkingLots
             )
             map.arguments = args
 
@@ -76,6 +93,11 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
         if(parentFragment is OnNavigationListener) {
 
             this.listener = parentFragment as OnNavigationListener
+        }
+
+        if(parentFragment is OnClickListener) {
+
+            this.onClickListener = parentFragment as OnClickListener
         }
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity as Context)
@@ -105,12 +127,37 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
             }
         }
 
+        this.filters?.let {
+
+            if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+                filters_list.adapter =
+                    FiltersAdapter(
+                        this,
+                        activity as Context,
+                        R.layout.filters_list_item_portrait,
+                        it
+                    )
+
+            } else {
+
+                filters_list.adapter =
+                    FiltersAdapter(
+                        this,
+                        activity as Context,
+                        R.layout.filters_list_item_landscape,
+                        it
+                    )
+            }
+        }
+
         super.onStart()
     }
 
     override fun onStop() {
 
         this.listener = null
+        this.onClickListener = null
 
         super.onStop()
     }
@@ -123,4 +170,9 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener {
     override fun onNavigateToFiltersFragment() {}
 
     override fun onNavigateToVehicleForm(args: Bundle?) {}
+
+    override fun onClickEvent(data: Any?) {
+
+        this.onClickListener?.onClickEvent(data)
+    }
 }
