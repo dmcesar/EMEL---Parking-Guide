@@ -108,5 +108,11 @@
     <string name="no_permissions">Não foram fornecidas as permissões necessárias para realizar a ação.</string>
     <string name="distance">Distância</string>
     <string name="kilometers">Km</string>
+    <string name="approaching_parking_lot">Encontra-se próximo de um parque</string>
+    <string name="currently_at">De momento encontra-se a</string>
+    <string name="km_from">Km de</string>
+    <string name="set_course">Indicar rota</string>
+    <string name="channel_name">SET_COURSE_CHANNEL</string>
+    <string name="channel_description">Mostra notificação para definir rota para parque na vacinidade</string>
 
 </resources>

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -23,7 +20,6 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.NavigationM
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.battery.Battery
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.battery.OnBatteryCapacityListener
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.*
@@ -48,8 +44,6 @@ class MainActivity : AppCompatActivity(),
     OnDataReceivedListener,
     OnBatteryCapacityListener,
     OnLocationChangedListener {
-
-    private val TAG = MainActivity::class.java.simpleName
 
     private lateinit var viewModel: MainViewModel
 
@@ -126,7 +120,6 @@ class MainActivity : AppCompatActivity(),
             if(currentHour.before(morningDate) || currentHour.after(afternoonDate)) {
 
                 /* Queue DarkTheme */
-                Log.i(TAG, "Queued DarkTheme")
                 sharedPreferences.edit().putInt(PREFERENCE_QUEUED_THEME, R.style.DarkTheme).apply()
             }
         }
@@ -138,7 +131,6 @@ class MainActivity : AppCompatActivity(),
             if(currentHour.after(morningDate) && currentHour.before(afternoonDate)) {
 
                 /* Queue LightTheme */
-                Log.i(TAG, "Queued LightTheme")
                 sharedPreferences.edit().putInt(PREFERENCE_QUEUED_THEME, R.style.LightTheme).apply()
             }
         }
@@ -186,8 +178,6 @@ class MainActivity : AppCompatActivity(),
                             R.string.OK
                         ) { _, _ ->
                             run {
-
-                                Log.i(TAG, "Queued DarkTheme")
 
                                 /* Queue Dark theme to apply when navigation occurs.
                                 * Stop validating themes according to time until setting is reset. */
@@ -400,6 +390,7 @@ class MainActivity : AppCompatActivity(),
         NavigationManager.goToVehicleFormFragment(supportFragmentManager, args)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onDataReceived(data: ArrayList<*>?) {
 
         data?.let {
@@ -409,7 +400,9 @@ class MainActivity : AppCompatActivity(),
 
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("http://maps.google.com/maps?daddr=$latitude,$longitude"))
+                Uri.parse("http://maps.google.com/maps?daddr=$latitude,$longitude")
+            )
+
             startActivity(intent)
         }
     }

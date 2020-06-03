@@ -33,6 +33,7 @@ android {
 apply plugin: 'kotlin-kapt'
 
 dependencies {
+    implementation "com.android.support:support-compat:28.0.0" // Notifications
     implementation 'com.google.android.gms:play-services-maps:17.0.0' // Maps
     implementation 'com.google.android.gms:play-services-location:17.0.0' // Location
     implementation 'androidx.preference:preference:1.1.1' // Settings

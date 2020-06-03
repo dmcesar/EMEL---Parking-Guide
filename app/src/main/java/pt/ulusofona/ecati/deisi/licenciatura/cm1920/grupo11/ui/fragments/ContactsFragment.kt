@@ -162,7 +162,11 @@ class ContactsFragment : Fragment(), OnDataReceivedListener, AdapterView.OnItemS
 
         vehicles_spinner.adapter = spinnerAdapter
 
-        this.selectedPlate = vehicles_spinner.selectedItem.toString()
+
+        vehicles_spinner.selectedItem?.let {
+
+            this.selectedPlate = it.toString()
+        }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) { }

@@ -52,7 +52,7 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 /* If list size is 1 (parking lot details), hide legend button */
                 if(list.size == 1) {
 
-                    fab_toggle_legend.visibility = View.GONE
+                    fab_toggle_legend?.visibility = View.GONE
                     this.zoomOnUser = false
                 }
 

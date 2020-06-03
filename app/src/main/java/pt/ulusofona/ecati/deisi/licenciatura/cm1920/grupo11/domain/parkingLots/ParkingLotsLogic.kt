@@ -12,6 +12,7 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.connect
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.connectivity.OnConnectivityStatusListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNotificationEventListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.Extensions
 import kotlin.collections.ArrayList
 
@@ -25,8 +26,9 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
     private var hasConnectivity: Boolean? = null
     private var requestedDataFlag = false
 
-    private var listener: OnDataReceivedWithOriginListener? = null
+    private var parkingLotsListener: OnDataReceivedWithOriginListener? = null
     private var filtersListener: OnDataReceivedListener? = null
+    private var notificationListener: OnNotificationEventListener? = null
 
     private var userLocation: Location? = null
 
@@ -89,7 +91,7 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
             /* Send data to observers */
             withContext(Dispatchers.Main) {
 
-                listener?.onDataReceivedWithOrigin(processedData, updated)
+                parkingLotsListener?.onDataReceivedWithOrigin(processedData, updated)
                 filtersListener?.onDataReceived(filters)
             }
         }
@@ -114,13 +116,9 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
 
             hasConnectivity?.let { connected ->
 
-                Log.i(TAG, "has connectivity status")
-
                 getData(connected)
 
             } ?: kotlin.run {
-
-                Log.i(TAG, "no connectivity status")
 
                 requestedDataFlag = true
             }
@@ -163,18 +161,41 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
         }
     }
 
+    fun checkIfUserIsNearParkingLot(parkingLots: ArrayList<ParkingLot>) {
+
+        CoroutineScope(Dispatchers.Default).launch {
+
+            parkingLots.forEach { p ->
+
+                /* Check if user is in 500m range of any parking lot */
+                if (p.distanceToUser <= 500) {
+
+                    if (p.active == 1 && p.getCapacityPercent() < 100 && p.isFavourite) {
+
+                        withContext(Dispatchers.Main) {
+
+                            notificationListener?.onNotificationEvent(p)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     fun registerListener(listener: OnDataReceivedWithOriginListener) {
 
-        this.listener = listener
+        this.parkingLotsListener = listener
         this.filtersListener = listener as OnDataReceivedListener
+        this.notificationListener = listener as OnNotificationEventListener
         this.repository.registerListener(this)
         Connectivity.registerFragmentListener(this)
     }
 
     fun unregisterListener() {
 
-        this.listener = null
+        this.parkingLotsListener = null
         this.filtersListener = null
+        this.notificationListener = null
         this.repository.unregisterListener()
         Connectivity.unregisterFragmentListener()
     }
@@ -186,13 +207,9 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
 
     override fun onConnectivityStatus(connected: Boolean) {
 
-        Log.i(TAG, "connectivity status received")
-
         hasConnectivity = connected
 
         if(requestedDataFlag) {
-
-            Log.i(TAG, "requesting data on connectivity status received")
 
             CoroutineScope(Dispatchers.IO).launch {
 

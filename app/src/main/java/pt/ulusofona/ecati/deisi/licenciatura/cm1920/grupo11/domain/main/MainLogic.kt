@@ -42,7 +42,7 @@ class MainLogic(private val local: ParkingLotsDAO) {
 
             val closestParkingLot = listOrderedByProximity[0]
 
-            val coordinatesArrayList = arrayListOf<String>(closestParkingLot.latitude, closestParkingLot.longitude)
+            val coordinatesArrayList = arrayListOf(closestParkingLot.latitude, closestParkingLot.longitude)
 
             withContext(Dispatchers.Main) {
 

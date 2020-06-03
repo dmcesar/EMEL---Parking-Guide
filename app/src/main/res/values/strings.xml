@@ -109,5 +109,11 @@
     <string name="no_permissions">No permissions given for requested action.</string>
     <string name="distance">Distance</string>
     <string name="kilometers">Km</string>
+    <string name="approaching_parking_lot">Approaching parking lot</string>
+    <string name="currently_at">Currently at</string>
+    <string name="km_from">Km from</string>
+    <string name="set_course">Set course</string>
+    <string name="channel_name">SET_COURSE_CHANNEL</string>
+    <string name="channel_description">Display notification to set course to nearby parking lot</string>
 
 </resources>

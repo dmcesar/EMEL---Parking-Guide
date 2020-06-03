@@ -2,24 +2,19 @@ package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
-import android.preference.Preference
 import android.preference.PreferenceManager
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.gms.location.LocationResult
-import com.google.android.gms.maps.LocationSource
 import com.google.android.material.snackbar.Snackbar
 
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
@@ -35,12 +30,8 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.acceler
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.OnAccelerometerEventListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.FusedLocation
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.LOCATION_REQUEST_CODE
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters.FiltersAdapter
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnTouchListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.*
+import java.math.RoundingMode
 
 const val EXTRA_DATA_FETCHED_DURING_SPLASH = "pt.ulusofona.ecati.ParkingLotsListFragment.DATA_FETCHED_DURING_SPLASH"
 const val EXTRA_PARKING_LOT = "pt.ulusofona.ecati.ParkingLotsListFragment.ParkingLot"
@@ -52,15 +43,14 @@ class ParkingLotsFragment : Fragment(),
     OnTouchListener,
     OnAccelerometerEventListener,
     OnLocationChangedListener,
-    OnNavigationListener {
-
-    private val TAG = ParkingLotsFragment::class.java.simpleName
+    OnNavigationListener,
+ OnNotificationEventListener {
 
     private val QUEUED_FRAGMENT_KEY = "queued_fragment"
 
     private lateinit var viewModel: ParkingLotsViewModel
 
-    private var listener: OnNavigationListener? = null
+    private var navigationListener: OnNavigationListener? = null
 
     /* Data received from ViewModel */
     private lateinit var parkingLots: ArrayList<ParkingLot>
@@ -110,8 +100,6 @@ class ParkingLotsFragment : Fragment(),
          else raise flag to request data */
         this.location?.let {
 
-            Log.i(TAG, "from click received getAll() called")
-
             /* Request data from viewModel */
             this.viewModel.getAll(it)
 
@@ -121,7 +109,7 @@ class ParkingLotsFragment : Fragment(),
     @OnClick(R.id.button_filter)
     fun onClickGoFiltersFragment() {
 
-        this.listener?.onNavigateToFiltersFragment()
+        this.navigationListener?.onNavigateToFiltersFragment()
     }
 
     private fun screenRotated(savedInstanceState: Bundle?): Boolean {
@@ -233,7 +221,7 @@ class ParkingLotsFragment : Fragment(),
     override fun onStart() {
 
         /* Register listeners */
-        this.listener = (this.activity as OnNavigationListener)
+        this.navigationListener = (this.activity as OnNavigationListener)
         this.viewModel.registerListener(this)
         FusedLocation.registerFragmentListener(this)
         Accelerometer.registerParkingLotsListener(this)
@@ -244,7 +232,7 @@ class ParkingLotsFragment : Fragment(),
     override fun onStop() {
 
         /* Unregister listeners */
-        this.listener = null
+        this.navigationListener = null
         this.viewModel.unregisterListener()
         Accelerometer.unregisterParkingLotsListener()
         FusedLocation.unregisterFragmentListener()
@@ -283,7 +271,7 @@ class ParkingLotsFragment : Fragment(),
             args.putParcelable(EXTRA_PARKING_LOT, data)
 
             /* Notify observer to navigate to ParkingLotDetailsFragment with created args */
-            this.listener?.onNavigateToParkingLotDetails(args)
+            this.navigationListener?.onNavigateToParkingLotDetails(args)
 
         } else {
 
@@ -309,7 +297,7 @@ class ParkingLotsFragment : Fragment(),
 
     override fun onNavigateToParkingLotDetails(args: Bundle) {
 
-        this.listener?.onNavigateToParkingLotDetails(args)
+        this.navigationListener?.onNavigateToParkingLotDetails(args)
     }
 
     override fun onNavigateToFiltersFragment() {}
@@ -334,6 +322,8 @@ class ParkingLotsFragment : Fragment(),
         }
 
         else { ParkingLotsNavigationManager.goToMapFragment(childFragmentManager, args) }
+
+        this.viewModel.checkIfUserIsNearParkingLot(this.parkingLots)
     }
 
     /* Receives filters list */
@@ -363,11 +353,27 @@ class ParkingLotsFragment : Fragment(),
 
         if(this.requestedDataFlag) {
 
-            Log.i(TAG, "from location received getAll() called")
-
             this.requestedDataFlag = false
 
             this.viewModel.getAll(locationResult.lastLocation)
         }
+    }
+
+    override fun onNotificationEvent(parkingLot: ParkingLot) {
+
+        val distance = (parkingLot.distanceToUser / 1000).toBigDecimal().setScale(1, RoundingMode.UP).toDouble()
+        val text = parkingLot.name + ": " + distance + "Km"
+
+        Snackbar.make(parking_lots_layout, text, Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.set_course) {
+
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("http://maps.google.com/maps?daddr=${parkingLot.latitude},${parkingLot.longitude}")
+                )
+
+                startActivity(intent)
+
+            }.show()
     }
 }

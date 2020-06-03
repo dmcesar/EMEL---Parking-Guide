@@ -11,11 +11,12 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.repositories.Pa
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.parkingLots.ParkingLotsLogic
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNotificationEventListener
 
 const val ENDPOINT = "https://emel.city-platform.com/opendata/"
 
 class ParkingLotsViewModel(application: Application) : AndroidViewModel(application),
-    OnDataReceivedWithOriginListener, OnDataReceivedListener {
+    OnDataReceivedWithOriginListener, OnDataReceivedListener, OnNotificationEventListener {
 
     /* Retrieves local database instance */
     private val localDatabase = LocalDatabase.getInstance(application).parkingLotsDAO()
@@ -32,6 +33,7 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
 
     private var listener: OnDataReceivedWithOriginListener? = null
     private var filtersListener: OnDataReceivedListener? = null
+    private var notificationListener: OnNotificationEventListener? = null
 
     /* Fetches data stored locally */
     fun getAll(userLocation: Location?) {
@@ -54,10 +56,16 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
         this.logic.removeFilter(filter)
     }
 
+    fun checkIfUserIsNearParkingLot(parkingLots: ArrayList<ParkingLot>){
+
+        this.logic.checkIfUserIsNearParkingLot(parkingLots)
+    }
+
     fun registerListener(listener: OnDataReceivedWithOriginListener) {
 
         this.listener = listener
         this.filtersListener = listener as OnDataReceivedListener
+        this.notificationListener = listener as OnNotificationEventListener
         this.logic.registerListener(this)
     }
 
@@ -65,6 +73,7 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
 
         this.listener = null
         this.filtersListener = null
+        this.notificationListener = null
         this.logic.unregisterListener()
     }
 
@@ -81,5 +90,10 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
     override fun onDataReceived(data: ArrayList<*>?) {
 
         this.filtersListener?.onDataReceived(data)
+    }
+
+    override fun onNotificationEvent(parkingLot: ParkingLot) {
+
+        this.notificationListener?.onNotificationEvent(parkingLot)
     }
 }
