@@ -1,6 +1,7 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels
 
 import android.app.Application
+import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Filter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
@@ -33,9 +34,9 @@ class ParkingLotsViewModel(application: Application) : AndroidViewModel(applicat
     private var filtersListener: OnDataReceivedListener? = null
 
     /* Fetches data stored locally */
-    fun getAll() {
+    fun getAll(userLocation: Location?) {
 
-        this.logic.requestData()
+        this.logic.requestData(userLocation)
     }
 
     fun toggleFavorite(parkingLot: ParkingLot) {

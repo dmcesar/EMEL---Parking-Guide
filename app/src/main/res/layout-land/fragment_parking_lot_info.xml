@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:weightSum="6"
+    android:weightSum="7"
     android:padding="20dp"
     android:background="?attr/backgroundColor" >
 
     <LinearLayout
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -112,8 +112,18 @@
             android:textColor="?attr/onBackgroundColor" />
 
         <TextView
-            android:id="@+id/last_updated_at"
+            android:id="@+id/park_distance"
             app:layout_constraintTop_toBottomOf="@id/park_occupancy_state"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextStyle"
+            android:textColor="?attr/onBackgroundColor" />
+
+        <TextView
+            android:id="@+id/last_updated_at"
+            app:layout_constraintTop_toBottomOf="@id/park_distance"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"

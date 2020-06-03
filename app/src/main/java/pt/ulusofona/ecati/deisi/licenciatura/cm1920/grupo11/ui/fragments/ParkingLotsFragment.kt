@@ -3,6 +3,7 @@ package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.preference.Preference
@@ -17,6 +18,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.maps.LocationSource
 import com.google.android.material.snackbar.Snackbar
 
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
@@ -30,6 +33,9 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.Accelerometer
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.accelerometer.OnAccelerometerEventListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.FusedLocation
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.LOCATION_REQUEST_CODE
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters.FiltersAdapter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
@@ -45,6 +51,7 @@ class ParkingLotsFragment : Fragment(),
     OnDataReceivedListener,
     OnTouchListener,
     OnAccelerometerEventListener,
+    OnLocationChangedListener,
     OnNavigationListener {
 
     private val TAG = ParkingLotsFragment::class.java.simpleName
@@ -55,9 +62,16 @@ class ParkingLotsFragment : Fragment(),
 
     private var listener: OnNavigationListener? = null
 
+    /* Data received from ViewModel */
     private lateinit var parkingLots: ArrayList<ParkingLot>
     private lateinit var filters: ArrayList<Filter>
     private var updated: Boolean = true
+
+    /* Flag raised when parking lots data is requested */
+    private var requestedDataFlag: Boolean = false
+
+    /* Location received from FusedLocation */
+    private var location: Location? = null
 
     /* Used when onDataReceived() is called by observable.
     * If value is 0, navigate to ListView fragment.
@@ -73,8 +87,14 @@ class ParkingLotsFragment : Fragment(),
 
         queuedFragment = 0
 
-        /* Request data from viewModel */
-        this.viewModel.getAll()
+        /* If there is a user location, request parking lots, referencing distance to user,
+         else raise flag to request data */
+        this.location?.let {
+
+            /* Request data from viewModel */
+            this.viewModel.getAll(it)
+
+        } ?: kotlin.run { this.requestedDataFlag = true }
     }
 
     @OnClick(R.id.button_go_map_view)
@@ -86,8 +106,14 @@ class ParkingLotsFragment : Fragment(),
 
         queuedFragment = 1
 
-        /* Request data from viewModel */
-        this.viewModel.getAll()
+        /* If there is a user location, request parking lots, referencing distance to user,
+         else raise flag to request data */
+        this.location?.let {
+
+            /* Request data from viewModel */
+            this.viewModel.getAll(it)
+
+        } ?: kotlin.run { this.requestedDataFlag = true }
     }
 
     @OnClick(R.id.button_filter)
@@ -109,7 +135,6 @@ class ParkingLotsFragment : Fragment(),
             putParcelableArrayList(EXTRA_DATA, parkingLots)
             putParcelableArrayList(EXTRA_FILTERS, filters)
             putBoolean(EXTRA_DATA_FROM_REMOTE, updated)
-
         }
 
         super.onSaveInstanceState(outState)
@@ -163,13 +188,13 @@ class ParkingLotsFragment : Fragment(),
                 /* Navigate to ListView Fragment with received arguments */
                 val args = Bundle()
                 args.putParcelableArrayList(EXTRA_DATA, dataReceived)
-                args.putBoolean(EXTRA_DATA_FROM_REMOTE, this.updated!!)
+                args.putBoolean(EXTRA_DATA_FROM_REMOTE, this.updated)
                 args.putBoolean(EXTRA_DATA_FETCHED_DURING_SPLASH, true)
 
                 /* Save in shared preferences if data that came from splash screen was updated */
                 PreferenceManager.getDefaultSharedPreferences(activity as Context)
                     .edit()
-                    .putBoolean(EXTRA_DATA_FROM_REMOTE, this.updated!!)
+                    .putBoolean(EXTRA_DATA_FROM_REMOTE, this.updated)
                     .apply()
 
                 ParkingLotsNavigationManager.goToListFragment(childFragmentManager, args)
@@ -178,13 +203,26 @@ class ParkingLotsFragment : Fragment(),
             /* If no arguments where received */
             kotlin.run {
 
-                this.viewModel.getAll()
+                /* If there is a user location, request parking lots, referencing distance to user,
+                else raise flag to request data */
+                this.location?.let {
+
+                    /* Request data from viewModel */
+                    this.viewModel.getAll(it)
+
+                } ?: kotlin.run { this.requestedDataFlag = true }
             }
 
         } else {
 
-            /* Request data from ViewModel */
-            this.viewModel.getAll()
+            /* If there is a user location, request parking lots, referencing distance to user,
+                else raise flag to request data */
+            this.location?.let {
+
+                /* Request data from viewModel */
+                this.viewModel.getAll(it)
+
+            } ?: kotlin.run { this.requestedDataFlag = true }
         }
 
         return view
@@ -195,7 +233,7 @@ class ParkingLotsFragment : Fragment(),
         /* Register listeners */
         this.listener = (this.activity as OnNavigationListener)
         this.viewModel.registerListener(this)
-
+        FusedLocation.registerFragmentListener(this)
         Accelerometer.registerParkingLotsListener(this)
 
         super.onStart()
@@ -206,8 +244,8 @@ class ParkingLotsFragment : Fragment(),
         /* Unregister listeners */
         this.listener = null
         this.viewModel.unregisterListener()
-
         Accelerometer.unregisterParkingLotsListener()
+        FusedLocation.unregisterFragmentListener()
 
         super.onStop()
     }
@@ -302,8 +340,6 @@ class ParkingLotsFragment : Fragment(),
 
         this.filters = data as ArrayList<Filter>
 
-        Log.i(TAG, "Received filters list size" + data.size.toString())
-
         /* Create arguments */
         val args = Bundle()
         args.putParcelableArrayList(EXTRA_DATA, this.parkingLots)
@@ -317,5 +353,19 @@ class ParkingLotsFragment : Fragment(),
         }
 
         else { ParkingLotsNavigationManager.goToMapFragment(childFragmentManager, args) }
+    }
+
+    override fun onLocationChanged(locationResult: LocationResult) {
+
+        Log.i(TAG, "Locaiton received")
+
+        this.location = locationResult.lastLocation
+
+        if(this.requestedDataFlag) {
+
+            this.requestedDataFlag = false
+
+            this.viewModel.getAll(locationResult.lastLocation)
+        }
     }
 }

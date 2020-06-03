@@ -18,6 +18,7 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Type
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
+import java.math.RoundingMode
 import java.text.SimpleDateFormat
 
 const val EXTRA_PARK_COORDINATES = "com.example.projetocm-g11.view.ParkingPlaceInfoFragment.PARK_COORDINATES"
@@ -109,12 +110,15 @@ class ParkingLotDetailsFragment : Fragment() {
             else -> (activity as Context).resources.getString(R.string.state_free)
         }
 
+        val distance = context?.resources?.getString(R.string.distance) + ": " + (this.parkingLot.distanceToUser / 1000).toBigDecimal().setScale(1, RoundingMode.UP).toDouble().toString() + context?.resources?.getString(R.string.kilometers)
+
         view.park_capacity_bar.progress = this.parkingLot.getCapacityPercent()
         view.park_capacity_text.text = this.parkingLot.getCapacityPercent().toString()
         view.park_occupancy_state.text = state
         view.park_name.text = this.parkingLot.name
         view.park_type.text = type
         view.park_availability.text = active
+        view.park_distance.text = distance
         view.last_updated_at.text = lastUpdatedAt
         view.park_occupancy?.text = occupancy
 

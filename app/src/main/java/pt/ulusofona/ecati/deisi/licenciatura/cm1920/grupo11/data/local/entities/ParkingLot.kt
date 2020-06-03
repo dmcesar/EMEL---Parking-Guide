@@ -20,7 +20,8 @@ class ParkingLot(
     val maxCapacity: Int,
     val name: String,
     val occupancy: Int,
-    var isFavourite: Boolean = false
+    var isFavourite: Boolean = false,
+    var distanceToUser: Float = 0.0f
 ) : Parcelable {
 
     fun getCapacityPercent(): Int {

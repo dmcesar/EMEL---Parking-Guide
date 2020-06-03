@@ -118,12 +118,6 @@ class ParkingLotsFiltersFragment : Fragment(),
             )
         )
 
-        filter_park_closest.isChecked = list.contains(
-            Filter(
-                "CLOSEST"
-            )
-        )
-
         filter_parks_favorites.isChecked = list.contains(
             Filter(
                 "FAVORITE"
@@ -181,18 +175,6 @@ class ParkingLotsFiltersFragment : Fragment(),
             if(isChecked) {
 
                 Log.i(TAG, "Inserted AVAILABLE")
-
-                this.viewModel.insert(filter)
-
-            } else this.viewModel.delete(filter)
-        }
-
-        view.filter_park_closest.setOnCheckedChangeListener{ _, isChecked ->
-
-            val filter =
-                Filter("CLOSEST")
-
-            if(isChecked) {
 
                 this.viewModel.insert(filter)
 

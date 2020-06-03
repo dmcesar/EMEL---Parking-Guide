@@ -136,18 +136,6 @@
                     android:textColor="?attr/onCardColor" />
 
                 <Switch
-                    android:id="@+id/filter_park_closest"
-                    style="@style/SwitchStyle"
-                    android:layout_marginVertical="10dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/closest"
-                    android:textOff="@string/off"
-                    android:textOn="@string/on"
-                    android:textColor="?attr/onCardColor" />
-
-                <Switch
                     android:id="@+id/filter_parks_favorites"
                     style="@style/SwitchStyle"
                     android:layout_marginVertical="10dp"

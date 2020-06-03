@@ -10,9 +10,8 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_parking_lots.*
 
-import pt.ulusofona.ecati.deisi.ui.adapters.ParkingLotLandscapeAdapter
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters.ParkingLotLandscapeAdapter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters.ParkingLotPortraitAdapter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA_FROM_REMOTE
@@ -21,7 +20,6 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Filter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters.FiltersAdapter
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnTouchListener
 import kotlin.collections.ArrayList
 

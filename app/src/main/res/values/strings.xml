@@ -106,5 +106,8 @@
     <string name="filters_removed">Filters removed</string>
     <string name="check_vehicle_removed">Send text to 3838 to check if vehicle is blocked.</string>
     <string name="send_text">Send text</string>
+    <string name="no_permissions">No permissions given for requested action.</string>
+    <string name="distance">Distance</string>
+    <string name="kilometers">Km</string>
 
 </resources>

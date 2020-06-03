@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
     android:orientation="horizontal"
-    android:weightSum="4"
+    android:weightSum="10"
     style="@style/ItemCardStyle" >
 
     <!-- Circular progress bar indicating park capacity -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ProgressBar
             android:id="@+id/park_capacity_bar"
@@ -50,7 +50,7 @@
         android:background="?attr/onCardColor" />
 
     <LinearLayout
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -61,22 +61,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/HighlightTextStyle"
-            android:textColor="?attr/onCardColor" />
+            android:textColor="?attr/onCardColor"/>
+
+        <TextView
+            android:id="@+id/park_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextStyle"
+            android:textColor="?attr/onCardColor"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/park_occupancy_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/TextStyle"
-            android:textColor="?attr/onCardColor" />
+            android:textColor="?attr/onCardColor"/>
+
+        <TextView
+            android:id="@+id/park_availability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextStyle"
+            android:textColor="?attr/onCardColor"/>
 
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
             app:layout_constraintTop_toTopOf="parent"
@@ -86,15 +108,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:src="@drawable/ic_star" />
-
-        <TextView
-            android:id="@+id/park_availability"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/TextStyle"
-            android:textColor="?attr/onCardColor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

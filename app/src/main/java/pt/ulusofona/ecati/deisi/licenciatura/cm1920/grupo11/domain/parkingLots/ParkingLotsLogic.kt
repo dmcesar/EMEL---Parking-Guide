@@ -1,76 +1,135 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.parkingLots
 
+import android.location.Location
 import android.util.Log
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Filter
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.list.Storage
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.room.dao.ParkingLotsDAO
 import kotlinx.coroutines.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Type
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.repositories.ParkingLotsRepository
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.domain.repository.RepositoryLogic
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.connectivity.Connectivity
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.connectivity.OnConnectivityStatusListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.Extensions
 import kotlin.collections.ArrayList
 
-class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repository) {
+class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataReceivedWithOriginListener,
+    OnConnectivityStatusListener {
 
     private val TAG = ParkingLotsLogic::class.java.simpleName
 
     private val storage = Storage.getInstance()
 
+    private var hasConnectivity: Boolean? = null
+    private var requestedData = false
+
     private var listener: OnDataReceivedWithOriginListener? = null
     private var filtersListener: OnDataReceivedListener? = null
 
-    private fun applyFilters(unfilteredList: ArrayList<ParkingLot>, updated: Boolean) {
+    private var userLocation: Location? = null
+
+    private fun processData(receivedData: ArrayList<ParkingLot>, updated: Boolean) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
+            /* Get filters */
             val filters = storage.getAll()
 
+            var filteredData = receivedData.asSequence()
+
+            /* Apply filters */
             withContext(Dispatchers.Default) {
 
                 if (filters.size > 0) {
 
-                    var filteredList = unfilteredList.asSequence()
-
-                    Log.i(TAG, "Before filters applied -> ${filteredList.toList().size}")
+                    Log.i(TAG, "Before filters applied -> ${filteredData.toList().size}")
 
                     for (f in filters) {
 
-                        filteredList = when (f.value) {
+                        filteredData = when (f.value) {
 
-                            "SURFACE" -> filteredList.filter { p -> p.getTypeEnum() == Type.SURFACE }
+                            "SURFACE" -> filteredData.filter { p -> p.getTypeEnum() == Type.SURFACE }
 
-                            "UNDERGROUND" -> filteredList.filter { p -> p.getTypeEnum() == Type.UNDERGROUND }
+                            "UNDERGROUND" -> filteredData.filter { p -> p.getTypeEnum() == Type.UNDERGROUND }
 
-                            "AVAILABLE" -> filteredList.filter { p -> p.active == 1 }
+                            "AVAILABLE" -> filteredData.filter { p -> p.active == 1 }
 
-                            "UNAVAILABLE" -> filteredList.filter { p -> p.active == 0 }
+                            "UNAVAILABLE" -> filteredData.filter { p -> p.active == 0 }
 
-                            "FAVORITE" -> filteredList.filter { p -> p.isFavourite }
+                            "FAVORITE" -> filteredData.filter { p -> p.isFavourite }
 
-                            else -> filteredList.filter { p -> p.name.contains(f.value) }
+                            else -> filteredData.filter { p -> p.name.contains(f.value) }
                         }
                     }
 
-                    Log.i(TAG, "After filters applied -> ${filteredList.toList().size}")
-
-                    /* Send parking lots to view */
-                    notifyDataChanged(ArrayList(filteredList.toList()), updated)
-
-                } else {
-
-                    /* Send parking lots to view */
-                    notifyDataChanged(unfilteredList, updated)
+                    Log.i(TAG, "After filters applied -> ${filteredData.toList().size}")
                 }
             }
 
+            val processedData = ArrayList(filteredData.toList())
+
+            /* Update distance to user */
+            withContext(Dispatchers.Default) {
+
+                userLocation?.let {
+
+                    processedData.forEach { p ->
+
+                        /* Calculate distance */
+                        p.distanceToUser = Extensions.calculateDistanceBetween(
+                            it,
+                            Extensions.toLocation(p.latitude.toDouble(), p.longitude.toDouble())
+                        )
+                    }
+                }
+            }
+
+            /* Send data to observers */
             withContext(Dispatchers.Main) {
 
-                /* Send filters to view */
+                listener?.onDataReceivedWithOrigin(processedData, updated)
                 filtersListener?.onDataReceived(filters)
             }
+        }
+    }
+
+    private suspend fun getData(connected: Boolean) {
+
+        requestedData = false
+
+        if (connected) {
+
+            repository.getFromRemote()
+
+        } else repository.getFromLocal()
+    }
+
+    fun requestData(location: Location?) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            userLocation = location
+
+            hasConnectivity?.let { connected ->
+
+                getData(connected)
+
+            } ?: kotlin.run {
+
+                requestedData = true
+            }
+        }
+    }
+
+    fun toggleFavorite(parkingLot: ParkingLot) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            repository.toggleFavorite(parkingLot.id, !parkingLot.isFavourite)
+
+            repository.getFromLocal()
         }
     }
 
@@ -78,9 +137,12 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            storage.clear()
+            userLocation?.let {
 
-            super.requestData()
+                storage.clear()
+
+                requestData(it)
+            }
         }
     }
 
@@ -88,41 +150,49 @@ class ParkingLotsLogic(repository: ParkingLotsRepository) : RepositoryLogic(repo
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            storage.delete(filter)
+            userLocation?.let {
 
-            super.requestData()
-        }
-    }
+                storage.delete(filter)
 
-    /* Notifies ViewModel */
-    private suspend fun notifyDataChanged(list: ArrayList<ParkingLot>, updated: Boolean) {
-
-        withContext(Dispatchers.Main) {
-
-            listener?.onDataReceivedWithOrigin(ArrayList(list), updated)
+                requestData(it)
+            }
         }
     }
 
     fun registerListener(listener: OnDataReceivedWithOriginListener) {
 
-        Log.i(TAG, "registered as listener")
-
         this.listener = listener
         this.filtersListener = listener as OnDataReceivedListener
-        super.registerListener()
+        this.repository.registerListener(this)
+        Connectivity.registerListener(this)
     }
 
-    override fun unregisterListener() {
-
-        Log.i(TAG, "unregistered as listener")
+    fun unregisterListener() {
 
         this.listener = null
         this.filtersListener = null
-        super.unregisterListener()
+        this.repository.unregisterListener()
+        Connectivity.unregisterListener()
     }
 
     override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
 
-        applyFilters(data, updated)
+        processData(data, updated)
+    }
+
+    override fun onConnectivityStatus(connected: Boolean) {
+
+        if(requestedData) {
+
+            CoroutineScope(Dispatchers.IO).launch {
+
+                getData(connected)
+            }
+        }
+
+        else {
+
+            hasConnectivity = connected
+        }
     }
 }

@@ -2,11 +2,11 @@ package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,21 +19,16 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.fragment_map.view.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Type
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.FusedLocation
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.sensors.location.OnLocationChangedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.EXTRA_DATA
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.activities.LOCATION_REQUEST_CODE
-import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnMapMarkersReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnNavigationListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.utils.Extensions
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.MapViewModel
 
-class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallback,
+class MapFragment : Fragment(), OnMapReadyCallback,
     OnLocationChangedListener, GoogleMap.OnMarkerClickListener, OnMapMarkersReceivedListener {
-
-    private val TAG = MapFragment::class.java.simpleName
 
     private lateinit var viewModel: MapViewModel
 
@@ -42,6 +37,7 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
     private var userMarker: Marker? = null
 
     private val markersParkingLots = HashMap<LatLng, ParkingLot>()
+    private var zoomOnUser: Boolean = true
 
     private var listener: OnNavigationListener? = null
 
@@ -57,6 +53,7 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
                 if(list.size == 1) {
 
                     fab_toggle_legend.visibility = View.GONE
+                    this.zoomOnUser = false
                 }
 
                 this.viewModel.getParkingLotPins(list)
@@ -92,7 +89,11 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
             if(userMoved) {
 
                 this.userMarker = this.map?.addMarker(userPin)
-                this.map?.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 12.0f))
+
+                if(this.zoomOnUser) {
+
+                    this.map?.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 12.0f))
+                }
             }
         }
     }
@@ -103,6 +104,11 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
         this.map?.addMarker(markerOptions)
 
         this.markersParkingLots[markerOptions.position] = parkingLot
+
+        if(!this.zoomOnUser) {
+
+            this.map?.animateCamera(CameraUpdateFactory.newLatLngZoom(markerOptions.position, 12.0f))
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -120,13 +126,11 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
 
                 view.fab_toggle_legend.setImageDrawable(ContextCompat.getDrawable(activity as Context, R.drawable.ic_close))
 
-
             } else {
 
                 view.map_legend.visibility = View.GONE
 
                 view.fab_toggle_legend.setImageDrawable(ContextCompat.getDrawable(activity as Context, R.drawable.ic_map))
-
             }
         }
 
@@ -142,7 +146,9 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
 
         this.viewModel.registerListener(this)
 
-        super.onRequestPermissions(activity?.baseContext!!, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION))
+        FusedLocation.registerMapListener(this)
+        map_view.getMapAsync(this)
+        map_view.onResume()
 
         super.onStart()
     }
@@ -152,19 +158,10 @@ class MapFragment : PermissionsFragment(LOCATION_REQUEST_CODE), OnMapReadyCallba
         this.listener = null
         this.viewModel.unregisterListener()
 
-        FusedLocation.unregisterGoogleMapListener()
+        FusedLocation.unregisterMapListener()
 
         super.onStop()
     }
-
-    override fun onRequestPermissionsSuccess() {
-
-        FusedLocation.registerGoogleMapListener(this)
-        map_view.getMapAsync(this)
-        map_view.onResume()
-    }
-
-    override fun onRequestPermissionsFailure() { }
 
     override fun onMapReady(map: GoogleMap?) {
 

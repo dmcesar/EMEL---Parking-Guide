@@ -8,7 +8,7 @@ import com.google.android.gms.location.*
 class FusedLocation private constructor(context: Context) : LocationCallback() {
 
     // Intervalos de tempo em que a localização é verificada, 20 segundos
-    private val TIME_BETWEEN_UPDATES = 20 * 1000L
+    private val TIME_BETWEEN_UPDATES = 5 * 1000L
 
     // Este atributo é utilizado para configurar os pedidos de localização
     private var locationRequest: LocationRequest? = null
@@ -35,35 +35,47 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
     companion object {
         private val TAG = FusedLocation::class.java.simpleName
 
+        private var activityListener: OnLocationChangedListener? = null
+        private var fragmentListener: OnLocationChangedListener? = null
+        private var mapListener: OnLocationChangedListener? = null
 
-        private var googleMapListener: OnLocationChangedListener? = null
-        private var distanceListener: OnLocationChangedListener? = null
         private var instance: FusedLocation? = null
 
-        fun registerGoogleMapListener(listener: OnLocationChangedListener) {
+        fun registerMapListener(listener: OnLocationChangedListener) {
 
-            googleMapListener = listener
+            this.mapListener = listener
         }
 
-        fun unregisterGoogleMapListener() {
+        fun unregisterMapListener() {
 
-            googleMapListener = null
+            this.mapListener = null
         }
 
-        fun registerDistanceListener(listener: OnLocationChangedListener) {
+        fun registerActivityListener(listener: OnLocationChangedListener) {
 
-            distanceListener = listener
+            this.activityListener = listener
         }
 
-        fun unregisterDistanceListener() {
+        fun unregisterActivityListener() {
 
-            distanceListener = null
+            this.activityListener = null
+        }
+
+        fun registerFragmentListener(listener: OnLocationChangedListener) {
+
+            this.fragmentListener = listener
+        }
+
+        fun unregisterFragmentListener() {
+
+            this.fragmentListener = null
         }
 
         fun notifyListeners(locationResult: LocationResult) {
 
-            googleMapListener?.onLocationChanged(locationResult)
-            distanceListener?.onLocationChanged(locationResult)
+            this.activityListener?.onLocationChanged(locationResult)
+            this.mapListener?.onLocationChanged(locationResult)
+            this.fragmentListener?.onLocationChanged(locationResult)
         }
 
         fun start(context: Context) {

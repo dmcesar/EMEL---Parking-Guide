@@ -13,11 +13,10 @@ import kotlinx.android.synthetic.main.parking_lots_portrait_list_item.view.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnTouchListener
+import java.math.RoundingMode
 
 open class ParkingLotPortraitAdapter(private val listener: OnTouchListener, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
     RecyclerView.Adapter<ParkingLotPortraitAdapter.ParkingLotsPortraitViewHolder>() {
-
-    private val TAG = ParkingLotPortraitAdapter::class.java.simpleName
 
     open class ParkingLotsPortraitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -27,6 +26,7 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchListener, priv
         val name: TextView = view.park_name
         val occupancyState: TextView = view.park_occupancy_state
         val availability: TextView = view.park_availability
+        val distance: TextView = view.park_distance
         val isFavorite: ImageView = view.park_isFavorite
     }
 
@@ -61,12 +61,15 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchListener, priv
             context.resources.getString(R.string.park_open)
         else context.resources.getString(R.string.park_closed)
 
+        val distance = context.resources.getString(R.string.distance) + ": " + (items[position].distanceToUser / 1000).toBigDecimal().setScale(1, RoundingMode.UP).toDouble().toString() + context.resources.getString(R.string.kilometers)
+
         holder.capacityBar.progress = items[position].getCapacityPercent()
         holder.capacityText.text = capacity
         holder.name.text = items[position].name
         holder.occupancyState.text = state
         holder.availability.text = availability
         holder.isFavorite.visibility = if(items[position].isFavourite) { View.VISIBLE } else View.GONE
+        holder.distance.text = distance
 
         holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
 

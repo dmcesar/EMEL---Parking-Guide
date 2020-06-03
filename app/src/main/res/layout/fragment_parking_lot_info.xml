@@ -90,15 +90,34 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/park_occupancy_state"
+        <LinearLayout
+            android:weightSum="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginHorizontal="30dp"
             android:layout_marginVertical="20dp"
-            android:gravity="start"
-            style="@style/TextStyle"
-            android:textColor="?attr/onBackgroundColor" />
+            android:background="?attr/backgroundColor" >
+
+            <TextView
+                android:id="@+id/park_distance"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                style="@style/TextStyle"
+                android:textColor="?attr/onBackgroundColor"/>
+
+            <TextView
+                android:id="@+id/park_occupancy_state"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                style="@style/TextStyle"
+                android:textColor="?attr/onBackgroundColor"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:weightSum="2"
@@ -110,7 +129,7 @@
             android:background="?attr/backgroundColor" >
 
             <TextView
-                android:id="@+id/park_availability"
+                android:id="@+id/last_updated_at"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -119,7 +138,7 @@
                 android:textColor="?attr/onBackgroundColor" />
 
             <TextView
-                android:id="@+id/last_updated_at"
+                android:id="@+id/park_availability"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
