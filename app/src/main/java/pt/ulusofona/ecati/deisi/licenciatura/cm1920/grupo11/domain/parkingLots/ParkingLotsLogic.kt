@@ -23,7 +23,7 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
     private val storage = Storage.getInstance()
 
     private var hasConnectivity: Boolean? = null
-    private var requestedData = false
+    private var requestedDataFlag = false
 
     private var listener: OnDataReceivedWithOriginListener? = null
     private var filtersListener: OnDataReceivedListener? = null
@@ -97,7 +97,7 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
 
     private suspend fun getData(connected: Boolean) {
 
-        requestedData = false
+        requestedDataFlag = false
 
         if (connected) {
 
@@ -114,11 +114,15 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
 
             hasConnectivity?.let { connected ->
 
+                Log.i(TAG, "has connectivity status")
+
                 getData(connected)
 
             } ?: kotlin.run {
 
-                requestedData = true
+                Log.i(TAG, "no connectivity status")
+
+                requestedDataFlag = true
             }
         }
     }
@@ -164,7 +168,7 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
         this.listener = listener
         this.filtersListener = listener as OnDataReceivedListener
         this.repository.registerListener(this)
-        Connectivity.registerListener(this)
+        Connectivity.registerFragmentListener(this)
     }
 
     fun unregisterListener() {
@@ -172,7 +176,7 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
         this.listener = null
         this.filtersListener = null
         this.repository.unregisterListener()
-        Connectivity.unregisterListener()
+        Connectivity.unregisterFragmentListener()
     }
 
     override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
@@ -182,17 +186,18 @@ class ParkingLotsLogic(private val repository: ParkingLotsRepository) : OnDataRe
 
     override fun onConnectivityStatus(connected: Boolean) {
 
-        if(requestedData) {
+        Log.i(TAG, "connectivity status received")
+
+        hasConnectivity = connected
+
+        if(requestedDataFlag) {
+
+            Log.i(TAG, "requesting data on connectivity status received")
 
             CoroutineScope(Dispatchers.IO).launch {
 
                 getData(connected)
             }
-        }
-
-        else {
-
-            hasConnectivity = connected
         }
     }
 }

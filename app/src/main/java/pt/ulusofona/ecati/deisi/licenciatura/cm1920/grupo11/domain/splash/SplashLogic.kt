@@ -78,14 +78,14 @@ class SplashLogic(private val repository: ParkingLotsRepository) : OnDataReceive
 
         this.listener = listener
         this.repository.registerListener(this)
-        Connectivity.registerListener(this)
+        Connectivity.registerActivityListener(this)
     }
 
     fun unregisterListener() {
 
         this.listener = null
         this.repository.unregisterListener()
-        Connectivity.unregisterListener()
+        Connectivity.unregisterActivityListener()
     }
 
     /* Receives data and notifies observer */

@@ -110,6 +110,8 @@ class ParkingLotsFragment : Fragment(),
          else raise flag to request data */
         this.location?.let {
 
+            Log.i(TAG, "from click received getAll() called")
+
             /* Request data from viewModel */
             this.viewModel.getAll(it)
 
@@ -357,11 +359,11 @@ class ParkingLotsFragment : Fragment(),
 
     override fun onLocationChanged(locationResult: LocationResult) {
 
-        Log.i(TAG, "Locaiton received")
-
         this.location = locationResult.lastLocation
 
         if(this.requestedDataFlag) {
+
+            Log.i(TAG, "from location received getAll() called")
 
             this.requestedDataFlag = false
 

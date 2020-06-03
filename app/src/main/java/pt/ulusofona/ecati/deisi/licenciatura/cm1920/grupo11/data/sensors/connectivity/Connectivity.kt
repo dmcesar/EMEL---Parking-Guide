@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Handler
+import android.util.Log
 
 class Connectivity(private val context: Context) : Runnable {
 
@@ -14,7 +15,9 @@ class Connectivity(private val context: Context) : Runnable {
         private var instance: Connectivity? = null
         private val handler = Handler()
 
-        private var listener: OnConnectivityStatusListener? = null
+        private var activityListener: OnConnectivityStatusListener? = null
+        private var fragmentListener: OnConnectivityStatusListener? = null
+
 
         fun start(context: Context) {
 
@@ -28,19 +31,30 @@ class Connectivity(private val context: Context) : Runnable {
             instance?.start()
         }
 
-        fun registerListener(listener: OnConnectivityStatusListener) {
+        fun registerActivityListener(listener: OnConnectivityStatusListener) {
 
-            Companion.listener = listener
+            this.activityListener = listener
         }
 
-        fun unregisterListener() {
+        fun unregisterActivityListener() {
 
-            listener = null
+            this.activityListener = null
+        }
+
+        fun registerFragmentListener(listener: OnConnectivityStatusListener) {
+
+            this.fragmentListener = listener
+        }
+
+        fun unregisterFragmentListener() {
+
+            this.fragmentListener = null
         }
 
         fun notifyObservers(connected: Boolean) {
 
-            listener?.onConnectivityStatus(connected)
+            activityListener?.onConnectivityStatus(connected)
+            fragmentListener?.onConnectivityStatus(connected)
         }
     }
 

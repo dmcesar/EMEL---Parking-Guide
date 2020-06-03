@@ -90,8 +90,6 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
 
     override fun onLocationResult(locationResult: LocationResult?) {
 
-        Log.i(TAG, locationResult?.lastLocation.toString())
-
         locationResult?.let { notifyListeners(it) }
 
         super.onLocationResult(locationResult)
