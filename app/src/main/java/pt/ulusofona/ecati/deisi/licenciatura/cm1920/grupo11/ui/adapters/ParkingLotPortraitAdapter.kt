@@ -133,7 +133,7 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchListener, priv
 
                         if (swipedDistance <= 20 && swipedDistance >= -20) {
 
-                            listener.onClickEvent(items[position])
+                            v?.performClick()
                         }
                     }
 
