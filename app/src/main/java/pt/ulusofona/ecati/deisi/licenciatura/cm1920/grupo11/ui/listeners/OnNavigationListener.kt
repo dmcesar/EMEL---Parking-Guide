@@ -9,4 +9,6 @@ interface OnNavigationListener {
     fun onNavigateToFiltersFragment()
 
     fun onNavigateToVehicleForm(args: Bundle?)
+
+    fun onNavigateToParkingZoneDetails(args: Bundle)
 }

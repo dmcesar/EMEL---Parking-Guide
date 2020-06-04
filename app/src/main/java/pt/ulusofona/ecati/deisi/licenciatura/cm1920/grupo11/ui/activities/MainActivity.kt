@@ -371,6 +371,9 @@ class MainActivity : AppCompatActivity(),
     /* Data/other events listeners*/
     override fun onNavigateToParkingLotDetails(args: Bundle) {
 
+        validateThemeTime()
+        validateThemes()
+
         NavigationManager.goToParkingLotDetailsFragment(supportFragmentManager, args)
     }
 
@@ -388,6 +391,14 @@ class MainActivity : AppCompatActivity(),
         validateThemes()
 
         NavigationManager.goToVehicleFormFragment(supportFragmentManager, args)
+    }
+
+    override fun onNavigateToParkingZoneDetails(args: Bundle) {
+
+        validateThemeTime()
+        validateThemes()
+
+        NavigationManager.goToParkingZoneDetailsFragment(supportFragmentManager, args)
     }
 
     @Suppress("UNCHECKED_CAST")

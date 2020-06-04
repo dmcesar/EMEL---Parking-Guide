@@ -42,21 +42,12 @@ class ParkingLotDetailsFragment : Fragment() {
     @OnClick(R.id.button_go_info)
     fun onClickGoInfo() {
 
-        /*
-
-        val args = Bundle()
-
         val coordinates = doubleArrayOf(this.parkingLot.latitude.toDouble(), this.parkingLot.longitude.toDouble())
 
+        val args = Bundle()
         args.putDoubleArray(EXTRA_PARK_COORDINATES, coordinates)
 
-        val infoFragment =
-            ParkingPlaceInformationFragment()
-        infoFragment.arguments = args
-
-        this.listener?.onNavigateToFragment(infoFragment)
-
-         */
+        this.listener?.onNavigateToParkingZoneDetails(args)
     }
 
     private fun registerListener() {

@@ -98,5 +98,13 @@ class NavigationManager {
                 fragment
             )
         }
+
+        fun goToParkingZoneDetailsFragment(fm: FragmentManager, args: Bundle) {
+
+            val fragment = ParkingZoneDetailsFragment()
+            fragment.arguments = args
+
+            placeFragment(fm, fragment)
+        }
     }
 }

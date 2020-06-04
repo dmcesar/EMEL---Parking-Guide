@@ -9,7 +9,7 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedWithOriginListener
 import retrofit2.Retrofit
 
-private const val API_TOKEN = "93600bb4e7fee17750ae478c22182dda"
+const val API_TOKEN = "93600bb4e7fee17750ae478c22182dda"
 
 class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remote: Retrofit) {
 
