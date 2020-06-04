@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnClickListener
 import kotlinx.android.synthetic.main.vehicles_list_item.view.*
+import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Vehicle
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnTouchListener
 
@@ -35,10 +36,15 @@ class VehicleAdapter(private val listener: OnTouchListener, private val context:
 
     override fun onBindViewHolder(holder: VehiclesViewHolder, position: Int) {
 
-        holder.brand.text = items[position].brand
-        holder.model.text = items[position].model
-        holder.licencePlate.text = items[position].plate
-        holder.plateDate.text = items[position].getDate()
+        val brand = context.resources.getString(R.string.enter_brand) + ": " + items[position].brand
+        val model = context.resources.getString(R.string.enter_model) + ": " + items[position].model
+        val plate = context.resources.getString(R.string.enter_plate) + ": " + items[position].plate
+        val date = context.resources.getString(R.string.enter_plate_date) + ": " + items[position].getDate()
+
+        holder.brand.text = brand
+        holder.model.text = model
+        holder.licencePlate.text = plate
+        holder.plateDate.text = date
 
         holder.itemView.setOnClickListener { listener.onClickEvent(items[position]) }
 

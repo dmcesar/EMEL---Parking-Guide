@@ -1,6 +1,8 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.adapters
 
+import android.animation.ObjectAnimator
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -17,6 +19,8 @@ import java.math.RoundingMode
 
 open class ParkingLotPortraitAdapter(private val listener: OnTouchListener, private val context: Context, private val layout: Int, private val items: MutableList<ParkingLot>) :
     RecyclerView.Adapter<ParkingLotPortraitAdapter.ParkingLotsPortraitViewHolder>() {
+
+    private val TAG = ParkingLotPortraitAdapter::class.java.simpleName
 
     open class ParkingLotsPortraitViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -76,32 +80,72 @@ open class ParkingLotPortraitAdapter(private val listener: OnTouchListener, priv
         holder.itemView.setOnTouchListener(object : View.OnTouchListener {
 
             var onTouchX = 0f
+            var swipedDistance = 0f
 
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
 
                 when (event?.action) {
 
+                    /* Save pressed X coordinate */
                     MotionEvent.ACTION_DOWN -> {
 
                         onTouchX = event.x
                     }
 
-                    MotionEvent.ACTION_UP -> {
+                    /* Calculate swiped distance */
+                    MotionEvent.ACTION_MOVE -> {
 
-                        when {
+                        swipedDistance = event.x - onTouchX
 
-                            onTouchX + 10 < event.x -> {
+                        /* Check if swipe distance is valid */
+                        if (swipedDistance < 1000 && swipedDistance > -1000) {
+
+                            ObjectAnimator.ofFloat(
+                                holder.itemView,
+                                "translationX",
+                                swipedDistance
+                            ).apply {
+                                start()
+                            }
+
+                            /* Check swipe direction */
+                            if (swipedDistance >= 500) {
 
                                 listener.onSwipeRightEvent(items[position])
-                            }
-                            onTouchX - 10 > event.x -> {
+
+                            } else if (swipedDistance <= -500) {
 
                                 listener.onSwipeLeftEvent(items[position])
                             }
-                            else -> {
+                        }
+                    }
 
-                                v?.performClick()
-                            }
+                    MotionEvent.ACTION_UP -> {
+
+                        /* Reset animation */
+                        ObjectAnimator.ofFloat(
+                            holder.itemView,
+                            "translationX",
+                            0f
+                        ).apply {
+                            start()
+                        }
+
+                        if (swipedDistance <= 20 && swipedDistance >= -20) {
+
+                            listener.onClickEvent(items[position])
+                        }
+                    }
+
+                    MotionEvent.ACTION_CANCEL -> {
+
+                        /* Reset animation when action is canceled */
+                        ObjectAnimator.ofFloat(
+                            holder.itemView,
+                            "translationX",
+                            0f
+                        ).apply {
+                            start()
                         }
                     }
 

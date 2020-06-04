@@ -41,12 +41,7 @@ class VehiclesListFragment : Fragment(),
         val view =  inflater.inflate(R.layout.fragment_vehicles_list, container, false)
 
         /* Set layout for RecycleView according to screen orientation */
-        if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-
-            view.vehicles.layoutManager = LinearLayoutManager(activity as Context)
-        }
-
-        else view.vehicles.layoutManager = GridLayoutManager(activity as Context, 2)
+        view.vehicles.layoutManager = LinearLayoutManager(activity as Context)
 
         /* Set FAB onClickListener */
         view.fab.setOnClickListener {
