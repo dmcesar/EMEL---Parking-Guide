@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_parking_zone_details.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.remote.responses.ParkingZoneResponse
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnParkingZoneDetailsListener
@@ -23,12 +24,12 @@ class ParkingZoneDetailsFragment : Fragment(), OnParkingZoneDetailsListener {
 
         this.arguments?.let {
 
-            val coordinates = it.getStringArray(EXTRA_PARK_COORDINATES)
+            val coordinates = it.getDoubleArray(EXTRA_PARK_COORDINATES)
 
             coordinates?.let { coords ->
 
-                this.latitude = coords[0].toDouble()
-                this.longitude = coords[1].toDouble()
+                this.latitude = coords[0]
+                this.longitude = coords[1]
             }
         }
         super.onCreate(savedInstanceState)
@@ -36,7 +37,7 @@ class ParkingZoneDetailsFragment : Fragment(), OnParkingZoneDetailsListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_parking_place_information, container, false)
+        val view = inflater.inflate(R.layout.fragment_parking_zone_details, container, false)
 
         this.viewModel = ViewModelProviders.of(this).get(ParkingZoneDetailsViewModel::class.java)
 
@@ -46,7 +47,15 @@ class ParkingZoneDetailsFragment : Fragment(), OnParkingZoneDetailsListener {
     override fun onStart() {
 
         this.viewModel.registerListener(this)
-        this.viewModel.getInfo(this.latitude!!, this.longitude!!)
+
+
+        this.latitude?.let {lat ->
+
+            this.longitude?.let { long ->
+
+                this.viewModel.getInfo(lat, long)
+            }
+        }
 
         super.onStart()
     }
@@ -59,11 +68,14 @@ class ParkingZoneDetailsFragment : Fragment(), OnParkingZoneDetailsListener {
     }
 
     override fun onParkingZoneDetailsReceived(data: ParkingZoneResponse) {
-        TODO("Not yet implemented")
+
+        parking_type.text = data.type
+        parking_schedule.text = data.schedule
+        parking_observations.text = data.observations
     }
 
     override fun onNoConnectivity() {
 
-        //Snackbar.make()
+        Snackbar.make(parking_zone_layout, R.string.no_connection, Snackbar.LENGTH_LONG).show()
     }
 }

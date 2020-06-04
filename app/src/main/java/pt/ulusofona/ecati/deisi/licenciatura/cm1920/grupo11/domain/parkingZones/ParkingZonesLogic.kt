@@ -20,7 +20,7 @@ class ParkingZonesLogic(private val retrofit: Retrofit) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val response = service.getAll(ParkingZoneRequest(token = API_TOKEN, latitude = latitude, longitude = longitude))
+            val response = service.getZone(API_TOKEN, ParkingZoneRequest(latitude, longitude))
 
             if(response.isSuccessful) {
 

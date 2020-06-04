@@ -20,7 +20,7 @@
     <string name="update">Update</string>
     <string name="park_me_now">Park me now!</string>
     <string name="go_map">Set course</string>
-    <string name="go_info">Parking place information</string>
+    <string name="go_info">Parking zone information</string>
     <string name="toggle_service_stations">Service Stations</string>
     <string name="toggle_general_information">EMEL General</string>
     <string name="phone_general_information">Phone: 211163060</string>
@@ -115,5 +115,6 @@
     <string name="set_course">Set course</string>
     <string name="channel_name">SET_COURSE_CHANNEL</string>
     <string name="channel_description">Display notification to set course to nearby parking lot</string>
+    <string name="no_connection">No connection detected. Cannot load data.</string>
 
 </resources>

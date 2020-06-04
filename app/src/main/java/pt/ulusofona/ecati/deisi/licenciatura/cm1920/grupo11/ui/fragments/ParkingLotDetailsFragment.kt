@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import butterknife.ButterKnife
 import butterknife.OnClick
-import kotlinx.android.synthetic.main.fragment_parking_lot_info.view.*
+import kotlinx.android.synthetic.main.fragment_parking_lot_details.view.*
 
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.ParkingLot
@@ -67,7 +67,7 @@ class ParkingLotDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_parking_lot_info, container, false)
+        val view = inflater.inflate(R.layout.fragment_parking_lot_details, container, false)
 
         ButterKnife.bind(this, view)
 
