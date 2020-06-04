@@ -25,7 +25,6 @@ import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.Contac
 
 class ContactsFragment : Fragment(), OnDataReceivedListener {
 
-    private val TAG = ContactsFragment::class.java.simpleName
     private var selectedPlate = ""
 
     private lateinit var viewModel: ContactsViewModel
@@ -141,11 +140,8 @@ class ContactsFragment : Fragment(), OnDataReceivedListener {
                 parent?.let {
 
                     selectedPlate = it.getItemAtPosition(position).toString()
-
-                    Log.i(TAG, selectedPlate)
                 }
             }
-
         }
 
         this.viewModel = ViewModelProviders.of(this).get(ContactsViewModel::class.java)
