@@ -171,6 +171,8 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener, OnClickListener
 
     override fun onNavigateToVehicleForm(args: Bundle?) {}
 
+    override fun onNavigateToParkingZoneDetails(args: Bundle) {}
+
     override fun onClickEvent(data: Any?) {
 
         this.onClickListener?.onClickEvent(data)

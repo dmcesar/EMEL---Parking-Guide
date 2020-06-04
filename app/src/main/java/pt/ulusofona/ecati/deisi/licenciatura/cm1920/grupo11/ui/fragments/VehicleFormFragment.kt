@@ -16,6 +16,13 @@ import butterknife.OnClick
 
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.VehiclesListViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_form.*
+import kotlinx.android.synthetic.main.fragment_vehicle_form.button_submit_form
+import kotlinx.android.synthetic.main.fragment_vehicle_form.form_name
+import kotlinx.android.synthetic.main.fragment_vehicle_form.input_brand
+import kotlinx.android.synthetic.main.fragment_vehicle_form.input_model
+import kotlinx.android.synthetic.main.fragment_vehicle_form.input_plate
+import kotlinx.android.synthetic.main.fragment_vehicle_form.input_plate_date
+import kotlinx.android.synthetic.main.fragment_vehicle_form_edit.*
 import kotlinx.android.synthetic.main.vehicles_list_item.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.data.local.entities.Vehicle
@@ -123,10 +130,15 @@ class VehicleFormFragment : Fragment() {
 
     private fun updateFormData() {
 
-        brand?.text = vehicle?.brand
-        model?.text = vehicle?.model
-        plate?.text = vehicle?.plate
-        plate_date?.text = vehicle?.getDate()
+        val brandText = (activity as Context).resources.getString(R.string.enter_brand) + ": " + vehicle?.brand
+        val modelText = (activity as Context).resources.getString(R.string.enter_model) + ": " + vehicle?.model
+        val plateText = (activity as Context).resources.getString(R.string.enter_plate) + ": " + vehicle?.plate
+        val plateDateText = (activity as Context).resources.getString(R.string.enter_plate_date) + ": " + SimpleDateFormat("MM-yyyy").format(vehicle?.plateDate)
+
+        brand?.text = brandText
+        model?.text = modelText
+        plate?.text = plateText
+        plate_date?.text = plateDateText
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -152,6 +164,14 @@ class VehicleFormFragment : Fragment() {
     }
 
     override fun onStart() {
+
+        this.vehicle?.let {
+
+            input_brand.setText(it.brand)
+            input_model.setText(it.model)
+            input_plate.setText(it.plate)
+            input_plate_date.setText(SimpleDateFormat("MM-yyyy").format(it.plateDate))
+        }
 
         input_plate_date.addTextChangedListener(object : TextWatcher {
 

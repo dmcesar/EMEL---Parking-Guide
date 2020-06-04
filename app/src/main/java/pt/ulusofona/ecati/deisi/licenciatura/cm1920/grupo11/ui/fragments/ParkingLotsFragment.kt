@@ -304,6 +304,11 @@ class ParkingLotsFragment : Fragment(),
 
     override fun onNavigateToVehicleForm(args: Bundle?) {}
 
+    override fun onNavigateToParkingZoneDetails(args: Bundle) {
+
+        this.navigationListener?.onNavigateToParkingZoneDetails(args)
+    }
+
     override fun onDataReceivedWithOrigin(data: ArrayList<ParkingLot>, updated: Boolean) {
 
         this.parkingLots = data

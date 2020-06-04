@@ -1,79 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
-
-    <TextView
-        android:id="@+id/form_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:gravity="start"
-        android:text="@string/register_vehicle"
-        style="@style/HighlightTextStyle"
-        android:textColor="?attr/onBackgroundColor" />
-
-    <EditText
-        android:id="@+id/input_brand"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginHorizontal="10dp"
-        android:inputType="text"
-        android:hint="@string/enter_brand" />
-
-
-    <EditText
-        android:id="@+id/input_model"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:inputType="text"
-        android:hint="@string/enter_model" />
+    android:background="?attr/backgroundColor" >
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:background="?attr/backgroundColor">
 
-
-        <EditText
-            android:id="@+id/input_plate"
-            style="@style/EditTextStyle"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/form_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:inputType="text"
-            android:hint="@string/enter_plate" />
+            android:layout_margin="20dp"
+            android:gravity="start"
+            android:text="@string/register_vehicle"
+            style="@style/HighlightTextStyle"
+            android:textColor="?attr/onBackgroundColor" />
 
-
-        <EditText
-            android:id="@+id/input_plate_date"
-            style="@style/EditTextStyle"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:inputType="date"
-            android:hint="@string/enter_plate_date" />
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_brand"
+                style="@style/TextStyle"
+                android:textColor="?attr/onBackgroundColor" />
+
+            <EditText
+                android:id="@+id/input_brand"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/enter_brand" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_model"
+                style="@style/TextStyle"
+                android:textColor="?attr/onBackgroundColor" />
+
+            <EditText
+                android:id="@+id/input_model"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/enter_model" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter_plate"
+                    style="@style/TextStyle"
+                    android:textColor="?attr/onBackgroundColor" />
+
+                <EditText
+                    android:id="@+id/input_plate"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="@string/enter_plate" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter_plate_date"
+                    style="@style/TextStyle"
+                    android:textColor="?attr/onBackgroundColor" />
+
+                <EditText
+                    android:id="@+id/input_plate_date"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:hint="@string/enter_plate_date" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_submit_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="10dp"
+            android:paddingHorizontal="5dp"
+            android:text="@string/register"
+            android:textColor="?attr/onCardColor"
+            style="@style/SquareButtonStyle"/>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_submit_form"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:paddingHorizontal="5dp"
-        android:text="@string/register"
-        android:textColor="?attr/onCardColor"
-        style="@style/SquareButtonStyle"/>
-
-</LinearLayout>
+</ScrollView>
