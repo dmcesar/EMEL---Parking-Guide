@@ -22,11 +22,13 @@ class ParkingZoneDetailsViewModel : ViewModel(),
     fun registerListener(listener: OnParkingZoneDetailsListener) {
 
         this.listener = listener
+        this.logic.registerListener(this)
     }
 
     fun unregisterListener() {
 
         this.listener = null
+        this.logic.unregisterListener()
     }
 
     override fun onParkingZoneDetailsReceived(data: ParkingZoneResponse) {

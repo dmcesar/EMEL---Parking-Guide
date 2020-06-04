@@ -4,23 +4,28 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProviders
 import butterknife.ButterKnife
 import butterknife.OnClick
+import butterknife.OnItemSelected
 
 import kotlinx.android.synthetic.main.fragment_contacts.*
+import kotlinx.android.synthetic.main.fragment_contacts.view.*
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.R
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.listeners.OnDataReceivedListener
 import pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.viewmodels.ContactsViewModel
 
-class ContactsFragment : Fragment(), OnDataReceivedListener, AdapterView.OnItemSelectedListener {
+class ContactsFragment : Fragment(), OnDataReceivedListener {
 
+    private val TAG = ContactsFragment::class.java.simpleName
     private var selectedPlate = ""
 
     private lateinit var viewModel: ContactsViewModel
@@ -127,6 +132,22 @@ class ContactsFragment : Fragment(), OnDataReceivedListener, AdapterView.OnItemS
 
         ButterKnife.bind(this, view)
 
+        view.vehicles_spinner.onItemSelectedListener = object: OnItemSelectedListener {
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                parent?.let {
+
+                    selectedPlate = it.getItemAtPosition(position).toString()
+
+                    Log.i(TAG, selectedPlate)
+                }
+            }
+
+        }
+
         this.viewModel = ViewModelProviders.of(this).get(ContactsViewModel::class.java)
 
         return view
@@ -162,17 +183,9 @@ class ContactsFragment : Fragment(), OnDataReceivedListener, AdapterView.OnItemS
 
         vehicles_spinner.adapter = spinnerAdapter
 
-
         vehicles_spinner.selectedItem?.let {
 
             this.selectedPlate = it.toString()
         }
-    }
-
-    override fun onNothingSelected(p0: AdapterView<*>?) { }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-        this.selectedPlate = parent?.getItemAtPosition(position).toString()
     }
 }

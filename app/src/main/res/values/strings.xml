@@ -82,10 +82,6 @@
     <string name="unavailable">Closed</string>
     <string name="alphabetically">Alphabetically</string>
     <string name="favorites">Favorites</string>
-    <string name="type_example">Parking type: Rotational</string>
-    <string name="schedule_example">Schedule: 24 hours</string>
-    <string name="observations">Observations</string>
-    <string name="observations_example">Parking place observations</string>
     <string name="outdatedDataTitle">Connection error</string>
     <string name="outdatedDataMessage">Could not fetch data from server. Displaying potentially outdated data.</string>
     <string name="noDataMessage">Could not fetch data from server and no data is stored locally. Check internet connection and try again.</string>
@@ -116,5 +112,24 @@
     <string name="channel_name">SET_COURSE_CHANNEL</string>
     <string name="channel_description">Display notification to set course to nearby parking lot</string>
     <string name="no_connection">No connection detected. Cannot load data.</string>
+    <string name="type">Parking type</string>
+    <string name="schedule">Schedule</string>
+    <string name="observations">Observations</string>
+    <string name="tariff">Tariff</string>
+    <string name="prices_table">Prices table</string>
+    <string name="h1">00:15</string>
+    <string name="h2">00:30</string>
+    <string name="h3">01:00</string>
+    <string name="h4">01:30</string>
+    <string name="h5">02:00</string>
+    <string name="h6">02:30</string>
+    <string name="h7">03:00</string>
+    <string name="h8">03:00</string>
+    <string name="h9">04:00</string>
+    <string name="green_zone">Green zone</string>
+    <string name="yellow_zone">Yellow zone</string>
+    <string name="red_zone">Red zone</string>
+    <string name="max_2_h">Maximum 2 hours</string>
+    <string name="n_a">N/A</string>
 
 </resources>

@@ -81,10 +81,6 @@
     <string name="unavailable">Fechado</string>
     <string name="alphabetically">Alfabeticamente</string>
     <string name="favorites">Favoritos</string>
-    <string name="type_example">Tipo de estacionamento: Rotativo</string>
-    <string name="schedule_example">Horário: 24 horas</string>
-    <string name="observations">Observações</string>
-    <string name="observations_example">Observações sobre o estacionamento</string>
     <string name="outdatedDataTitle">Erro de ligação</string>
     <string name="outdatedDataMessage">Não foi possível conectar ao servidor. A mostrar dados potêncialmente desatualizados.</string>
     <string name="noDataMessage">Não foi possível conectar ao servidor e não existem dados localmente. Verifique a ligação à internet e tente outra vez.</string>
@@ -115,5 +111,24 @@
     <string name="channel_name">SET_COURSE_CHANNEL</string>
     <string name="channel_description">Mostra notificação para definir rota para parque na vacinidade</string>
     <string name="no_connection">Conecxão não detetada. Impossivel carregar dados.</string>
+    <string name="type">Tipo de estacionamento</string>
+    <string name="schedule">Horário</string>
+    <string name="observations">Observações</string>
+    <string name="tariff">Tarifa</string>
+    <string name="prices_table">Table de preços</string>
+    <string name="h1">00:15</string>
+    <string name="h2">00:30</string>
+    <string name="h3">01:00</string>
+    <string name="h4">01:30</string>
+    <string name="h5">02:00</string>
+    <string name="h6">02:30</string>
+    <string name="h7">03:00</string>
+    <string name="h8">03:00</string>
+    <string name="h9">04:00</string>
+    <string name="green_zone">Zona verde</string>
+    <string name="yellow_zone">Zona amarela</string>
+    <string name="red_zone">Zona vermelha</string>
+    <string name="max_2_h">Máximo 2 horas</string>
+    <string name="n_a">N/A</string>
 
 </resources>

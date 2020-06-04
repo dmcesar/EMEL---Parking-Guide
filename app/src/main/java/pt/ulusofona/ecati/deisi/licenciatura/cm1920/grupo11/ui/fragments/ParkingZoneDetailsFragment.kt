@@ -1,5 +1,6 @@
 package pt.ulusofona.ecati.deisi.licenciatura.cm1920.grupo11.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -48,7 +49,6 @@ class ParkingZoneDetailsFragment : Fragment(), OnParkingZoneDetailsListener {
 
         this.viewModel.registerListener(this)
 
-
         this.latitude?.let {lat ->
 
             this.longitude?.let { long ->
@@ -69,9 +69,15 @@ class ParkingZoneDetailsFragment : Fragment(), OnParkingZoneDetailsListener {
 
     override fun onParkingZoneDetailsReceived(data: ParkingZoneResponse) {
 
-        parking_type.text = data.type
-        parking_schedule.text = data.schedule
-        parking_observations.text = data.observations
+        val type = (activity as Context).resources.getString(R.string.type) + ": " + data.type
+        val schedule = (activity as Context).resources.getString(R.string.schedule) + ": " + data.schedule
+        val observations = (activity as Context).resources.getString(R.string.observations) + ": " + if(data.observations != "null") {data.observations} else {(activity as Context).resources.getString(R.string.n_a)}
+        val tariff = (activity as Context).resources.getString(R.string.tariff) + ": " + data.tariff
+
+        parking_type.text = type
+        parking_schedule.text = schedule
+        parking_observations.text = observations
+        parking_tariff.text = tariff
     }
 
     override fun onNoConnectivity() {
