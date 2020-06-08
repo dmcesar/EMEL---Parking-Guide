@@ -32,7 +32,7 @@ class ParkingLotsRepository(private val local: ParkingLotsDAO, private val remot
                 local.updateData(p.id, p.active, p.lastUpdatedAt, p.occupancy)
                 locallyUpdatedList.add(local.get(p.id))
 
-            } else{
+            } else {
 
                 local.insert(p)
                 locallyUpdatedList.add(p)

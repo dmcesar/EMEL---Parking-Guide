@@ -92,29 +92,6 @@ class ParkingLotsListFragment : Fragment(),
                     }
                 }
             }
-
-            /* If data is from remove API */
-            else {
-
-                /* If previously batch of data was outdated (from local) */
-                val previousBatchOfDataWasUpdated = sharedPreferences
-                    .getBoolean(EXTRA_DATA_FROM_REMOTE, false)
-
-                if(!previousBatchOfDataWasUpdated) {
-
-                    sharedPreferences
-                        .edit()
-                        .putBoolean(EXTRA_DATA_FROM_REMOTE, true)
-                        .apply()
-
-                    Snackbar.make(parking_lots_list, R.string.data_updated_after_connection_was_lost, Snackbar.LENGTH_LONG)
-                        .show()
-
-                } else {
-
-                    Log.i(TAG, "Data is updated and connection has not been lost!")
-                }
-            }
         }
 
         super.onStart()

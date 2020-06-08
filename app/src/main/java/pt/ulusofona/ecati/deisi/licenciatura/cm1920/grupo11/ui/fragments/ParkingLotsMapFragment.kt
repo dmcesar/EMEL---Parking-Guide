@@ -100,33 +100,6 @@ class ParkingLotsMapFragment : Fragment(), OnNavigationListener, OnClickListener
             this.onClickListener = parentFragment as OnClickListener
         }
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity as Context)
-
-        this.dataIsFromRemote?.let { fromRemote ->
-
-            /* If data is from remove API */
-            if(fromRemote) {
-                /* If previously batch of data was outdated (from local) */
-                val previousBatchOfDataWasUpdated = sharedPreferences
-                    .getBoolean(EXTRA_DATA_FROM_REMOTE, false)
-
-                if(!previousBatchOfDataWasUpdated) {
-
-                    sharedPreferences
-                        .edit()
-                        .putBoolean(EXTRA_DATA_FROM_REMOTE, true)
-                        .apply()
-
-                    Snackbar.make(parking_lots_frame, (parentFragment?.activity as Context).resources.getString(R.string.data_updated_after_connection_was_lost), Snackbar.LENGTH_LONG)
-                        .show()
-
-                } else {
-
-                    Log.i(TAG, "Data is updated and connection has not been lost!")
-                }
-            }
-        }
-
         this.filters?.let {
 
             if((activity as Context).resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
