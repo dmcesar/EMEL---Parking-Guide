@@ -70,117 +70,117 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/h1"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/h2"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/h3"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/h4"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/h5"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/h6"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/h7"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/h8"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/h9"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
             </LinearLayout>
@@ -188,7 +188,7 @@
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="?attr/backgroundColor" />
+                android:background="@color/black" />
 
             <LinearLayout
                 android:layout_weight="1"
@@ -200,124 +200,124 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/green_zone"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 0,25"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 0,40"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 0,80"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 1,20"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 1,60"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 2,00"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 2,40"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 2,80"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 3,20"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
             </LinearLayout>
@@ -325,7 +325,7 @@
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="?attr/backgroundColor" />
+                android:background="@color/black" />
 
             <LinearLayout
                 android:layout_weight="1"
@@ -337,124 +337,124 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/yellow_zone"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 0,30"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 0,60"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 1,20"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 1,80"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 2,40"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 3,00"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 3,60"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 4,20"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 4,80"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
             </LinearLayout>
@@ -462,7 +462,7 @@
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="?attr/backgroundColor" />
+                android:background="@color/black" />
 
             <LinearLayout
                 android:layout_weight="1"
@@ -474,124 +474,124 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/red_zone"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 0,50"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 0,80"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 1,60"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 2,40"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="€ 3,20"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/n_a"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/n_a"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/n_a"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="2dp"
-                    android:background="?attr/backgroundColor" />
+                    android:background="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/n_a"
-                    android:textColor="?attr/backgroundColor"
+                    android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
 
             </LinearLayout>

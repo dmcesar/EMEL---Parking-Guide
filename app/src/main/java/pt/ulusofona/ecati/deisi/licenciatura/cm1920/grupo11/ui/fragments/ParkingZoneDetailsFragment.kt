@@ -71,7 +71,7 @@ class ParkingZoneDetailsFragment : Fragment(), OnParkingZoneDetailsListener {
 
         val type = (activity as Context).resources.getString(R.string.type) + ": " + data.type
         val schedule = (activity as Context).resources.getString(R.string.schedule) + ": " + data.schedule
-        val observations = (activity as Context).resources.getString(R.string.observations) + ": " + if(data.observations != "null") {data.observations} else {(activity as Context).resources.getString(R.string.n_a)}
+        val observations = (activity as Context).resources.getString(R.string.observations) + ": " + if(data.observations != "null" || data.observations != null) {data.observations} else {(activity as Context).resources.getString(R.string.n_a)}
         val tariff = (activity as Context).resources.getString(R.string.tariff) + ": " + data.tariff
 
         parking_type.text = type
